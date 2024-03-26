@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Brain-Alarm</string>
+    <string name="fav_coun">PaginaSfide</string>
+    <string name="nomeSveglia">Nome Sveglia</string>
+    <string name="conferma">CONFERMA</string>
+    <string name="annulla">ANNULLA</string>
+    <string name="suono">Suono</string>
+    <string name="vibrazione">Vibrazione</string>
+    <string name="posticipa">Posticipa</string>
+    <string name="classica">CLASSICA</string>
+    <string name="sfida">SFIDA</string>
+
+
+    <string-array name="prova">
+        <item>italy</item>
+        <item>g</item>
+        <item>e</item>
+    </string-array>
+</resources>

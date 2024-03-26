@@ -1,0 +1,253 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WelcomeActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_percent="0.5"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineSX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="30dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineDX"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="30dp" />
+
+            <TimePicker
+                android:id="@+id/timePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteY="16dp" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nomeSveglia"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="#00FFFFFF"
+                app:layout_constraintEnd_toEndOf="@+id/guidelineDX"
+                app:layout_constraintStart_toStartOf="@+id/guidelineSX"
+                app:layout_constraintTop_toBottomOf="@+id/timePicker"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="30dp"
+                tools:layout_editor_absoluteY="16dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/nomeSveglia" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/ripetizioni"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@id/guidelineDX"
+                app:layout_constraintStart_toStartOf="@id/guidelineSX"
+                app:layout_constraintTop_toBottomOf="@id/nomeSveglia"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="30dp"
+                tools:layout_editor_absoluteY="405dp">
+
+                <CheckBox
+                    android:id="@+id/lunedi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="L" />
+
+                <CheckBox
+                    android:id="@+id/martedi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="M" />
+
+                <CheckBox
+                    android:id="@+id/mercoledi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="M" />
+
+                <CheckBox
+                    android:id="@+id/giovedi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="G" />
+
+                <CheckBox
+                    android:id="@+id/venerdi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="V" />
+
+                <CheckBox
+                    android:id="@+id/sabato"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="S" />
+
+                <CheckBox
+                    android:id="@+id/domenica"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="D" />
+
+            </LinearLayout>
+
+            <!-- pulsanti di suono/vibrazione/rinvia -->
+            <LinearLayout
+                android:id="@+id/impostazioni"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="@id/guidelineDX"
+                app:layout_constraintStart_toStartOf="@id/guidelineSX"
+                app:layout_constraintTop_toBottomOf="@id/ripetizioni"
+                tools:ignore="MissingConstraints">
+
+                <Button
+                    android:id="@+id/suono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/sfondoTras"
+                    android:text="@string/suono"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <Switch
+                    android:id="@+id/posticipa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="23.5dp"
+                    android:text="@string/posticipa"
+
+                    android:textSize="20dp" /><!-- sistemare font-->
+
+            </LinearLayout>
+
+            <!-- pulsanti giochi -->
+            <LinearLayout
+                android:id="@+id/giochi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@id/guidelineDX"
+                app:layout_constraintStart_toStartOf="@id/guidelineSX"
+                app:layout_constraintTop_toBottomOf="@id/impostazioni"
+                tools:ignore="MissingConstraints">
+
+
+                <Button
+                    android:id="@+id/classica"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="5"
+                    android:backgroundTint="@color/azzurro"
+                    android:text="@string/classica"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@id/guidelineSX"
+                    app:layout_constraintTop_toBottomOf="@id/ripetizioni" />
+
+                <Button
+                    android:id="@+id/sfida"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="7"
+                    android:backgroundTint="@color/arancione"
+                    android:text="@string/sfida"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@id/guidelineSX"
+                    app:layout_constraintTop_toBottomOf="@id/ripetizioni" />
+            </LinearLayout>
+
+            <!-- pulsanti di invio/annulla -->
+            <LinearLayout
+                android:id="@+id/bottoni"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guidelineDX"
+                app:layout_constraintStart_toStartOf="@id/guidelineSX"
+                tools:ignore="MissingConstraints">
+
+                <Button
+                    android:id="@+id/annulla"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:backgroundTint="@color/sfondoTras"
+                    android:text="@string/annulla"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@id/guidelineSX"
+                    app:layout_constraintEnd_toEndOf="@id/center"
+                    app:layout_constraintTop_toBottomOf="@id/conferma" />
+
+                <Button
+                    android:id="@+id/conferma"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:backgroundTint="@color/sfondoTras"
+                    android:text="@string/conferma"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@id/center"
+                    app:layout_constraintEnd_toEndOf="@id/guidelineDX"
+                    app:layout_constraintTop_toBottomOf="@id/ripetizioni" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

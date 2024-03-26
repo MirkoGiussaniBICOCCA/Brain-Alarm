@@ -22,9 +22,9 @@
                 android:id="@+id/center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintGuide_percent="0.5"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintGuide_percent="0.5"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.constraintlayout.widget.Guideline
@@ -167,55 +167,67 @@
             </LinearLayout>
 
             <!-- pulsanti giochi -->
-            <LinearLayout
-                android:id="@+id/giochi"
+            <!-- TODO 2 relative layout uno di sinistra e uno di destra per mettere i bottoni simmietrici -->
+            <RelativeLayout
+                android:id="@+id/giochiClassica"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@id/guidelineDX"
                 app:layout_constraintStart_toStartOf="@id/guidelineSX"
+                app:layout_constraintEnd_toEndOf="@id/center"
                 app:layout_constraintTop_toBottomOf="@id/impostazioni"
                 tools:ignore="MissingConstraints">
 
 
                 <Button
                     android:id="@+id/classica"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
-                    android:layout_weight="5"
+                    android:layout_centerHorizontal="true"
                     android:backgroundTint="@color/azzurro"
                     android:text="@string/classica"
                     android:textColor="@color/black"
                     android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="@id/guidelineSX"
-                    app:layout_constraintTop_toBottomOf="@id/ripetizioni" />
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/giochiSfida"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="@id/center"
+                app:layout_constraintEnd_toEndOf="@id/guidelineDX"
+                app:layout_constraintTop_toBottomOf="@id/impostazioni"
+                tools:ignore="MissingConstraints">
+
 
                 <Button
                     android:id="@+id/sfida"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
-                    android:layout_weight="7"
+                    android:layout_centerHorizontal="true"
                     android:backgroundTint="@color/arancione"
                     android:text="@string/sfida"
                     android:textColor="@color/black"
                     android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="@id/guidelineSX"
-                    app:layout_constraintTop_toBottomOf="@id/ripetizioni" />
-            </LinearLayout>
+                    />
+            </RelativeLayout>
 
             <!-- pulsanti di invio/annulla -->
+            <!-- TODO non sono perfette le misure dei pulsanti -->
             <LinearLayout
                 android:id="@+id/bottoni"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guidelineDX"
                 app:layout_constraintStart_toStartOf="@id/guidelineSX"
+                app:layout_constraintTop_toBottomOf="@id/giochiClassica"
                 tools:ignore="MissingConstraints">
 
                 <Button
@@ -228,7 +240,6 @@
                     android:text="@string/annulla"
                     android:textColor="@color/black"
                     android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="@id/guidelineSX"
                     app:layout_constraintEnd_toEndOf="@id/center"
                     app:layout_constraintTop_toBottomOf="@id/conferma" />
 
@@ -243,7 +254,6 @@
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@id/center"
-                    app:layout_constraintEnd_toEndOf="@id/guidelineDX"
                     app:layout_constraintTop_toBottomOf="@id/ripetizioni" />
 
             </LinearLayout>

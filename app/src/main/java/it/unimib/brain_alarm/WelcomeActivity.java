@@ -32,14 +32,16 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);  //da qua cambio l'avvio del programma
+
         final Button buttonConferma = findViewById(R.id.conferma);
+        textInput = findViewById(R.id.nomeSveglia);
 
         buttonConferma.setOnClickListener(v -> {
 
             String nomeSveglia = textInput.getEditText().getText().toString();
 
-            // Start login if email and password are ok
-            Log.d(TAG, "nome sveglia" + nomeSveglia);
+            // messaggio TAG
+            Log.d(TAG, "nome sveglia: " + nomeSveglia);
         });
     }
 }

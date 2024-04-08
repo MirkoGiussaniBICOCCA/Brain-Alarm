@@ -230,6 +230,8 @@
 
             <!-- pulsanti di invio/annulla -->
             <!-- TODO non sono perfette le misure dei pulsanti -->
+
+
             <RelativeLayout
                 android:id="@+id/bottoneAnnulla"
                 android:layout_width="0dp"
@@ -237,6 +239,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/center"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/guidelineSX"
                 tools:ignore="MissingConstraints">
 
@@ -252,7 +255,6 @@
                     android:textSize="14sp" />
             </RelativeLayout>
 
-
             <RelativeLayout
                 android:id="@+id/bottoneConferma"
                 android:layout_width="0dp"
@@ -260,6 +262,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guidelineDX"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@id/center"
                 tools:ignore="MissingConstraints">
 

@@ -11,7 +11,7 @@
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,44 +43,47 @@
 
             <TimePicker
                 android:id="@+id/timePicker"
+                style="@style/AppTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:numbersBackgroundColor="@color/azzurro"
+                android:numbersSelectorColor="@color/arancione"
+                android:numbersTextColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteY="16dp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/nomeSveglia"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 app:boxBackgroundColor="#00FFFFFF"
                 app:layout_constraintEnd_toEndOf="@+id/guidelineDX"
                 app:layout_constraintStart_toStartOf="@+id/guidelineSX"
                 app:layout_constraintTop_toBottomOf="@+id/timePicker"
-                tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteX="30dp"
-                tools:layout_editor_absoluteY="16dp">
+                tools:ignore="MissingConstraints">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/nomeSveglia" />
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/nomeSveglia"
+                    android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:id="@+id/ripetizioni"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="@id/guidelineDX"
                 app:layout_constraintStart_toStartOf="@id/guidelineSX"
                 app:layout_constraintTop_toBottomOf="@id/nomeSveglia"
-                tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteX="30dp"
-                tools:layout_editor_absoluteY="405dp">
+                tools:ignore="MissingConstraints">
 
                 <CheckBox
                     android:id="@+id/lunedi"
@@ -138,6 +141,7 @@
                 android:id="@+id/impostazioni"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="@id/guidelineDX"
                 app:layout_constraintStart_toStartOf="@id/guidelineSX"
@@ -147,7 +151,7 @@
                 <Button
                     android:id="@+id/suono"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:background="@color/sfondoTras"
                     android:text="@string/suono"
                     android:textAlignment="textStart"
@@ -158,11 +162,11 @@
                 <Switch
                     android:id="@+id/posticipa"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginStart="23.5dp"
+                    android:layout_marginTop="10dp"
                     android:text="@string/posticipa"
-
-                    android:textSize="20dp" /><!-- sistemare font-->
+                    android:textSize="20sp" /><!-- sistemare font-->
 
             </LinearLayout>
 
@@ -172,9 +176,11 @@
                 android:id="@+id/giochiClassica"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="@id/guidelineSX"
                 app:layout_constraintEnd_toEndOf="@id/center"
+                app:layout_constraintStart_toStartOf="@id/guidelineSX"
                 app:layout_constraintTop_toBottomOf="@id/impostazioni"
                 tools:ignore="MissingConstraints">
 
@@ -182,23 +188,27 @@
                 <Button
                     android:id="@+id/classica"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:backgroundTint="@color/azzurro"
                     android:text="@string/classica"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="14sp"
-                    />
+                    app:cornerRadius="20dp"
+                    app:icon="@drawable/sveglia"
+                    app:iconGravity="top"
+                    app:iconSize="60dp" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/giochiSfida"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="@id/center"
                 app:layout_constraintEnd_toEndOf="@id/guidelineDX"
+                app:layout_constraintStart_toStartOf="@id/center"
                 app:layout_constraintTop_toBottomOf="@id/impostazioni"
                 tools:ignore="MissingConstraints">
 
@@ -206,57 +216,66 @@
                 <Button
                     android:id="@+id/sfida"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:backgroundTint="@color/arancione"
                     android:text="@string/sfida"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="14sp"
-                    />
+                    app:cornerRadius="20dp"
+                    app:icon="@drawable/puzzle"
+                    app:iconGravity="top"
+                    app:iconSize="60dp" />
             </RelativeLayout>
 
             <!-- pulsanti di invio/annulla -->
             <!-- TODO non sono perfette le misure dei pulsanti -->
-            <LinearLayout
-                android:id="@+id/bottoni"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/bottoneAnnulla"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/guidelineDX"
+                app:layout_constraintEnd_toEndOf="@id/center"
                 app:layout_constraintStart_toStartOf="@id/guidelineSX"
-                app:layout_constraintTop_toBottomOf="@id/giochiClassica"
                 tools:ignore="MissingConstraints">
 
                 <Button
                     android:id="@+id/annulla"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
                     android:backgroundTint="@color/sfondoTras"
                     android:text="@string/annulla"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="@id/center"
-                    app:layout_constraintTop_toBottomOf="@id/conferma" />
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/bottoneConferma"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guidelineDX"
+                app:layout_constraintStart_toStartOf="@id/center"
+                tools:ignore="MissingConstraints">
 
                 <Button
                     android:id="@+id/conferma"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
                     android:backgroundTint="@color/sfondoTras"
                     android:text="@string/conferma"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="@id/center"
-                    app:layout_constraintTop_toBottomOf="@id/ripetizioni" />
+                    android:textSize="14sp" />
+            </RelativeLayout>
 
-            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WelcomeActivity">
+    tools:context=".AggiungiActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -236,11 +236,13 @@
                 android:id="@+id/bottoneAnnulla"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/center"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/guidelineSX"
+                app:layout_constraintTop_toBottomOf="@+id/giochiClassica"
                 tools:ignore="MissingConstraints">
 
                 <Button
@@ -262,8 +264,9 @@
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guidelineDX"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/center"
+                app:layout_constraintTop_toBottomOf="@+id/giochiSfida"
                 tools:ignore="MissingConstraints">
 
                 <Button

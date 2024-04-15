@@ -9,6 +9,11 @@
     <string name="posticipa">Posticipa</string>
     <string name="classica">CLASSICA</string>
     <string name="sfida">SFIDA</string>
+    <string name="impostazioni">Impostazioni</string>
+    <string name="suoni">Suoni</string>
+    <string name="riposo">Riposo</string>
+    <string name="carriera">Carriera</string>
+    <string name="home">Home</string>
 
 
     <string-array name="prova">

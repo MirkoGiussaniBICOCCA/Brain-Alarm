@@ -25,13 +25,20 @@ public class HomeActivity extends AppCompatActivity {
         final Button buttonAggiungi = findViewById(R.id.bottoneAggiungiSveglia);
 
          buttonAggiungi.setOnClickListener(v -> {
-            startActivityBasedOnCondition(AggiungiActivity.class,
-            R.id.navigate_to_newsPreferencesActivity);
+             Log.d(TAG, "Cliccato bottone aggiungi");
 
-        }
-    });
+             Intent intent = new Intent(this, AggiungiActivity.class);
 
-    private void startActivityBasedOnCondition(Class<?> destinationActivity, int destination){
+             //startActivityBasedOnCondition(AggiungiActivity.class,
+             //R.id.navigate_to_newsPreferencesActivity);
+
+             startActivity(intent);
+             finish();
+        });
+    }
+}
+
+    /*private void startActivityBasedOnCondition(Class<?> destinationActivity, int destination){
         if(USE_NAVIGATION_COMPONENT){
             Navigation.findNavController(requireView()).navigate(destination);
         }else{
@@ -39,6 +46,6 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         }
         requireActivity().finish();
-        }
+        }*/
 
-}
+

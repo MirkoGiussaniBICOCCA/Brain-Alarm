@@ -67,9 +67,9 @@ public class HomeFragment extends Fragment {
         final Button buttonAggiungi = view.findViewById(R.id.bottoneAggiungiSveglia);
 
         buttonAggiungi.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_aggiungiActivity2);
+            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_aggiungiActivity);
         });
-
     }
+
 
 }

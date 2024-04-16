@@ -19,27 +19,13 @@ import android.os.Bundle;
 import it.unimib.brain_alarm.R;
 
 public class HomeActivity extends AppCompatActivity {
+    private static final String TAG = HomeActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_home);}
 
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().
-                findFragmentById(R.id.nav_menu_fragment);
-        NavController navController = navHostFragment.getNavController();
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.impostazioniFragment,
-                R.id.suoniFragment,
-                R.id.homeFragment,
-                R.id.riposoFragment,
-                R.id.carrieraFragment).build();
-
-        NavigationUI.setupWithNavController(bottomNav, navController);
-
-    }
 }
 
     /*private void startActivityBasedOnCondition(Class<?> destinationActivity, int destination){

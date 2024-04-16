@@ -28,6 +28,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <LinearLayout
+                android:id="@+id/ripetizioni"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+
+                app:layout_constraintTop_toBottomOf="@id/bottoneAggiungiSveglia"
+                tools:ignore="MissingConstraints">
+
+
+            </LinearLayout>
+
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -6,16 +6,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.List;
 
 import it.unimib.brain_alarm.AggiungiActivity;
 import it.unimib.brain_alarm.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,9 +33,8 @@ public class HomeFragment extends Fragment {
 
     private static final String TAG = AggiungiActivity.class.getSimpleName();
 
-    private TextInputLayout textInput;
 
-    private TextInputLayout textInputLayoutEmail;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -69,7 +75,39 @@ public class HomeFragment extends Fragment {
         buttonAggiungi.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_aggiungiActivity);
         });
+
+
+
+        /*
+        RecyclerView recyclerViewCountryNews = view.findViewById(R.id.recyclerview_country_news);
+        RecyclerView.LayoutManager layoutManager =
+                new LinearLayoutManager(requireContext(),
+                        LinearLayoutManager.VERTICAL, false);
+
+        List<News> newsList = getNewsListWithWithGSon();
+
+        it.unimib.worldnews.adapter.NewsRecyclerViewAdapter newsRecyclerViewAdapter = new it.unimib.worldnews.adapter.NewsRecyclerViewAdapter(newsList,
+                new it.unimib.worldnews.adapter.NewsRecyclerViewAdapter.OnItemClickListener() {
+                    @Override
+                    public void onNewsItemClick(News news) {
+                        Snackbar.make(view, news.getTitle(), Snackbar.LENGTH_SHORT).show();
+                    }
+                    //clicco sulla cella esce snackbar titolo, clicco su cancella esce dimensione lista
+                    @Override
+                    public void onDeleteButtonPressed(int position) {
+                        Snackbar.make(view, getString(R.string.list_size_message) + newsList.size(),
+                                Snackbar.LENGTH_SHORT).show();
+                    }
+                });
+        recyclerViewCountryNews.setLayoutManager(layoutManager);
+        recyclerViewCountryNews.setAdapter(newsRecyclerViewAdapter);
+
+        */
+
     }
+
+
+
 
 
 }

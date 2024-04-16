@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/fragmentImpostazioni"
+        android:id="@+id/impostazioniFragment"
         android:enabled="true"
         android:icon="@drawable/impostazioni"
         android:title="@string/impostazioni" />
     <item
-        android:id="@+id/fragmentSuoni"
+        android:id="@+id/suoniFragment"
         android:enabled="true"
         android:icon="@drawable/suoni"
         android:title="@string/suoni"/>
 
     <item
-        android:id="@+id/home"
+        android:id="@+id/homeFragment"
         android:enabled="true"
         android:icon="@drawable/home"
         android:title="@string/home"/>
 
     <item
-        android:id="@+id/fragmentRiposo"
+        android:id="@+id/riposoFragment"
         android:enabled="true"
         android:icon="@drawable/riposo"
         android:title="@string/riposo"/>
     <item
-        android:id="@+id/fragmentCarriera"
+        android:id="@+id/carrieraFragment"
         android:enabled="true"
         android:icon="@drawable/carriera"
         android:title="@string/carriera"/>

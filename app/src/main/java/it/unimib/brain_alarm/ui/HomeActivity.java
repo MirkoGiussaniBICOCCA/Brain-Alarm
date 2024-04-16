@@ -1,4 +1,4 @@
-package it.unimib.brain_alarm;
+package it.unimib.brain_alarm.ui;
 
 import android.content.Intent;
 import android.util.Log;
@@ -11,30 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import it.unimib.brain_alarm.R;
+
 public class HomeActivity extends AppCompatActivity {
-    private static final String TAG = AggiungiActivity.class.getSimpleName();
 
-    private TextInputLayout textInput;
-
-    private TextInputLayout textInputLayoutEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        final Button buttonAggiungi = findViewById(R.id.bottoneAggiungiSveglia);
 
-         buttonAggiungi.setOnClickListener(v -> {
-             Log.d(TAG, "Cliccato bottone aggiungi");
-
-             Intent intent = new Intent(this, AggiungiActivity.class);
-
-             //startActivityBasedOnCondition(AggiungiActivity.class,
-             //R.id.navigate_to_newsPreferencesActivity);
-
-             startActivity(intent);
-             finish();
-        });
     }
 }
 

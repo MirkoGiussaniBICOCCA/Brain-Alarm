@@ -1,19 +1,27 @@
 package it.unimib.brain_alarm;
 
+import static it.unimib.brain_alarm.util.Constants.NEWS_API_TEST_JSON_FILE;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
+import com.google.android.material.snackbar.Snackbar;
 
-import it.unimib.worldnews.adapter.NewsRecyclerViewAdapter;
+import java.io.IOException;
+import java.util.List;
+
+import it.unimib.brain_alarm.adapter.NewsRecyclerViewAdapter;
+import it.unimib.brain_alarm.News.News;
+import it.unimib.brain_alarm.util.JSONParserUtil;
 
 
 
@@ -49,7 +57,7 @@ public class riposoFragment extends Fragment {
 
 
 
-        RecyclerView recyclerViewCountryNews = view.findViewById(R.id.recyclerview_country_news);
+        RecyclerView recyclerViewCountryNews = view.findViewById(R.id.recyclerview_news);
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(),
                         LinearLayoutManager.VERTICAL, false);
@@ -73,8 +81,15 @@ public class riposoFragment extends Fragment {
         recyclerViewCountryNews.setLayoutManager(layoutManager);
         recyclerViewCountryNews.setAdapter(newsRecyclerViewAdapter);
 
-
-
     }
 
+    private List<News> getNewsListWithWithGSon() {
+        JSONParserUtil jsonParserUtil = new JSONParserUtil(requireActivity().getApplication());
+        try {
+            return jsonParserUtil.parseJSONFileWithGSon(NEWS_API_TEST_JSON_FILE).getArticles();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

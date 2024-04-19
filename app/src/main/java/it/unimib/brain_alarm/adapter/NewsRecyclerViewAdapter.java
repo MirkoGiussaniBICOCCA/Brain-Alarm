@@ -10,9 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-
 import it.unimib.brain_alarm.R;
-import it.unimib.brain_alarm.News;
+import it.unimib.brain_alarm.News.News;
 
 /**
  * Custom adapter that extends RecyclerView.Adapter to show an ArrayList of News
@@ -39,7 +38,7 @@ public class NewsRecyclerViewAdapter extends
     @Override
     public NewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.fav_news_list_item, parent, false);
+                inflate(R.layout.news_list_item, parent, false);
 
         return new NewViewHolder(view);
     }

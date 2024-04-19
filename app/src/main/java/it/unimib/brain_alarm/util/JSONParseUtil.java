@@ -7,7 +7,6 @@ import android.util.JsonReader;
 import android.util.JsonToken;
 
 import com.google.gson.Gson;
-
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;

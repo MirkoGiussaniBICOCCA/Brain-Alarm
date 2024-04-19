@@ -16,46 +16,32 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background">
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/bottoneAggiungiSveglia"
-                android:layout_width="149dp"
-                android:layout_height="56dp"
-                android:backgroundTint="@color/azzurro"
-                android:text="aggiungi"
-                app:icon="@drawable/add"
-                app:iconPadding="15dp"
-                app:iconSize="30dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.337" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:layout_width="334dp"
-                android:layout_height="269dp"
-                android:layout_marginTop="44dp"
+                android:id="@+id/ripetizioni"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
 
-                android:background="@drawable/background_navbar"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bottoneAggiungiSveglia">
+                app:layout_constraintTop_toBottomOf="@id/bottoneAggiungiSveglia"
+                tools:ignore="MissingConstraints">
 
 
-                <TextView
-                    android:id="@+id/elencoSveglie"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/elencoSveglie"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="20dp" />
             </LinearLayout>
+
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

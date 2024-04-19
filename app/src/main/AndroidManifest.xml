@@ -36,7 +36,8 @@
         <activity
             android:name=".AggiungiActivity"
             android:exported="true">
-            </activity>
+        </activity>
+
     </application>
 
 </manifest>

@@ -15,7 +15,7 @@
     <string name="carriera">Carriera</string>
     <string name="home">Home</string>
     <string name="elimina">Elimina</string>
-
+    <string name="elencoSveglie">Le tue sveglie</string>
 
     <string-array name="prova">
         <item>italy</item>

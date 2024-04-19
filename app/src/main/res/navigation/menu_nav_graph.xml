@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/menu_nav_graph"
-    app:startDestination="@id/impostazioniFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/impostazioniFragment"
@@ -47,7 +47,6 @@
         android:label="fragment_carriera"
         tools:layout="@layout/fragment_carriera" >
     </fragment>
-
 
 
 </navigation>

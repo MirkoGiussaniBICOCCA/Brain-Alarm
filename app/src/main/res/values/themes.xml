@@ -6,10 +6,13 @@
     </style>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/fucsia</item>
+        <item name="colorPrimaryDark">@color/azzurro</item>
+        <item name="colorAccent">@color/arancione</item>
     </style>
 
     <style name="Theme.BrainAlarm" parent="Base.Theme.BrainAlarm" />
+
+
+
 </resources>

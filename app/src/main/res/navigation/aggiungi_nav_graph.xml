@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/aggiungi_nav_graph"
+    app:startDestination="@id/aggiungiFragment">
+
+    <fragment
+        android:id="@+id/aggiungiFragment"
+        android:name="it.unimib.brain_alarm.AggiungiFragment"
+        android:label="fragment_aggiungi"
+        tools:layout="@layout/fragment_aggiungi" >
+        <action
+            android:id="@+id/nav_aggiungiFragment_to_sfidaFragment"
+            app:destination="@id/sfidaFragment" />
+        <action
+            android:id="@+id/nav_aggiungiFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sfidaFragment"
+        android:name="it.unimib.brain_alarm.SfidaFragment"
+        android:label="fragment_sfida"
+        tools:layout="@layout/fragment_sfida" >
+        <action
+            android:id="@+id/nav_sfidaFragment_to_aggiungiFragment"
+            app:destination="@id/aggiungiFragment" />
+    </fragment>
+    <include app:graph="@navigation/menu_nav_graph" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="it.unimib.brain_alarm.ui.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+</navigation>

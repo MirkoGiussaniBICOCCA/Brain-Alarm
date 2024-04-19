@@ -9,11 +9,19 @@
     <string name="posticipa">Posticipa</string>
     <string name="classica">CLASSICA</string>
     <string name="sfida">SFIDA</string>
-
+    <string name="impostazioni">Impostazioni</string>
+    <string name="suoni">Suoni</string>
+    <string name="riposo">Riposo</string>
+    <string name="carriera">Carriera</string>
+    <string name="home">Home</string>
+    <string name="elimina">Elimina</string>
+    <string name="elencoSveglie">Le tue sveglie</string>
 
     <string-array name="prova">
         <item>italy</item>
         <item>g</item>
         <item>e</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

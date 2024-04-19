@@ -16,6 +16,7 @@
     <string name="home">Home</string>
     <string name="elimina">Elimina</string>
     <string name="elencoSveglie">Le tue sveglie</string>
+    <string name="cancella">Cancella</string>
 
     <string-array name="prova">
         <item>italy</item>

@@ -1,12 +1,12 @@
 package it.unimib.brain_alarm.util;
 
-
 import android.app.Application;
 import android.content.Context;
 import android.util.JsonReader;
 import android.util.JsonToken;
 
 import com.google.gson.Gson;
+
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,9 +27,9 @@ import it.unimib.brain_alarm.News.NewsSource;
 /**
  * Util class to show different ways to parse a JSON file.
  */
-public class JSONParserUtil {
+public class JSONParseUtil {
 
-    private static final String TAG = JSONParserUtil.class.getSimpleName();
+    private static final String TAG = JSONParseUtil.class.getSimpleName();
 
     private final Context context;
 
@@ -46,7 +46,7 @@ public class JSONParserUtil {
     private final String contentParameter = "content";
     private final String nameParameter = "name";
 
-    public JSONParserUtil(Application application) {
+    public JSONParseUtil(Application application) {
         this.context = application.getApplicationContext();
     }
 
@@ -136,15 +136,7 @@ public class JSONParserUtil {
         return newsApiResponse;
     }
 
-    /**
-     * Returns a list of News from a JSON file parsed using JSONObject and JSONReader classes.
-     * Doc of JSONObject: <a href="https://developer.android.com/reference/org/json/JSONObject">...</a>
-     * Doc of JSONArray: <a href="https://developer.android.com/reference/org/json/JSONArray">...</a>
-     * @param fileName The JSON file to be parsed.
-     * @return The NewsApiResponse object associated with the JSON file content.
-     * @throws IOException
-     * @throws JSONException
-     */
+
     public NewsApiResponse parseJSONFileWithJSONObjectArray(String fileName)
             throws IOException, JSONException {
 

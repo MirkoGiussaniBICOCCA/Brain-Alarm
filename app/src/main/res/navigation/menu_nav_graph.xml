@@ -36,7 +36,7 @@
 
     <fragment
         android:id="@+id/riposoFragment"
-        android:name="it.unimib.brain_alarm.riposoFragment"
+        android:name="it.unimib.brain_alarm.RiposoFragment"
         android:label="fragment_riposo"
         tools:layout="@layout/fragment_riposo" >
     </fragment>

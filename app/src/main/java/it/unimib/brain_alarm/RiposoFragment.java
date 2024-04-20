@@ -2,8 +2,11 @@ package it.unimib.brain_alarm;
 
 import static it.unimib.brain_alarm.util.Constants.NEWS_API_TEST_JSON_FILE;
 
+import android.Manifest;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
@@ -21,22 +25,27 @@ import java.util.List;
 
 import it.unimib.brain_alarm.adapter.NewsRecyclerViewAdapter;
 import it.unimib.brain_alarm.News.News;
-import it.unimib.brain_alarm.util.JSONParserUtil;
+import it.unimib.brain_alarm.util.JSONParseUtil;
 
 
 
-public class riposoFragment extends Fragment {
+public class RiposoFragment extends Fragment {
 
 
-    public riposoFragment() {
+
+    private FusedLocationProviderClient fusedLocationClient;
+
+
+
+    public RiposoFragment() {
         // Required empty public constructor
     }
 
 
-    public static riposoFragment newInstance(String param1, String param2) {
-        riposoFragment fragment = new riposoFragment();
-        return fragment;
+    public static RiposoFragment newInstance() {
+        return new RiposoFragment();
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,7 +93,7 @@ public class riposoFragment extends Fragment {
     }
 
     private List<News> getNewsListWithWithGSon() {
-        JSONParserUtil jsonParserUtil = new JSONParserUtil(requireActivity().getApplication());
+        JSONParseUtil jsonParserUtil = new JSONParseUtil(requireActivity().getApplication());
         try {
             return jsonParserUtil.parseJSONFileWithGSon(NEWS_API_TEST_JSON_FILE).getArticles();
         } catch (IOException e) {

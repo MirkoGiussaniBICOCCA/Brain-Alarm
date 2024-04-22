@@ -12,7 +12,7 @@ public class SharedPreferencesUtil {
     public SharedPreferencesUtil(Context context) {this.context = context;}
 
 
-    public void saveSveglie (String sharedPreferencesFileName, String key) {
+    public void writeSveglie (String sharedPreferencesFileName, String key) {
         SharedPreferences sharedPref = context.getSharedPreferences(sharedPreferencesFileName,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();

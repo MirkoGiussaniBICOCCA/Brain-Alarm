@@ -19,6 +19,12 @@
     <string name="cancella">Cancella</string>
     <string name="missioni">Missioni</string>
     <string name="modifica">Modifica</string>
+    <string name="calcolatrice">Calcolatrice</string>
+    <string name="memory">Memory</string>
+    <string name="scrivere">Scrivere</string>
+    <string name="passi">Passi</string>
+
+
 
     <string-array name="prova">
         <item>italy</item>

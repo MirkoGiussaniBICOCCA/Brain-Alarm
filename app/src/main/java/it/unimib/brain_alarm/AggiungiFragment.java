@@ -77,7 +77,7 @@ public class AggiungiFragment extends Fragment {
         String nome = inputNomeSveglia.toString();
 
         SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(this);
-        sharedPreferencesUtil.saveSveglie(
+        sharedPreferencesUtil.writeSveglie(
                 SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_SVEGLIA);
     }
 

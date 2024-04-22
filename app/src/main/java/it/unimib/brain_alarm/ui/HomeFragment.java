@@ -67,31 +67,6 @@ public class HomeFragment extends Fragment {
 
 
 
-        /*
-        RecyclerView recyclerViewCountryNews = view.findViewById(R.id.recyclerview_country_news);
-        RecyclerView.LayoutManager layoutManager =
-                new LinearLayoutManager(requireContext(),
-                        LinearLayoutManager.VERTICAL, false);
-
-        List<News> newsList = getNewsListWithWithGSon();
-
-        it.unimib.worldnews.adapter.NewsRecyclerViewAdapter newsRecyclerViewAdapter = new it.unimib.worldnews.adapter.NewsRecyclerViewAdapter(newsList,
-                new it.unimib.worldnews.adapter.NewsRecyclerViewAdapter.OnItemClickListener() {
-                    @Override
-                    public void onNewsItemClick(News news) {
-                        Snackbar.make(view, news.getTitle(), Snackbar.LENGTH_SHORT).show();
-                    }
-                    //clicco sulla cella esce snackbar titolo, clicco su cancella esce dimensione lista
-                    @Override
-                    public void onDeleteButtonPressed(int position) {
-                        Snackbar.make(view, getString(R.string.list_size_message) + newsList.size(),
-                                Snackbar.LENGTH_SHORT).show();
-                    }
-                });
-        recyclerViewCountryNews.setLayoutManager(layoutManager);
-        recyclerViewCountryNews.setAdapter(newsRecyclerViewAdapter);
-
-        */
 
     }
 

@@ -36,7 +36,9 @@
                 android:id="@+id/bottoneFoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/azzurro"
                 android:text="@string/modifica"
+                android:textSize="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
@@ -60,9 +62,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="text"
+                    android:textSize="24dp"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20dp" />
+                     />
 
             </LinearLayout>
 

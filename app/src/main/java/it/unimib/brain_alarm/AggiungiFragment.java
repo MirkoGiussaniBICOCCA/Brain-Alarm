@@ -1,5 +1,8 @@
 package it.unimib.brain_alarm;
 
+import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_FILE_NAME;
+import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_SVEGLIA;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
 public class AggiungiFragment extends Fragment {
     public AggiungiFragment() {
@@ -43,7 +53,6 @@ public class AggiungiFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-
         final Button buttonSfida = view.findViewById(R.id.sfida);
         buttonSfida.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_sfidaFragment);
@@ -61,5 +70,22 @@ public class AggiungiFragment extends Fragment {
 
     }
 
+    /*
+    private TextInputEditText inputNomeSveglia;
+    private void saveInformation() {
 
+        String nome = inputNomeSveglia.toString();
+
+        SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(this);
+        sharedPreferencesUtil.saveSveglie(
+                SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_SVEGLIA);
+    }
+
+
+    private void setNome() {
+        SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(this);
+
+        String nomeSveglia = sharedPreferencesUtil.readSveglie(SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_SVEGLIA);
+    }
+    */
 }

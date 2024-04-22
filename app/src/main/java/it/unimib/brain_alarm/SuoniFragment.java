@@ -14,11 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SuoniFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class SuoniFragment extends Fragment {
 
     public SuoniFragment() {
@@ -52,9 +48,6 @@ public class SuoniFragment extends Fragment {
             mapIntent.setPackage("com.google.android.apps.maps");
             startActivity(mapIntent);
         } );
-
-
-
     }
 
 }

@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/carrieraFragment"
-        android:name="it.unimib.brain_alarm.carrieraFragment"
+        android:name="it.unimib.brain_alarm.CarrieraFragment"
         android:label="fragment_carriera"
         tools:layout="@layout/fragment_carriera" >
     </fragment>

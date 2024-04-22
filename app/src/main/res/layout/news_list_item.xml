@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:selectableItemBackground"
     android:descendantFocusability="blocksDescendants"
     android:padding="12dp">
 
-    <!-- android:background="?android:selectableItemBackground" (inserted above)
-         enables the listener associated with a ListView item when it contains
-         other Widgets that have their own OnClickListener (e.g., Button) -->
-
     <TextView
         android:id="@+id/textview_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="128dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="80dp"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,18 +23,22 @@
         android:id="@+id/textview_author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="128dp"
+        android:layout_marginEnd="80dp"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textview_title" />
 
     <Button
         android:id="@+id/button_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/sfondoTras"
         android:text="@string/cancella"
+        app:icon="@drawable/cestino"
+        android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toTopOf="@+id/textview_author"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview_title" />

@@ -6,29 +6,82 @@
     android:layout_height="match_parent"
     tools:context=".RiposoFragment">
 
-    <TextView
-        android:id="@+id/Notizie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Notizie"
-        app:layout_constraintBottom_toTopOf="@id/recyclerview_news"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/background_navbar"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerview_news"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.533">
+
+        <TextView
+            android:id="@+id/Notizie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:text="Notizie"
+            android:textColor="@color/white"
+            android:textSize="24dp" />
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_news"
-        android:layout_width="335dp"
-        android:layout_height="393dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="336dp"
+        android:background="@drawable/background_navbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/background_navbar"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.227" />
+        app:layout_constraintTop_toBottomOf="@id/recyclerview_news"
+        app:layout_constraintVertical_bias="1.0">
+
+        <ImageView
+            android:id="@+id/iconaMeteo"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:layout_marginStart="30dp"
+            android:src="@drawable/meteo" />
+
+        <TextView
+            android:id="@+id/Meteo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="100dp"
+            android:text="Meteo"
+            android:textColor="@color/white"
+            android:textSize="24dp" />
+
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,36 +10,43 @@
 
     <TextView
         android:id="@+id/textview_title"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="80dp"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        app:layout_constraintEnd_toStartOf="@+id/imageview_favorite_news"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"
+        tools:text="@string/news_list_item_title" />
+    <TextView
+        android:id="@+id/textview_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageview_favorite_news"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textview_title"
+        android:textColor="@color/white"
+        tools:text="@string/news_list_item_date" />
+
+    <ImageView
+        android:id="@+id/imageview_favorite_news"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:focusable="true"
+        android:contentDescription="@string/fav_content_description"
+        android:src="@drawable/ic_baseline_favorite_border_24"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textview_author"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="80dp"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_title" />
-
-    <Button
-        android:id="@+id/button_delete"
-        android:layout_width="48dp"
-        android:layout_height="50dp"
-        android:backgroundTint="@color/sfondoTras"
-        android:text="@string/cancella"
-        app:icon="@drawable/cestino"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/textview_author"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_title" />
 </androidx.constraintlayout.widget.ConstraintLayout>

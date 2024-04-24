@@ -7,24 +7,57 @@
         android:layout_height="match_parent"
         tools:context=".SuoniFragment">
 
-        <TextView
-            android:id="@+id/textView"
+        <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/suoni"
-            tools:layout_editor_absoluteX="-26dp"
-            tools:layout_editor_absoluteY="188dp" />
-
-        <Button
-            android:id="@+id/maps"
-            android:layout_width="147dp"
-            android:layout_height="88dp"
-            android:text="maps"
-            android:backgroundTint="@color/azzurro"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background">
+
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout2"
+                            android:layout_width="334dp"
+                            android:layout_height="269dp"
+                            android:layout_marginTop="84dp"
+                            android:background="@drawable/background_navbar"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.493"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+
+                                <TextView
+                                    android:id="@+id/iTuoiSuoni"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:text="@string/iTuoiSuoni"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="20dp" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/maps"
+                            android:layout_width="147dp"
+                            android:layout_height="88dp"
+                            android:layout_marginTop="116dp"
+                            android:backgroundTint="@color/azzurro"
+                            android:text="maps"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

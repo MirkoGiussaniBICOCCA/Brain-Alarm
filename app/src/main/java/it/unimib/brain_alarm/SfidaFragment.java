@@ -117,6 +117,7 @@ public class SfidaFragment extends Fragment {
         final Button buttonSalva = view.findViewById(R.id.SalvaSfida);
         buttonSalva.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.nav_sfidaFragment_to_aggiungiFragment);
+
         });
     }
 

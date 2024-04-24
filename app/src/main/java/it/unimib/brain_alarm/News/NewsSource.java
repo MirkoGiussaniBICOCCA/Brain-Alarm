@@ -3,6 +3,8 @@ package it.unimib.brain_alarm.News;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Objects;
+
 /**
  * Class to represent the source of news of NewsAPI.org (<a href="https://newsapi.org">...</a>).
  */
@@ -19,6 +21,20 @@ public class NewsSource implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NewsSource that = (NewsSource) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
     @Override

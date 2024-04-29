@@ -18,15 +18,17 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background">
+                    android:layout_height="wrap_content">
 
 
                         <LinearLayout
                             android:id="@+id/linearLayout2"
-                            android:layout_width="334dp"
-                            android:layout_height="269dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="84dp"
+                            android:layout_marginEnd="30dp"
+                            android:layout_margin="30dp"
+                            android:paddingBottom="30dp"
                             android:background="@drawable/background_navbar"
                             android:orientation="vertical"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -47,12 +49,26 @@
 
                                 <com.google.android.material.chip.Chip
                                     android:id="@+id/chipVibr"
-                                    android:layout_width="243dp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginStart="30dp"
+                                    android:layout_marginEnd="30dp"
                                     android:checkable="true"
-                                    app:checkedIcon="@drawable/impostazioni"
+                                    app:chipIcon="@drawable/close"
                                     android:text="@string/vibrazione"
                                     />
+
+                                <Spinner
+                                    android:id="@+id/spinnerSuono"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginStart="30dp"
+                                    android:layout_marginEnd="30dp"
+                                    android:background="@color/white"
+                                    android:entries="@array/suoni_array"
+                                    android:minHeight="48dp"/>
 
 
                         </LinearLayout>
@@ -69,9 +85,11 @@
 
                         <Button
                             android:id="@+id/maps"
-                            android:layout_width="147dp"
-                            android:layout_height="88dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="23dp"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginEnd="30dp"
                             android:backgroundTint="@color/azzurro"
                             android:text="maps"
                             app:layout_constraintEnd_toEndOf="parent"

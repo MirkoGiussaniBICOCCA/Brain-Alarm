@@ -134,6 +134,7 @@ public class News implements Parcelable {
         isFavorite = favorite;
     }
 
+    //parcelable implementa tutta la logica per leggere e scrivere
     @Override
     public String toString() {
         return "News{" +

@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -22,6 +23,7 @@ import com.google.android.material.chip.Chip;
 public class SuoniFragment extends Fragment {
 
     Chip chipVibrazione;
+    private boolean isVibrazione = false;
 
     public SuoniFragment() {
         // Required empty public constructor
@@ -58,9 +60,16 @@ public class SuoniFragment extends Fragment {
         chipVibrazione.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chipVibrazione.setChecked(true);
-                chipVibrazione.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.fucsia)));
-
+                if (!isVibrazione) {
+                    isVibrazione = true;
+                    chipVibrazione.setChecked(true);
+                    chipVibrazione.setChipIcon(getResources().getDrawable(R.drawable.check));
+                    chipVibrazione.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.fucsia))); }
+                else {
+                    isVibrazione = false;
+                    chipVibrazione.setChecked(true);
+                    chipVibrazione.setChipIcon(getResources().getDrawable(R.drawable.close));
+                    chipVibrazione.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.sfondoTras))); }
             }
         });
 
@@ -73,5 +82,7 @@ public class SuoniFragment extends Fragment {
             startActivity(mapIntent);
         } );
     }
+
+
 
 }

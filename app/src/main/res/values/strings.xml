@@ -26,21 +26,15 @@
     <string name="iTuoiSuoni">Le tue suonerie</string>
     <string name="salva">Salva</string>
 
+    <string name="mxModalità">Devi scegliere la modalità della sveglia (classica o sfida)!</string>
+
 
     <string name="alert_text_country_of_interest">Choose at least one country of interest</string>
     <string name="alert_text_topic_of_interest">Choose at least one topic of interest</string>
 
-    <string name="error_email">Insert a valid email address</string>
-    <string name="error_password">Password cannot be empty</string>
     <string name="check_login_data_message">Check the data you inserted</string>
 
-    <string name="country_news">World</string>
-    <string name="topic_news">Topic</string>
-    <string name="favorite_news">Favorites</string>
-    <string name="settings">Settings</string>
-    <string name="delete">Delete</string>
-    <string name="news">News</string>
-    <string name="personal_area">Personal area</string>
+
 
     <string name="nav_drawer_subtitle">Stay tuned for news from the world</string>
 
@@ -60,12 +54,23 @@
     <string name="uk">Uk</string>
     <string name="us">Usa</string>
 
+
+    <string name="classicaSuono">Classica</string>
+    <string name="radar">Radar</string>
+    <string name="arpeggio">Arpeggio</string>
+
     <string-array name="country_array">
         <item>@string/francia</item>
         <item>@string/germania</item>
         <item>@string/italia</item>
         <item>@string/uk</item>
         <item>@string/us</item>
+    </string-array>
+
+    <string-array name="suoni_array">
+        <item>@string/classicaSuono</item>
+        <item>@string/radar</item>
+        <item>@string/arpeggio</item>
     </string-array>
 
 

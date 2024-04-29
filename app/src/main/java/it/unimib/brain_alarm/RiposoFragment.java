@@ -33,6 +33,7 @@ import android.widget.Spinner;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import it.unimib.brain_alarm.R;
@@ -47,6 +48,9 @@ import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 public class RiposoFragment extends Fragment implements ResponseCallback {
 
     private static final String TAG = RiposoFragment.class.getSimpleName();
+
+    private static final String COUNTRY_SAVED = "country";
+    private static String stato;
 
     private List<News> newsList;
     private NewsRecyclerViewAdapter newsRecyclerViewAdapter;
@@ -89,6 +93,8 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
 
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -119,6 +125,14 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
             else
                 Snackbar.make(requireActivity().findViewById(android.R.id.content),getString(R.string.stato), Snackbar.LENGTH_LONG).show();
         });
+
+        if (savedInstanceState != null) {
+            stato = savedInstanceState.getString(COUNTRY_SAVED);
+            Log.d(TAG, "stringa salvata: " + stato);
+        }
+
+
+
 
         requireActivity().addMenuProvider(new MenuProvider() {
             @Override
@@ -228,6 +242,8 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
     }
 
 
+
+
     private void saveInformation() {
 
         String country = spinnerCountries.getSelectedItem().toString();
@@ -235,8 +251,7 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
 
         SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(getActivity().getApplication());
         sharedPreferencesUtil.writeStringData(
-                SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST,
-                countryShortName);
+                SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST, countryShortName);
     }
 
 

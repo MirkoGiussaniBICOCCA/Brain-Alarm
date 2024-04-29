@@ -1,12 +1,18 @@
 package it.unimib.brain_alarm;
 
+import static it.unimib.brain_alarm.util.Constants.FRANCE;
+import static it.unimib.brain_alarm.util.Constants.GERMANY;
+import static it.unimib.brain_alarm.util.Constants.ITALY;
+import static it.unimib.brain_alarm.util.Constants.UNITED_KINGDOM;
+import static it.unimib.brain_alarm.util.Constants.UNITED_STATES;
 import static it.unimib.brain_alarm.util.Constants.LAST_UPDATE;
 import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_COUNTRY_OF_INTEREST;
 import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_FILE_NAME;
 
+import android.app.Activity;
+import androidx.annotation.NonNull;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
@@ -20,7 +26,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -36,7 +44,6 @@ import it.unimib.brain_alarm.News.News;
 import it.unimib.brain_alarm.util.ResponseCallback;
 import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
-
 public class RiposoFragment extends Fragment implements ResponseCallback {
 
     private static final String TAG = RiposoFragment.class.getSimpleName();
@@ -46,6 +53,7 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
     private INewsRepository iNewsRepository;
     private SharedPreferencesUtil sharedPreferencesUtil;
     private ProgressBar progressBar;
+    private Spinner spinnerCountries;
 
     public RiposoFragment() {
         // Required empty public constructor
@@ -78,6 +86,7 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
         sharedPreferencesUtil = new SharedPreferencesUtil(requireActivity().getApplication());
         newsList = new ArrayList<>();
         Log.d(TAG, "dopo" );
+
     }
 
     @Override
@@ -87,10 +96,29 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
         return inflater.inflate(R.layout.fragment_riposo, container, false);
     }
 
+    private boolean isCountryOfInterestSelected() {
+        spinnerCountries = getActivity().findViewById(R.id.spinner_countries);
+        if (spinnerCountries.getSelectedItem() != null) {
+            return true;
+        }
+
+        else
+            return false;
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        final Button buttonSalva = view.findViewById(R.id.buttonCountry);
+        buttonSalva.setOnClickListener(v -> {
+            if (isCountryOfInterestSelected()) {
+                Log.d(TAG, "One country of interest and at least one topic has been chosen");
+                saveInformation();
+                }
+            else
+                Snackbar.make(requireActivity().findViewById(android.R.id.content),getString(R.string.stato), Snackbar.LENGTH_LONG).show();
+        });
 
         requireActivity().addMenuProvider(new MenuProvider() {
             @Override
@@ -181,6 +209,34 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
                     getString(R.string.news_removed_from_favorite_list_message),
                     Snackbar.LENGTH_LONG).show();
         }
+    }
+
+
+    private String getShortNameCountryOfInterest(String userVisibleCountryOfInterest) {
+        if (userVisibleCountryOfInterest.equals(getString(R.string.francia))) {
+            return FRANCE;
+        } else if (userVisibleCountryOfInterest.equals(getString(R.string.germania))) {
+            return GERMANY;
+        } else if (userVisibleCountryOfInterest.equals(getString(R.string.italia))) {
+            return ITALY;
+        } else if (userVisibleCountryOfInterest.equals(getResources().getString(R.string.uk))) {
+            return UNITED_KINGDOM;
+        } else if (userVisibleCountryOfInterest.equals(getResources().getString(R.string.us))) {
+            return UNITED_STATES;
+        }
+        return null;
+    }
+
+
+    private void saveInformation() {
+
+        String country = spinnerCountries.getSelectedItem().toString();
+        String countryShortName = getShortNameCountryOfInterest(country);
+
+        SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(getActivity().getApplication());
+        sharedPreferencesUtil.writeStringData(
+                SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST,
+                countryShortName);
     }
 
 

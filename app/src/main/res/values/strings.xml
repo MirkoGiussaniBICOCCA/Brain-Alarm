@@ -53,11 +53,22 @@
     <string name="news_added_to_favorite_list_message">News added to the favorite list</string>
     <string name="news_removed_from_favorite_list_message">News removed from the favorite list</string>
 
-    <string-array name="prova">
-        <item>italy</item>
-        <item>g</item>
-        <item>e</item>
+    <string name="stato">Scegli lo stato</string>
+    <string name="francia">Francia</string>
+    <string name="germania">Germania</string>
+    <string name="italia">Italia</string>
+    <string name="uk">Uk</string>
+    <string name="us">Usa</string>
+
+    <string-array name="country_array">
+        <item>@string/francia</item>
+        <item>@string/germania</item>
+        <item>@string/italia</item>
+        <item>@string/uk</item>
+        <item>@string/us</item>
     </string-array>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

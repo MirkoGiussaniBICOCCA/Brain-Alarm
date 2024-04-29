@@ -11,22 +11,23 @@ import java.util.List;
 
 import it.unimib.brain_alarm.News.News;
 
-/**
- * Data Access Object (DAO) that provides methods that can be used to query,
- * update, insert, and delete data in the database.
- * <a href="https://developer.android.com/training/data-storage/room/accessing-data">...</a>
- */
+
 @Dao
 public interface NewsDao {
-    @Query("SELECT * FROM news ORDER BY published_at DESC")
+    //interfaccia con una serie di metodi che posso poi utilizzare chiamandole
+
+    //getAll restituisce tutte le notizie poi riordinate in base alla data
+        @Query("SELECT * FROM news ORDER BY published_at DESC")
     List<News> getAll();
 
     @Query("SELECT * FROM news WHERE id = :id")
     News getNews(long id);
 
+    //restituisce notizie in base a se il parametro favorite è true o false
     @Query("SELECT * FROM news WHERE is_favorite = 1 ORDER BY published_at DESC")
     List<News> getFavoriteNews();
 
+    //se c'è conflitto per la chiave primaria sostituisco notizia vecchia con quella nuova
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     List<Long> insertNewsList(List<News> newsList);
 
@@ -36,15 +37,18 @@ public interface NewsDao {
     @Delete
     void delete(News news);
 
+    //cancella tutte le notizie
     @Query("DELETE FROM news")
     void deleteAll();
 
+    //cancella tutte le notizie tranne le preferite
     @Query("DELETE FROM news WHERE is_favorite = 0")
     void deleteNotFavoriteNews();
 
     @Delete
     void deleteAllWithoutQuery(News... news);
 
+    //aggiornamneto notizie
     @Update
     void updateSingleFavoriteNews(News news);
 

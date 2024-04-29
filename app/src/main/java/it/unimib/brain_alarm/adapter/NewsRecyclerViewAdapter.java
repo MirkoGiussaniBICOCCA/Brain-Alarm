@@ -84,7 +84,7 @@ public class NewsRecyclerViewAdapter extends
 
         public void bind(News news) {
             textViewTitle.setText(news.getTitle());
-            textViewDate.setText(DateTimeUtil.getDate(news.getDate()));
+            textViewDate.setText(DateTimeUtil.getDate(news.getDate())); //con DateTimeUtil riscrivo la data in formato corretto
             setImageViewFavoriteNews(newsList.get(getAdapterPosition()).isFavorite());
         }
 
@@ -98,6 +98,7 @@ public class NewsRecyclerViewAdapter extends
             }
         }
 
+        //listener su preferiti. devo gestire sia mettere che togliere cuore perchè recycler view deve gestore il reciclo della lista.
         private void setImageViewFavoriteNews(boolean isFavorite) {
             if (isFavorite) {
                 imageViewFavoriteNews.setImageDrawable(

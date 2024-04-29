@@ -15,12 +15,7 @@ public class DateTimeUtil {
 
     private DateTimeUtil() {}
 
-    /**
-     * Converts the date and time based on the user settings.
-     *
-     * @param dateTime The date and time to be converted.
-     * @return The date and time converted based the user settings.
-     */
+
     public static String getDate(String dateTime) {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_TIME_PATTERN, Locale.getDefault());

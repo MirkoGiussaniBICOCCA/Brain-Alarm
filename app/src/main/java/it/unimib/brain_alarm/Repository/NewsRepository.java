@@ -6,6 +6,7 @@ import static it.unimib.brain_alarm.util.Constants.TOP_HEADLINES_PAGE_SIZE_VALUE
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 
@@ -23,10 +24,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Repository to get the news using the API
- * provided by NewsApi.org (<a href="https://newsapi.org">...</a>).
- */
 public class NewsRepository implements INewsRepository {
 
     private static final String TAG = NewsRepository.class.getSimpleName();
@@ -35,6 +32,7 @@ public class NewsRepository implements INewsRepository {
     private final NewsApiService newsApiService;
     private final NewsDao newsDao;
     private final ResponseCallback responseCallback;
+
 
     public NewsRepository(Application application, ResponseCallback responseCallback) {
         this.application = application;
@@ -50,8 +48,11 @@ public class NewsRepository implements INewsRepository {
 
         long currentTime = System.currentTimeMillis();
 
+        Log.d(TAG, "prima di if " + (currentTime - lastUpdate > FRESH_TIMEOUT));
+
         // fa la chiamata se l'ultimo download della notizia è stato prima del tempo FRESH_TIMEOUT
         if (currentTime - lastUpdate > FRESH_TIMEOUT) {
+
             Call<NewsApiResponse> newsResponseCall = newsApiService.getNews(country,
                     TOP_HEADLINES_PAGE_SIZE_VALUE, application.getString(R.string.news_api_key));
 
@@ -61,12 +62,24 @@ public class NewsRepository implements INewsRepository {
                 public void onResponse(@NonNull Call<NewsApiResponse> call,
                                        @NonNull Response<NewsApiResponse> response) {
 
-                    if (response.body() != null && response.isSuccessful() &&   //controllo chiamata andata a buin fine
+                    Log.d(TAG, "if dentro onResponse " + (response.body() != null && response.isSuccessful() &&
+                            !response.body().getStatus().equals("error")));
+                    Log.d(TAG, "response.body() != null " + (response.body() != null ));
+                    Log.d(TAG, "response.body() " + (response.body()));
+                    Log.d(TAG, "response " + (response));
+                    /*
+                    Log.d(TAG, "response.isSuccessful() " + (response.isSuccessful()));
+                    Log.d(TAG, "!response.body().getStatus().equals(\"error\") " + (!response.body().getStatus().equals("error")));
+                    */
+
+                    if (response.body() != null && response.isSuccessful() &&   //controllo chiamata andata a buon fine
                             !response.body().getStatus().equals("error")) {
                         List<News> newsList = response.body().getArticles();  //ottengo lista oggetti News
                         saveDataInDatabase(newsList);
+                        Log.d(TAG, "onResponse");
                     } else {
                         //callback per notificare
+                        Log.d(TAG, "onfailure");
                         responseCallback.onFailure(application.getString(R.string.error_retrieving_news));
                     }
                 }
@@ -77,6 +90,7 @@ public class NewsRepository implements INewsRepository {
                 }
             });
         } else {
+            Log.d(TAG, "else local");
             Log.d(TAG, application.getString(R.string.data_read_from_local_database));
             readDataFromDatabase(lastUpdate);
         }
@@ -123,8 +137,8 @@ public class NewsRepository implements INewsRepository {
      */
     private void saveDataInDatabase(List<News> newsList) {
         NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
-            // Reads the news from the database
-            List<News> allNews = newsDao.getAll();
+
+            List<News> allNews = newsDao.getAll();  //restituisce lista notizie
 
             // Checks if the news just downloaded has already been downloaded earlier
             // in order to preserve the news status (marked as favorite or not)
@@ -142,7 +156,7 @@ public class NewsRepository implements INewsRepository {
                 }
             }
 
-            // Writes the news in the database and gets the associated primary keys
+            // scrivo le news nel database e ottengo le chiavi primarie associate
             List<Long> insertedNewsIds = newsDao.insertNewsList(newsList);
             for (int i = 0; i < newsList.size(); i++) {
                 // Adds the primary key to the corresponding object News just downloaded so that
@@ -150,16 +164,12 @@ public class NewsRepository implements INewsRepository {
                 // to know which news in the database must be marked as favorite/not favorite
                 newsList.get(i).setId(insertedNewsIds.get(i));
             }
-
+            //restituisco lista news
             responseCallback.onSuccess(newsList, System.currentTimeMillis());   //lista notizie con orario di quando ho scaricato notizie
         });
     }
 
-    /**
-     * Gets the news from the local database.
-     * The method is executed in a Runnable because the database access
-     * cannot been executed in the main thread.
-     */
+
     private void readDataFromDatabase(long lastUpdate) {
         NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
             responseCallback.onSuccess(newsDao.getAll(), lastUpdate);

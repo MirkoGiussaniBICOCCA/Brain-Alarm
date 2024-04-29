@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import it.unimib.brain_alarm.R;
 import it.unimib.brain_alarm.News.News;
+import it.unimib.brain_alarm.util.DateTimeUtil;
 
 /**
  * Custom adapter that extends RecyclerView.Adapter to show an ArrayList of News
@@ -83,7 +84,7 @@ public class NewsRecyclerViewAdapter extends
 
         public void bind(News news) {
             textViewTitle.setText(news.getTitle());
-            textViewDate.setText(news.getAuthor());
+            textViewDate.setText(DateTimeUtil.getDate(news.getDate()));
             setImageViewFavoriteNews(newsList.get(getAdapterPosition()).isFavorite());
         }
 

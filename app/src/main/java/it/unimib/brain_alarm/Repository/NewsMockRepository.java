@@ -3,6 +3,7 @@ package it.unimib.brain_alarm.Repository;
 import static it.unimib.brain_alarm.util.Constants.NEWS_API_TEST_JSON_FILE;
 
 import android.app.Application;
+import android.util.Log;
 
 import org.json.JSONException;
 
@@ -13,6 +14,7 @@ import it.unimib.brain_alarm.News.News;
 import it.unimib.brain_alarm.News.NewsApiResponse;
 import it.unimib.brain_alarm.R;
 
+import it.unimib.brain_alarm.RiposoFragment;
 import it.unimib.brain_alarm.database.NewsDao;
 import it.unimib.brain_alarm.database.NewsRoomDatabase;
 
@@ -29,7 +31,7 @@ public class NewsMockRepository implements INewsRepository {
     private final ResponseCallback responseCallback;
     private final NewsDao newsDao;
     private final JsonParserType jsonParserType;
-
+    private static final String TAG = RiposoFragment.class.getSimpleName();
     public NewsMockRepository(Application application, ResponseCallback responseCallback, JsonParserType jsonParserType) {
         this.application = application;
         this.responseCallback = responseCallback;
@@ -62,6 +64,7 @@ public class NewsMockRepository implements INewsRepository {
             case GSON:
                 try {
                     newsApiResponse = jsonParserUtil.parseJSONFileWithGSon(NEWS_API_TEST_JSON_FILE);
+                    Log.d(TAG, "dentro newsMock" );
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -73,6 +76,7 @@ public class NewsMockRepository implements INewsRepository {
 
         if (newsApiResponse != null) {
             saveDataInDatabase(newsApiResponse.getArticles());
+            Log.d(TAG, "api responde != null: ");
         } else {
             responseCallback.onFailure(application.getString(R.string.error_retrieving_news));
         }
@@ -130,6 +134,7 @@ public class NewsMockRepository implements INewsRepository {
                     // favorite status.
                     newsList.set(newsList.indexOf(news), news);
                 }
+                Log.d(TAG, "save data in NewsMock" );
             }
 
             // Writes the news in the database and gets the associated primary keys
@@ -155,4 +160,5 @@ public class NewsMockRepository implements INewsRepository {
             responseCallback.onSuccess(newsDao.getAll(), lastUpdate);
         });
     }
+
 }

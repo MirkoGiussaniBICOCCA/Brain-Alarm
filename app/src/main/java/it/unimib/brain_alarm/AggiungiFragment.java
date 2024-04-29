@@ -60,14 +60,19 @@ public class AggiungiFragment extends Fragment {
 
         final Button buttonConferma = view.findViewById(R.id.conferma);
         buttonConferma.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_homeFragment);
+            Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_mainActivity);
         } );
 
         final Button buttonAnnulla = view.findViewById(R.id.annulla);
         buttonAnnulla.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_homeFragment);
+            Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_mainActivity);
         } );
 
+        final Button buttoneSuono = view.findViewById(R.id.bottoneSuono);
+        buttoneSuono.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_suoniFragment);
+
+        });
     }
 
     /*

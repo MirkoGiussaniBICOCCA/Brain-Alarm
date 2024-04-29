@@ -1,6 +1,7 @@
 package it.unimib.brain_alarm;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,9 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SeekBar;
+
+import com.google.android.material.chip.Chip;
 
 
 public class SuoniFragment extends Fragment {
+
+    Chip chipVibrazione;
 
     public SuoniFragment() {
         // Required empty public constructor
@@ -40,6 +46,24 @@ public class SuoniFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        final Button buttonSalva = view.findViewById(R.id.salvaSuono);
+        buttonSalva.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.nav_suoniFragment_to_aggiungiFragment);
+        });
+
+
+        chipVibrazione = view.findViewById(R.id.chipVibr);
+
+        chipVibrazione.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chipVibrazione.setChecked(true);
+                chipVibrazione.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.fucsia)));
+
+            }
+        });
+
 
         final Button buttonMaps = view.findViewById(R.id.maps);
         buttonMaps.setOnClickListener(v -> {

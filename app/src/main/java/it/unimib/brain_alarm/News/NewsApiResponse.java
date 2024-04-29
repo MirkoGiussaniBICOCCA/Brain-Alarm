@@ -39,9 +39,7 @@ public class NewsApiResponse implements Parcelable {
         this.totalResults = totalResults;
     }
 
-    public List<News> getArticles() {
-        return articles;
-    }
+    public List<News> getArticles() {return articles;}
 
     public void setArticles(List<News> articles) {
         this.articles = articles;

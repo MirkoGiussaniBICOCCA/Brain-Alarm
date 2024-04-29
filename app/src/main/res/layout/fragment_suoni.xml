@@ -44,18 +44,39 @@
                                     android:textAlignment="center"
                                     android:textColor="@color/white"
                                     android:textSize="20dp" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/chipVibr"
+                                    android:layout_width="243dp"
+                                    android:layout_height="wrap_content"
+                                    android:checkable="true"
+                                    app:checkedIcon="@drawable/impostazioni"
+                                    android:text="@string/vibrazione"
+                                    />
+
+
                         </LinearLayout>
+
+                        <Button
+                            android:id="@+id/salvaSuono"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="60dp"
+                            android:text="@string/salva"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
                         <Button
                             android:id="@+id/maps"
                             android:layout_width="147dp"
                             android:layout_height="88dp"
-                            android:layout_marginTop="116dp"
+                            android:layout_marginTop="23dp"
                             android:backgroundTint="@color/azzurro"
                             android:text="maps"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+                            app:layout_constraintTop_toBottomOf="@+id/salvaSuono" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

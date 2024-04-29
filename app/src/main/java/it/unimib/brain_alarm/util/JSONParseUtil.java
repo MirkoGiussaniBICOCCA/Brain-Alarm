@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.JsonReader;
 import android.util.JsonToken;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -187,7 +188,7 @@ public class JSONParseUtil {
     public NewsApiResponse parseJSONFileWithGSon(String fileName) throws IOException {
         InputStream inputStream = context.getAssets().open(fileName);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
+        Log.d(TAG, "dentro JSON" );
         return new Gson().fromJson(bufferedReader, NewsApiResponse.class);
     }
 }

@@ -1,15 +1,11 @@
 package it.unimib.brain_alarm;
 
 import static it.unimib.brain_alarm.util.Constants.LAST_UPDATE;
-import static it.unimib.brain_alarm.util.Constants.NEWS_API_TEST_JSON_FILE;
 import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_COUNTRY_OF_INTEREST;
 import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_FILE_NAME;
 
-import android.Manifest;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuProvider;
@@ -26,19 +22,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.unimib.brain_alarm.R;
 import it.unimib.brain_alarm.Repository.INewsRepository;
 import it.unimib.brain_alarm.Repository.NewsMockRepository;
 import it.unimib.brain_alarm.Repository.NewsRepository;
 import it.unimib.brain_alarm.adapter.NewsRecyclerViewAdapter;
 import it.unimib.brain_alarm.News.News;
-import it.unimib.brain_alarm.util.JSONParseUtil;
 import it.unimib.brain_alarm.util.ResponseCallback;
 import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
@@ -49,7 +43,6 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
 
     private List<News> newsList;
     private NewsRecyclerViewAdapter newsRecyclerViewAdapter;
-
     private INewsRepository iNewsRepository;
     private SharedPreferencesUtil sharedPreferencesUtil;
     private ProgressBar progressBar;
@@ -65,21 +58,26 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d(TAG, "debug mode: " + requireActivity().getResources().getBoolean(R.bool.debug_mode));
+        Log.d(TAG, "qui debug mode: " + requireActivity().getResources().getBoolean(R.bool.debug_mode));
 
         if (requireActivity().getResources().getBoolean(R.bool.debug_mode)) {
             // Use NewsMockRepository to read the news from
             // newsapi-test.json file contained in assets folder
+            // ho inizializzato la repository
             iNewsRepository =
                     new NewsMockRepository(requireActivity().getApplication(), this,
                             INewsRepository.JsonParserType.GSON);
+            Log.d(TAG, "dentro if: " + requireActivity().getResources().getBoolean(R.bool.debug_mode));
+
         } else {
             iNewsRepository =
                     new NewsRepository(requireActivity().getApplication(), this);
+            Log.d(TAG, "dentro else: " + requireActivity().getResources().getBoolean(R.bool.debug_mode));
         }
 
         sharedPreferencesUtil = new SharedPreferencesUtil(requireActivity().getApplication());
         newsList = new ArrayList<>();
+        Log.d(TAG, "dopo" );
     }
 
     @Override
@@ -114,7 +112,6 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
                 new LinearLayoutManager(requireContext(),
                         LinearLayoutManager.VERTICAL, false);
 
-        //List<News> newsList = getNewsListWithWithGSon();
 
         newsRecyclerViewAdapter = new NewsRecyclerViewAdapter(newsList,
                 requireActivity().getApplication(),
@@ -140,7 +137,7 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
             lastUpdate = sharedPreferencesUtil.readStringData(
                     SHARED_PREFERENCES_FILE_NAME, LAST_UPDATE);
         }
-
+        //vado a recuperare country da shared preference e chiamo metodo fetchNews
         progressBar.setVisibility(View.VISIBLE);
         iNewsRepository.fetchNews(sharedPreferencesUtil.readStringData(
                         SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST), 0,

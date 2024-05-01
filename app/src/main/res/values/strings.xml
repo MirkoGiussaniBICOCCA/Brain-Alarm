@@ -27,7 +27,8 @@
     <string name="salva">Salva</string>
 
     <string name="mxModalità">Devi scegliere la modalità della sveglia (classica o sfida)!</string>
-
+    <string name="mxStato">Stato salvato</string>
+    <string name="mxSfida">Devi scegliere almeno una sfida!</string>
 
     <string name="alert_text_country_of_interest">Choose at least one country of interest</string>
     <string name="alert_text_topic_of_interest">Choose at least one topic of interest</string>

@@ -119,6 +119,8 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
         final Button buttonSalva = view.findViewById(R.id.buttonCountry);
         buttonSalva.setOnClickListener(v -> {
             if (isCountryOfInterestSelected()) {
+                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                        getString(R.string.mxStato), Snackbar.LENGTH_LONG).show();
                 Log.d(TAG, "One country of interest and at least one topic has been chosen");
                 saveInformation();
                 }

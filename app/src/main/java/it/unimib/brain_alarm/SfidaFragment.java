@@ -192,7 +192,6 @@ public class SfidaFragment extends Fragment {
 
         final Button buttonSalva = view.findViewById(R.id.SalvaSfida);
         buttonSalva.setOnClickListener(v -> {
-            //TODO mettere nell'if controllo se ripetizioni>0. forse da aggiungere salvataggio int ripetizioni
             if (progCalcolatrice>0 || progMemory>0 || progScrivere>0 || progPassi>0) {
                 Navigation.findNavController(v).navigate(R.id.nav_sfidaFragment_to_aggiungiFragment);
                 Log.d(TAG, "ripetizioni " + progCalcolatrice + progMemory + progScrivere + progPassi);

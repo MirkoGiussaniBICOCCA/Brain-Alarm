@@ -18,7 +18,7 @@ import it.unimib.brain_alarm.RiposoFragment;
 import it.unimib.brain_alarm.database.NewsDao;
 import it.unimib.brain_alarm.database.NewsRoomDatabase;
 
-import it.unimib.brain_alarm.util.JSONParseUtil;
+import it.unimib.brain_alarm.util.JSONParserUtil;
 
 import it.unimib.brain_alarm.util.ResponseCallback;
 import it.unimib.brain_alarm.util.ServiceLocator;
@@ -44,7 +44,7 @@ public class NewsMockRepository implements INewsRepository {
     public void fetchNews(String country, int page, long lastUpdate) {
 
         NewsApiResponse newsApiResponse = null;
-        JSONParseUtil jsonParserUtil = new JSONParseUtil(application);
+        JSONParserUtil jsonParserUtil = new JSONParserUtil(application);
 
         switch (jsonParserType) {
             case JSON_READER:
@@ -75,7 +75,7 @@ public class NewsMockRepository implements INewsRepository {
         }
 
         if (newsApiResponse != null) {
-            saveDataInDatabase(newsApiResponse.getArticles());
+            saveDataInDatabase(newsApiResponse.getNewsList());
             Log.d(TAG, "api responde != null: ");
         } else {
             responseCallback.onFailure(application.getString(R.string.error_retrieving_news));

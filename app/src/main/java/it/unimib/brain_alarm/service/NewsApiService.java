@@ -1,4 +1,4 @@
-package it.unimib.brain_alarm.util;
+package it.unimib.brain_alarm.service;
 
 import static it.unimib.brain_alarm.util.Constants.TOP_HEADLINES_COUNTRY_PARAMETER;
 import static it.unimib.brain_alarm.util.Constants.TOP_HEADLINES_ENDPOINT;

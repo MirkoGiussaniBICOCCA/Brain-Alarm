@@ -9,13 +9,14 @@ import static it.unimib.brain_alarm.util.Constants.LAST_UPDATE;
 import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_COUNTRY_OF_INTEREST;
 import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_FILE_NAME;
 
-import android.app.Activity;
+
 import androidx.annotation.NonNull;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,35 +30,31 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
-import it.unimib.brain_alarm.R;
-import it.unimib.brain_alarm.Repository.INewsRepository;
-import it.unimib.brain_alarm.Repository.NewsMockRepository;
-import it.unimib.brain_alarm.Repository.NewsRepository;
+import it.unimib.brain_alarm.News.Result;
+import it.unimib.brain_alarm.Repository.INewsRepositoryWithLiveData;
 import it.unimib.brain_alarm.adapter.NewsRecyclerViewAdapter;
 import it.unimib.brain_alarm.News.News;
-import it.unimib.brain_alarm.util.ResponseCallback;
+import it.unimib.brain_alarm.util.ErrorMessagesUtil;
+import it.unimib.brain_alarm.util.ServiceLocator;
 import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
-public class RiposoFragment extends Fragment implements ResponseCallback {
+public class RiposoFragment extends Fragment {
 
     private static final String TAG = RiposoFragment.class.getSimpleName();
 
-    private static final String COUNTRY_SAVED = "country";
-    private static String stato;
-
     private List<News> newsList;
     private NewsRecyclerViewAdapter newsRecyclerViewAdapter;
-    private INewsRepository iNewsRepository;
     private SharedPreferencesUtil sharedPreferencesUtil;
     private ProgressBar progressBar;
-    private Spinner spinnerCountries;
+    private NewsViewModel newsViewModel;
+
 
     public RiposoFragment() {
         // Required empty public constructor
@@ -72,25 +69,24 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
 
         Log.d(TAG, "qui debug mode: " + requireActivity().getResources().getBoolean(R.bool.debug_mode));
 
-        if (requireActivity().getResources().getBoolean(R.bool.debug_mode)) {
-            // Use NewsMockRepository to read the news from
-            // newsapi-test.json file contained in assets folder
-            // ho inizializzato la repository
-            iNewsRepository =
-                    new NewsMockRepository(requireActivity().getApplication(), this,
-                            INewsRepository.JsonParserType.GSON);
-            Log.d(TAG, "dentro if: " + requireActivity().getResources().getBoolean(R.bool.debug_mode));
-
-        } else {
-            iNewsRepository =
-                    new NewsRepository(requireActivity().getApplication(), this);
-            Log.d(TAG, "dentro else: " + requireActivity().getResources().getBoolean(R.bool.debug_mode));
-        }
-
         sharedPreferencesUtil = new SharedPreferencesUtil(requireActivity().getApplication());
-        newsList = new ArrayList<>();
-        Log.d(TAG, "dopo" );
 
+        //qui ottengo istanza del repository con serviceLocator
+        //con serviceLocator leggo file properties e vedo se sono in debug mode o no
+        INewsRepositoryWithLiveData newsRepositoryWithLiveData =
+                ServiceLocator.getInstance().getNewsRepository(
+                        requireActivity().getApplication(),
+                        requireActivity().getApplication().getResources().getBoolean(R.bool.debug_mode)
+                );
+
+        //creazione viewModel con parametri personalizzati (passo repository)
+        //viewModelProvider per instanziare viewModel
+        //instanzio viewModel a cui passo activity e gli dico di instanziare view model con repository
+        newsViewModel = new ViewModelProvider(
+                requireActivity(),
+                new NewsViewModelFactory(newsRepositoryWithLiveData)).get(NewsViewModel.class);
+
+        newsList = new ArrayList<>();
     }
 
 
@@ -102,39 +98,10 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
         return inflater.inflate(R.layout.fragment_riposo, container, false);
     }
 
-    private boolean isCountryOfInterestSelected() {
-        spinnerCountries = getActivity().findViewById(R.id.spinner_countries);
-        if (spinnerCountries.getSelectedItem() != null) {
-            return true;
-        }
-
-        else
-            return false;
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        final Button buttonSalva = view.findViewById(R.id.buttonCountry);
-        buttonSalva.setOnClickListener(v -> {
-            if (isCountryOfInterestSelected()) {
-                Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                        getString(R.string.mxStato), Snackbar.LENGTH_LONG).show();
-                Log.d(TAG, "One country of interest and at least one topic has been chosen");
-                saveInformation();
-                }
-            else
-                Snackbar.make(requireActivity().findViewById(android.R.id.content),getString(R.string.stato), Snackbar.LENGTH_LONG).show();
-        });
-
-        if (savedInstanceState != null) {
-            stato = savedInstanceState.getString(COUNTRY_SAVED);
-            Log.d(TAG, "stringa salvata: " + stato);
-        }
-
-
-
 
         requireActivity().addMenuProvider(new MenuProvider() {
             @Override
@@ -149,7 +116,6 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
         });
 
         progressBar = view.findViewById(R.id.progress_bar);
-
 
         RecyclerView recyclerViewCountryNews = view.findViewById(R.id.recyclerview_news);
         RecyclerView.LayoutManager layoutManager =
@@ -168,14 +134,18 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
                     @Override
                     public void onFavoriteButtonPressed(int position) {
                         newsList.get(position).setFavorite(!newsList.get(position).isFavorite());
-                        iNewsRepository.updateNews(newsList.get(position));
+                        newsViewModel.updateNews(newsList.get(position));
                     }
                 });
+
         recyclerViewCountryNews.setLayoutManager(layoutManager);
         recyclerViewCountryNews.setAdapter(newsRecyclerViewAdapter);
 
-        String lastUpdate = "0";
+        String country = sharedPreferencesUtil.readStringData(
+                SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST);
+        Log.d(TAG, "country :" + country) ;
 
+        String lastUpdate = "0";
         if (sharedPreferencesUtil.readStringData(
                 SHARED_PREFERENCES_FILE_NAME, LAST_UPDATE) != null) {
             lastUpdate = sharedPreferencesUtil.readStringData(
@@ -183,78 +153,36 @@ public class RiposoFragment extends Fragment implements ResponseCallback {
         }
         //vado a recuperare country da shared preference e chiamo metodo fetchNews
         progressBar.setVisibility(View.VISIBLE);
-        iNewsRepository.fetchNews(sharedPreferencesUtil.readStringData(
-                        SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST), 0,
-                Long.parseLong(lastUpdate));
+
+        //mi metto in ascolto dei cambiamento che avvengono a livedata che ottengo dal getNews del viewModel
+        newsViewModel.getNews(country, Long.parseLong(lastUpdate)).observe(getViewLifecycleOwner(),
+                //uso inizializzazione anonima
+                //livedata è associato a result quindi controllo se ho result success o error
+                result -> {
+                    //o aggiorno la lista o mostro messaggio di errore
+                    if (result.isSuccess()) {
+                        //logica per aggiornare recycler view
+                        int initialSize = this.newsList.size();
+                        this.newsList.clear();
+                        this.newsList.addAll(((Result.Success) result).getData().getNewsList());
+                        newsRecyclerViewAdapter.notifyItemRangeInserted(initialSize, this.newsList.size());
+                        progressBar.setVisibility(View.GONE);
+                    } else {
+                        //per mostrare snackbar dell'errore
+                        ErrorMessagesUtil errorMessagesUtil =
+                                new ErrorMessagesUtil(requireActivity().getApplication());
+                        Snackbar.make(view, errorMessagesUtil.
+                                        getErrorMessage(((Result.Error) result).getMessage()),
+                                Snackbar.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
+
+
 
     }
 
-    @Override
-    public void onSuccess(List<News> newsList, long lastUpdate) {
-        if (newsList != null) {
-            this.newsList.clear();
-            this.newsList.addAll(newsList);
-            sharedPreferencesUtil.writeStringData(SHARED_PREFERENCES_FILE_NAME, LAST_UPDATE,
-                    String.valueOf(lastUpdate));
-        }
 
-        requireActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                newsRecyclerViewAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.GONE);
-            }
-        });
-    }
-
-    @Override
-    public void onFailure(String errorMessage) {
-        progressBar.setVisibility(View.GONE);
-        Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                errorMessage, Snackbar.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onNewsFavoriteStatusChanged(@NonNull News news) {
-        if (news.isFavorite()) {
-            Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                    getString(R.string.news_added_to_favorite_list_message),
-                    Snackbar.LENGTH_LONG).show();
-        } else {
-            Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                    getString(R.string.news_removed_from_favorite_list_message),
-                    Snackbar.LENGTH_LONG).show();
-        }
-    }
-
-
-    private String getShortNameCountryOfInterest(String userVisibleCountryOfInterest) {
-        if (userVisibleCountryOfInterest.equals(getString(R.string.francia))) {
-            return FRANCE;
-        } else if (userVisibleCountryOfInterest.equals(getString(R.string.germania))) {
-            return GERMANY;
-        } else if (userVisibleCountryOfInterest.equals(getString(R.string.italia))) {
-            return ITALY;
-        } else if (userVisibleCountryOfInterest.equals(getResources().getString(R.string.uk))) {
-            return UNITED_KINGDOM;
-        } else if (userVisibleCountryOfInterest.equals(getResources().getString(R.string.us))) {
-            return UNITED_STATES;
-        }
-        return null;
-    }
-
-
-
-
-    private void saveInformation() {
-
-        String country = spinnerCountries.getSelectedItem().toString();
-        String countryShortName = getShortNameCountryOfInterest(country);
-
-        SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(getActivity().getApplication());
-        sharedPreferencesUtil.writeStringData(
-                SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST, countryShortName);
-    }
 
 
 }

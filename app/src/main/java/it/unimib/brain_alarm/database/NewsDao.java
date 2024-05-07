@@ -50,8 +50,8 @@ public interface NewsDao {
 
     //aggiornamneto notizie
     @Update
-    void updateSingleFavoriteNews(News news);
+    int updateSingleFavoriteNews(News news);
 
     @Update
-    void updateListFavoriteNews(List<News> news);
+    int updateListFavoriteNews(List<News> news);
 }

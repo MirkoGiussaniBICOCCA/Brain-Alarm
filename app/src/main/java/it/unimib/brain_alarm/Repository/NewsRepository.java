@@ -6,7 +6,6 @@ import static it.unimib.brain_alarm.util.Constants.TOP_HEADLINES_PAGE_SIZE_VALUE
 
 import android.app.Application;
 import android.util.Log;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 
@@ -17,7 +16,7 @@ import it.unimib.brain_alarm.database.NewsDao;
 import it.unimib.brain_alarm.database.NewsRoomDatabase;
 import it.unimib.brain_alarm.News.News;
 import it.unimib.brain_alarm.News.NewsApiResponse;
-import it.unimib.brain_alarm.util.NewsApiService;
+import it.unimib.brain_alarm.service.NewsApiService;
 import it.unimib.brain_alarm.util.ResponseCallback;
 import it.unimib.brain_alarm.util.ServiceLocator;
 import retrofit2.Call;
@@ -51,6 +50,7 @@ public class NewsRepository implements INewsRepository {
         Log.d(TAG, "prima di if " + (currentTime - lastUpdate > FRESH_TIMEOUT));
 
         // fa la chiamata se l'ultimo download della notizia è stato prima del tempo FRESH_TIMEOUT
+        // se stato selezionato diverso
         if (currentTime - lastUpdate > FRESH_TIMEOUT) {
 
             Call<NewsApiResponse> newsResponseCall = newsApiService.getNews(country,
@@ -74,7 +74,7 @@ public class NewsRepository implements INewsRepository {
 
                     if (response.body() != null && response.isSuccessful() &&   //controllo chiamata andata a buon fine
                             !response.body().getStatus().equals("error")) {
-                        List<News> newsList = response.body().getArticles();  //ottengo lista oggetti News
+                        List<News> newsList = response.body().getNewsList();  //ottengo lista oggetti News
                         saveDataInDatabase(newsList);
                         Log.d(TAG, "onResponse");
                     } else {

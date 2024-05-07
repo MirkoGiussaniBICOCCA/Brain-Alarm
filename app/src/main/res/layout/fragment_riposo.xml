@@ -58,49 +58,6 @@
                     android:textSize="24dp" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/layoutCountry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/background_navbar"
-                android:orientation="vertical"
-                android:paddingBottom="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/layoutT"
-                tools:layout_editor_absoluteX="30dp">
-
-                <TextView
-                    android:id="@+id/textview_country"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/stato"
-                    android:textColor="@color/white"
-                    android:textSize="24sp" />
-
-                <Spinner
-                    android:id="@+id/spinner_countries"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="@color/white"
-                    android:entries="@array/country_array"
-                    android:minHeight="48dp" />
-
-                <Button
-                    android:id="@+id/buttonCountry"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"
-                    android:text="@string/salva" />
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layoutView"
@@ -108,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/layoutCountry">
+                app:layout_constraintTop_toBottomOf="@+id/layoutT">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview_news"

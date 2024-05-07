@@ -3,8 +3,16 @@ package it.unimib.brain_alarm.util;
 
 import android.app.Application;
 
+import it.unimib.brain_alarm.R;
 import it.unimib.brain_alarm.database.NewsRoomDatabase;
-import it.unimib.brain_alarm.util.NewsApiService;
+import it.unimib.brain_alarm.Repository.INewsRepositoryWithLiveData;
+import it.unimib.brain_alarm.Repository.NewsRepositoryWithLiveData;
+import it.unimib.brain_alarm.service.NewsApiService;
+import it.unimib.brain_alarm.source.BaseNewsLocalDataSource;
+import it.unimib.brain_alarm.source.BaseNewsRemoteDataSource;
+import it.unimib.brain_alarm.source.NewsLocalDataSource;
+import it.unimib.brain_alarm.source.NewsMockRemoteDataSource;
+import it.unimib.brain_alarm.source.NewsRemoteDataSource;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -41,5 +49,27 @@ public class ServiceLocator {
 
     public NewsRoomDatabase getNewsDao(Application application) {
         return NewsRoomDatabase.getDatabase(application);
+    }
+
+    public INewsRepositoryWithLiveData getNewsRepository(Application application, boolean debugMode) {
+        BaseNewsRemoteDataSource newsRemoteDataSource;
+        BaseNewsLocalDataSource newsLocalDataSource;
+        SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(application);
+
+        //logica per inizializzare la sorgente remota
+        //debug mode inizializzo sorgente dati remota (legge dal file) altrimenti con chiamata a beckend
+        if (debugMode) {
+            JSONParserUtil jsonParserUtil = new JSONParserUtil(application);
+            newsRemoteDataSource =
+                    new NewsMockRemoteDataSource(jsonParserUtil, JSONParserUtil.JsonParserType.GSON);
+        } else {
+            newsRemoteDataSource =
+                    new NewsRemoteDataSource(application.getString(R.string.news_api_key));
+        }
+
+        newsLocalDataSource = new NewsLocalDataSource(getNewsDao(application), sharedPreferencesUtil);
+
+        //chiamo costruttore Repository a cui passo sorgenti dati
+        return new NewsRepositoryWithLiveData(newsRemoteDataSource, newsLocalDataSource);
     }
 }

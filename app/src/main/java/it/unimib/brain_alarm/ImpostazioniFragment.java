@@ -1,6 +1,5 @@
 package it.unimib.brain_alarm;
 
-import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_COUNTRY_OF_INTEREST;
 
 import android.os.Bundle;
 
@@ -11,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 public class ImpostazioniFragment extends Fragment {
 

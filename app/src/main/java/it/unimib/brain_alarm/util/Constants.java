@@ -32,4 +32,11 @@ public class Constants {
     public static final String NEWS_DATABASE_NAME = "news_db";
     public static final int DATABASE_VERSION = 1;
 
+    public static final String RETROFIT_ERROR = "retrofit_error";
+    public static final String API_KEY_ERROR = "api_key_error";
+
+    public static final String UNEXPECTED_ERROR = "unexpected_error";
 }
+
+
+

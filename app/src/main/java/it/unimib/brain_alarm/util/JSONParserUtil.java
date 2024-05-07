@@ -28,9 +28,18 @@ import it.unimib.brain_alarm.News.NewsSource;
 /**
  * Util class to show different ways to parse a JSON file.
  */
-public class JSONParseUtil {
+public class JSONParserUtil {
 
-    private static final String TAG = JSONParseUtil.class.getSimpleName();
+    private static final String TAG = JSONParserUtil.class.getSimpleName();
+
+    public enum JsonParserType {
+        JSON_READER,
+        JSON_OBJECT_ARRAY,
+        GSON,
+        JSON_ERROR
+    };
+
+    //private final Application application;
 
     private final Context context;
 
@@ -47,7 +56,7 @@ public class JSONParseUtil {
     private final String contentParameter = "content";
     private final String nameParameter = "name";
 
-    public JSONParseUtil(Application application) {
+    public JSONParserUtil(Application application) {
         this.context = application.getApplicationContext();
     }
 
@@ -132,7 +141,7 @@ public class JSONParseUtil {
         }
         jsonReader.endObject(); // End of JSON object
 
-        newsApiResponse.setArticles(newsList);
+        newsApiResponse.setNewsList(newsList);
 
         return newsApiResponse;
     }
@@ -173,7 +182,7 @@ public class JSONParseUtil {
                 newsList.add(news);
             }
         }
-        newsApiResponse.setArticles(newsList);
+        newsApiResponse.setNewsList(newsList);
 
         return newsApiResponse;
     }

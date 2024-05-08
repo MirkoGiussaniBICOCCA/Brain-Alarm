@@ -1,26 +1,20 @@
 package it.unimib.brain_alarm;
 
-import static android.content.Intent.getIntent;
-import static java.lang.String.valueOf;
 import static it.unimib.brain_alarm.util.Constants.FRANCE;
 import static it.unimib.brain_alarm.util.Constants.GERMANY;
 import static it.unimib.brain_alarm.util.Constants.ITALY;
 import static it.unimib.brain_alarm.util.Constants.UNITED_KINGDOM;
 import static it.unimib.brain_alarm.util.Constants.UNITED_STATES;
-import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_COUNTRY_OF_INTEREST;
-import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_FILE_NAME;
 
 
-import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
-
-import com.google.android.material.snackbar.Snackbar;
-import java.util.GregorianCalendar;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -37,6 +31,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import java.io.IOException;
 
 import it.unimib.brain_alarm.R;
@@ -49,18 +45,11 @@ import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 public class CarrieraFragment extends Fragment {
 
     private static final String TAG = CarrieraFragment.class.getSimpleName();
+    private static String nomeProfilo;
+    TextView nuovoNome;
 
-    TextView textStato;
-    private static final String COUNTRY_SAVED = "country";
-    public static final String EXTRA_BUTTON_PRESSED_COUNTER_KEY = "BUTTON_PRESSED_COUNTER_KEY";
-
-    public static final String EXTRA_NEWS_KEY = "NEWS_KEY";
-    public static final String EXTRA_BUNDLE_INT = "BUNDLE_INT";
-    private static String stato;
-    private int buttonNextPressedCounter;
-    private Spinner spinnerCountries;
-
-    private News news;
+    private TextInputLayout inputLayoutNome;
+    private LinearLayout layoutCambiaNome;
 
     public CarrieraFragment() {
         // Required empty public constructor
@@ -74,10 +63,6 @@ public class CarrieraFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        spinnerCountries = getActivity().findViewById(R.id.spinner_countries);
-
-
     }
 
     @Override
@@ -92,32 +77,37 @@ public class CarrieraFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final Button buttonSalva = view.findViewById(R.id.buttonCountry);
+        final Button buttonCambiaNome = view.findViewById(R.id.cambiaNome);
+        final Button buttonSalvaNome = view.findViewById(R.id.salvaNome);
+        layoutCambiaNome = view.findViewById(R.id.linearLayoutCambiaNome);
+        inputLayoutNome = view.findViewById(R.id.inputLayoutNome);
 
-        if (savedInstanceState != null) {
-            stato = savedInstanceState.getString(COUNTRY_SAVED);
-            news = savedInstanceState.getParcelable(EXTRA_NEWS_KEY);
-            Log.d(TAG, "stringa salvata: " + stato);
-        }
-
-
-
-        textStato = view.findViewById((R.id.textStatoSel));
-
-
-        buttonSalva.setOnClickListener(v -> {
-
-            if (isCountryOfInterestSelected()) {
-                Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                        getString(R.string.mxStato), Snackbar.LENGTH_LONG).show();
-                Log.d(TAG, "Stato selezionato");
-                saveInformation();
-                textStato.setText("stato selezionato: " + spinnerCountries.getSelectedItem());
-            } else
-                Snackbar.make(requireActivity().findViewById(android.R.id.content), getString(R.string.stato), Snackbar.LENGTH_LONG).show();
-
+        buttonCambiaNome.setOnClickListener(v -> {
+            layoutCambiaNome.setVisibility(view.VISIBLE);
         });
 
+        nuovoNome = view.findViewById(R.id.nomeProfilo);
+
+        //salvo nuovoNome nel file shared preferences
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+        nomeProfilo = sharedPref.getString("nomeProfilo", null);
+
+        if(nomeProfilo != null)
+            nuovoNome.setText("Ciao " + nomeProfilo);
+
+        buttonSalvaNome.setOnClickListener(v -> {
+
+            nomeProfilo = inputLayoutNome.getEditText().getText().toString();
+
+            if (nomeProfilo!=null) {
+                saveInformation();
+
+                //visualizzare nuovo nome
+                nuovoNome.setText("Ciao " + sharedPref.getString("nomeProfilo", null));
+                layoutCambiaNome.setVisibility(view.GONE);
+            } else
+                nuovoNome.setText("null");
+        });
 
         ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 new ActivityResultCallback<Uri>() {
@@ -138,8 +128,7 @@ public class CarrieraFragment extends Fragment {
         fotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Pass in the mime type you want to let the user select
-                // as the input
+                // Pass in the mime type you want to let the user select as the input
                 mGetContent.launch("image/*");
             }
         });
@@ -147,45 +136,13 @@ public class CarrieraFragment extends Fragment {
 
     }
 
-    private boolean isCountryOfInterestSelected() {
-        spinnerCountries = getActivity().findViewById(R.id.spinner_countries);
-        if (spinnerCountries.getSelectedItem() != null) {
-            return true;
-        } else
-            return false;
-    }
-
-    private String getShortNameCountryOfInterest(String userVisibleCountryOfInterest) {
-        if (userVisibleCountryOfInterest.equals(getString(R.string.francia))) {
-            return FRANCE;
-        } else if (userVisibleCountryOfInterest.equals(getString(R.string.germania))) {
-            return GERMANY;
-        } else if (userVisibleCountryOfInterest.equals(getString(R.string.italia))) {
-            return ITALY;
-        } else if (userVisibleCountryOfInterest.equals(getResources().getString(R.string.uk))) {
-            return UNITED_KINGDOM;
-        } else if (userVisibleCountryOfInterest.equals(getResources().getString(R.string.us))) {
-            return UNITED_STATES;
-        }
-        return null;
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.d(TAG, "onSaveInstanceState");
-        outState.putInt(EXTRA_BUTTON_PRESSED_COUNTER_KEY, buttonNextPressedCounter);
-        outState.putParcelable(EXTRA_NEWS_KEY, news);
-    }
-
     private void saveInformation() {
-        String country = spinnerCountries.getSelectedItem().toString();
-        String countryShortName = getShortNameCountryOfInterest(country);
-        Log.d(TAG, "stato salvato: " + countryShortName);
-        SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(getActivity().getApplication());
-        sharedPreferencesUtil.writeStringData(
-                SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST, countryShortName);
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("nomeProfilo", nomeProfilo);
+        editor.apply();
     }
+
 
 
 }

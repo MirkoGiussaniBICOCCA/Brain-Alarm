@@ -1,8 +1,5 @@
 package it.unimib.brain_alarm.ui;
 
-import static it.unimib.brain_alarm.CarrieraFragment.EXTRA_BUNDLE_INT;
-import static it.unimib.brain_alarm.CarrieraFragment.EXTRA_BUTTON_PRESSED_COUNTER_KEY;
-import static it.unimib.brain_alarm.CarrieraFragment.EXTRA_NEWS_KEY;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -54,14 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(bottomNav, navController);
 
-        Intent intent = getIntent();
-        Log.d(TAG, "Times: " + intent.getIntExtra(EXTRA_BUTTON_PRESSED_COUNTER_KEY, 0));
-        Log.d(TAG, "News: " + intent.getParcelableExtra(EXTRA_NEWS_KEY));
 
-        Bundle bundle = intent.getExtras();
-        if (bundle != null) {
-            Log.d(TAG, "Int from Bundle " + bundle.getInt(EXTRA_BUNDLE_INT));
-        }
     }
 
 

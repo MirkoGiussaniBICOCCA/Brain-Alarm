@@ -48,7 +48,7 @@
 
                 <TextView
                     android:id="@+id/Notizie"
-                    android:layout_width="139dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="30dp"
@@ -56,6 +56,18 @@
                     android:text="Notizie"
                     android:textColor="@color/white"
                     android:textSize="24dp" />
+
+                <TextView
+                    android:id="@+id/statoNotizie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="Stato"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+
+
             </LinearLayout>
 
 
@@ -89,12 +101,13 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/background_navbar"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@+id/layoutView"
-                android:layout_marginTop="30dp"
                 tools:layout_editor_absoluteX="30dp">
 
                 <ImageView
@@ -117,6 +130,8 @@
 
 
             </LinearLayout>
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -11,6 +11,9 @@ import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_FILE_NAME;
 
 
 import androidx.annotation.NonNull;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -48,6 +51,9 @@ import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 public class RiposoFragment extends Fragment {
 
     private static final String TAG = RiposoFragment.class.getSimpleName();
+
+
+    TextView textStatoSelezionato;
 
     private List<News> newsList;
     private NewsRecyclerViewAdapter newsRecyclerViewAdapter;
@@ -102,6 +108,11 @@ public class RiposoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+
+        textStatoSelezionato = view.findViewById((R.id.statoNotizie));
+        textStatoSelezionato.setText(sharedPref.getString("stato", null));
 
         requireActivity().addMenuProvider(new MenuProvider() {
             @Override

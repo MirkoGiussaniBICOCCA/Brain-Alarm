@@ -164,6 +164,14 @@
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/txtSuono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/suono"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"/>
+
                 <Switch
                     android:id="@+id/posticipa"
                     android:layout_width="match_parent"

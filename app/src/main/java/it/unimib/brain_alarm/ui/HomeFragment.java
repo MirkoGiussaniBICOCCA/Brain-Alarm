@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextClock;
+import android.widget.TextSwitcher;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -33,6 +35,7 @@ public class HomeFragment extends Fragment {
 
     private static final String TAG = AggiungiActivity.class.getSimpleName();
 
+    private TextClock txtCl;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -58,6 +61,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        txtCl = view.findViewById(R.id.txtClock);
+
+        // on below line we are setting 12 hour
+        // format for our text clock
+        txtCl.setFormat12Hour("hh:mm:ss a");
+
 
         final Button buttonAggiungi = view.findViewById(R.id.bottoneAggiungiSveglia);
 

@@ -64,57 +64,10 @@
                     android:textColor="@color/white"
                     android:textSize="24dp" />
 
-                <Button
-                    android:id="@+id/cambiaNome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:text="s"
-                    app:icon="@drawable/scrivere2"
-                    app:iconSize="24dp" />
-
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/linearLayoutCambiaNome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/background_navbar"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayoutProfilo">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputLayoutNome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputNome"
-                        android:layout_width="220dp"
-                        android:layout_height="wrap_content"
-                        android:hint="hint"
-                        tools:ignore="ExtraText" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <Button
-                    android:id="@+id/salvaNome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="save"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-            </LinearLayout>
 
 
 

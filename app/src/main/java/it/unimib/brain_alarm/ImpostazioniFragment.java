@@ -20,14 +20,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 public class ImpostazioniFragment extends Fragment {
 
     private static final String TAG = ImpostazioniFragment.class.getSimpleName();
+
+    private LinearLayout layoutModifica;
+    TextView nomeImpostazioni;
+    private static String nome;
+
+    private TextInputLayout inputLayoutNome;
+    TextView statoImpostazioni;
     private static String stato;
     private Spinner spinnerCountries;
+
+
 
     public ImpostazioniFragment() {
         // Required empty public constructor
@@ -54,30 +66,56 @@ public class ImpostazioniFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final Button buttonCambia = view.findViewById(R.id.buttonImpostazioni);
+        final Button buttonSalva = view.findViewById(R.id.salvaImpostazioni);
+        spinnerCountries = view.findViewById(R.id.spinner_countries);
+        layoutModifica = view.findViewById(R.id.layoutModifica);
+        inputLayoutNome = view.findViewById(R.id.inputLayoutNome);
+
+        buttonCambia.setOnClickListener(v -> {
+            layoutModifica.setVisibility(view.VISIBLE);
+        });
+
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+        nome = sharedPref.getString("nome", null);
         stato = sharedPref.getString("stato", null);
 
-        Log.d(TAG, "stato shared pref " + stato);
+        nomeImpostazioni = view.findViewById(R.id.nomeImpostazioni);
+        statoImpostazioni = view.findViewById(R.id.statoImpostazioni);
 
-        spinnerCountries = view.findViewById(R.id.spinner_countries);
-
-        final Button buttonSalva = view.findViewById(R.id.buttonCountry);
+        if(nome != null && stato!=null) {
+            nomeImpostazioni.setText("Nome: " + nome);
+            statoImpostazioni.setText("Stato: " + stato);
+        }
 
         buttonSalva.setOnClickListener(v -> {
-            stato = spinnerCountries.getSelectedItem().toString();
-            Log.d(TAG, "stato salvato " + stato);
-            saveInformation();
 
+            nome = inputLayoutNome.getEditText().getText().toString();
+            stato = spinnerCountries.getSelectedItem().toString();
+
+            if (nome!=null && stato!=null) {
+                saveInformation();
+
+                //visualizzare nuovo nome
+                nomeImpostazioni.setText("Nome: " + sharedPref.getString("nome", null));
+                statoImpostazioni.setText("Stato: " + sharedPref.getString("stato", null));
+                layoutModifica.setVisibility(view.GONE);
+            } else
+                nomeImpostazioni.setText("null");
         });
+
+        Log.d(TAG, "nome shared pref " + nome);
+        Log.d(TAG, "stato shared pref " + stato);
+
 
     }
 
     private void saveInformation() {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("nome", nome);
         editor.putString("stato", stato);
         editor.apply();
-        Log.d(TAG, "saveInf " + stato);
 
     }
 

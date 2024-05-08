@@ -45,11 +45,8 @@ import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 public class CarrieraFragment extends Fragment {
 
     private static final String TAG = CarrieraFragment.class.getSimpleName();
-    private static String nomeProfilo;
-    TextView nuovoNome;
 
-    private TextInputLayout inputLayoutNome;
-    private LinearLayout layoutCambiaNome;
+    TextView nomeProfilo;
 
     public CarrieraFragment() {
         // Required empty public constructor
@@ -77,37 +74,11 @@ public class CarrieraFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final Button buttonCambiaNome = view.findViewById(R.id.cambiaNome);
-        final Button buttonSalvaNome = view.findViewById(R.id.salvaNome);
-        layoutCambiaNome = view.findViewById(R.id.linearLayoutCambiaNome);
-        inputLayoutNome = view.findViewById(R.id.inputLayoutNome);
 
-        buttonCambiaNome.setOnClickListener(v -> {
-            layoutCambiaNome.setVisibility(view.VISIBLE);
-        });
-
-        nuovoNome = view.findViewById(R.id.nomeProfilo);
-
-        //salvo nuovoNome nel file shared preferences
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
-        nomeProfilo = sharedPref.getString("nomeProfilo", null);
+        nomeProfilo = view.findViewById(R.id.nomeProfilo);
+        nomeProfilo.setText("Ciao " + sharedPref.getString("nome", null));
 
-        if(nomeProfilo != null)
-            nuovoNome.setText("Ciao " + nomeProfilo);
-
-        buttonSalvaNome.setOnClickListener(v -> {
-
-            nomeProfilo = inputLayoutNome.getEditText().getText().toString();
-
-            if (nomeProfilo!=null) {
-                saveInformation();
-
-                //visualizzare nuovo nome
-                nuovoNome.setText("Ciao " + sharedPref.getString("nomeProfilo", null));
-                layoutCambiaNome.setVisibility(view.GONE);
-            } else
-                nuovoNome.setText("null");
-        });
 
         ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 new ActivityResultCallback<Uri>() {
@@ -136,12 +107,7 @@ public class CarrieraFragment extends Fragment {
 
     }
 
-    private void saveInformation() {
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("nomeProfilo", nomeProfilo);
-        editor.apply();
-    }
+
 
 
 

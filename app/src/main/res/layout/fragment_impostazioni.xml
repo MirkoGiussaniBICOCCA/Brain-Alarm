@@ -24,25 +24,90 @@
             android:layout_marginEnd="30dp">
 
             <LinearLayout
-                android:id="@+id/layoutCountry"
+                android:id="@+id/layoutImpostazioni"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="128dp"
                 android:background="@drawable/background_navbar"
                 android:orientation="vertical"
                 android:paddingBottom="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/nomeImpostazioni"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="@string/nomeImpostazioni"
+                    android:textColor="@color/white"
+                    android:textSize="24dp" />
+
+                <TextView
+                    android:id="@+id/statoImpostazioni"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="@string/statoImpostato"
+                    android:textColor="@color/white"
+                    android:textSize="24dp" />
+
+                <Button
+                    android:id="@+id/buttonImpostazioni"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:text="@string/modifica" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutModifica"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/background_navbar"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutImpostazioni">
+
+                <TextView
+                    android:id="@+id/textview_nome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/impostaNome"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayoutNome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputNome"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:background="@color/giallo"
+                        android:hint="hint"
+                        tools:ignore="ExtraText" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
 
                 <TextView
                     android:id="@+id/textview_country"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/stato"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/impostaStato"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
 
@@ -50,11 +115,8 @@
                     android:id="@+id/spinner_countries"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginBottom="16dp"
                     android:animateLayoutChanges="false"
                     android:background="@color/giallo"
                     android:entries="@array/country_array"
@@ -62,16 +124,17 @@
                     android:popupBackground="@color/arancione"
                     android:spinnerMode="dropdown" />
 
+
+
                 <Button
-                    android:id="@+id/buttonCountry"
+                    android:id="@+id/salvaImpostazioni"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"
                     android:text="@string/salva" />
 
             </LinearLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -26,6 +26,11 @@
     <string name="iTuoiSuoni">Le tue suonerie</string>
     <string name="salva">Salva</string>
     <string name="nome">Ciao user</string>
+    <string name="nomeImpostazioni">Nome: </string>
+    <string name="statoImpostato">Stato impostato:</string>
+    <string name="impostaStato">Scegli lo stato:</string>
+    <string name="impostaNome">Scegli il tuo nome:</string>
+
 
     <string name="mxModalità">Devi scegliere la modalità della sveglia (classica o sfida)!</string>
     <string name="mxStato">Stato salvato</string>
@@ -50,17 +55,6 @@
     <string name="news_added_to_favorite_list_message">News added to the favorite list</string>
     <string name="news_removed_from_favorite_list_message">News removed from the favorite list</string>
 
-    <string name="stato">Scegli lo stato</string>
-    <string name="francia">Francia</string>
-    <string name="germania">Germania</string>
-    <string name="italia">Italia</string>
-    <string name="uk">Uk</string>
-    <string name="us">Usa</string>
-
-
-    <string name="classicaSuono">Classica</string>
-    <string name="radar">Radar</string>
-    <string name="arpeggio">Arpeggio</string>
 
     <string-array name="country_array">
         <item>@string/francia</item>
@@ -70,13 +64,21 @@
         <item>@string/us</item>
     </string-array>
 
+
+    <string name="francia">Francia</string>
+    <string name="germania">Germania</string>
+    <string name="italia">Italia</string>
+    <string name="uk">Uk</string>
+    <string name="us">Usa</string>
+
     <string-array name="suoni_array">
         <item>@string/classicaSuono</item>
         <item>@string/radar</item>
         <item>@string/arpeggio</item>
     </string-array>
 
+    <string name="classicaSuono">Classica</string>
+    <string name="radar">Radar</string>
+    <string name="arpeggio">Arpeggio</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

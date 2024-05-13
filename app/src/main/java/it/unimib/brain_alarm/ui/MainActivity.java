@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
                 R.id.impostazioniFragment,
                 R.id.suoniFragment,
                 R.id.homeFragment,
-                R.id.riposoFragment,
-                R.id.carrieraFragment).build();
+                R.id.newsFragment,
+                R.id.profiloFragment).build();
 
         NavigationUI.setupWithNavController(bottomNav, navController);
 
@@ -55,12 +55,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /*
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.d(TAG, "onSaveInstanceState");
-        outState.putString(COUNTRY_SAVED, stato);
-    }
-    */
 }

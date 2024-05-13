@@ -1,10 +1,5 @@
 package it.unimib.brain_alarm;
 
-import static it.unimib.brain_alarm.util.Constants.FRANCE;
-import static it.unimib.brain_alarm.util.Constants.GERMANY;
-import static it.unimib.brain_alarm.util.Constants.ITALY;
-import static it.unimib.brain_alarm.util.Constants.UNITED_KINGDOM;
-import static it.unimib.brain_alarm.util.Constants.UNITED_STATES;
 import static it.unimib.brain_alarm.util.Constants.LAST_UPDATE;
 import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_COUNTRY_OF_INTEREST;
 import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_FILE_NAME;
@@ -30,9 +25,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -48,9 +41,9 @@ import it.unimib.brain_alarm.util.ErrorMessagesUtil;
 import it.unimib.brain_alarm.util.ServiceLocator;
 import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
-public class RiposoFragment extends Fragment {
+public class NewsFragment extends Fragment {
 
-    private static final String TAG = RiposoFragment.class.getSimpleName();
+    private static final String TAG = NewsFragment.class.getSimpleName();
 
 
     TextView textStatoSelezionato;
@@ -62,11 +55,11 @@ public class RiposoFragment extends Fragment {
     private NewsViewModel newsViewModel;
 
 
-    public RiposoFragment() {
+    public NewsFragment() {
         // Required empty public constructor
     }
-    public static RiposoFragment newInstance() {
-        return new RiposoFragment();
+    public static NewsFragment newInstance() {
+        return new NewsFragment();
     }
 
     @Override
@@ -101,7 +94,7 @@ public class RiposoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_riposo, container, false);
+        return inflater.inflate(R.layout.fragment_news, container, false);
     }
 
 

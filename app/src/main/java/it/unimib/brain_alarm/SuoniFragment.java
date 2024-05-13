@@ -19,6 +19,9 @@ import android.widget.SeekBar;
 
 import com.google.android.material.chip.Chip;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class SuoniFragment extends Fragment {
 
@@ -71,6 +74,8 @@ public class SuoniFragment extends Fragment {
                     chipVibrazione.setChipIcon(getResources().getDrawable(R.drawable.close));
                     chipVibrazione.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.sfondoTras))); }
             }
+
+
         });
 
 
@@ -82,6 +87,7 @@ public class SuoniFragment extends Fragment {
             startActivity(mapIntent);
         } );
     }
+
 
 
 

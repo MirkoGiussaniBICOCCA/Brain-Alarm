@@ -5,9 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Objects;
 
-/**
- * Class to represent the source of news of NewsAPI.org (<a href="https://newsapi.org">...</a>).
- */
+
 public class NewsSource implements Parcelable {
     private String name;
 

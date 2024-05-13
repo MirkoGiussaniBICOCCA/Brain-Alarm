@@ -18,13 +18,13 @@
         android:title="@string/home"/>
 
     <item
-        android:id="@+id/riposoFragment"
+        android:id="@+id/newsFragment"
         android:enabled="true"
-        android:icon="@drawable/riposo"
-        android:title="@string/riposo"/>
+        android:icon="@drawable/globo"
+        android:title="@string/notizie"/>
     <item
-        android:id="@+id/carrieraFragment"
+        android:id="@+id/profiloFragment"
         android:enabled="true"
-        android:icon="@drawable/carriera"
-        android:title="@string/carriera"/>
+        android:icon="@drawable/profilo"
+        android:title="@string/profilo"/>
 </menu>

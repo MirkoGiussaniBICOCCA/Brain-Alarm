@@ -14,7 +14,7 @@ import it.unimib.brain_alarm.News.News;
 import it.unimib.brain_alarm.News.NewsApiResponse;
 import it.unimib.brain_alarm.R;
 
-import it.unimib.brain_alarm.RiposoFragment;
+import it.unimib.brain_alarm.NewsFragment;
 import it.unimib.brain_alarm.database.NewsDao;
 import it.unimib.brain_alarm.database.NewsRoomDatabase;
 
@@ -31,7 +31,7 @@ public class NewsMockRepository implements INewsRepository {
     private final ResponseCallback responseCallback;
     private final NewsDao newsDao;
     private final JsonParserType jsonParserType;
-    private static final String TAG = RiposoFragment.class.getSimpleName();
+    private static final String TAG = NewsFragment.class.getSimpleName();
     public NewsMockRepository(Application application, ResponseCallback responseCallback, JsonParserType jsonParserType) {
         this.application = application;
         this.responseCallback = responseCallback;

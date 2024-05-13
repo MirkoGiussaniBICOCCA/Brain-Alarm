@@ -35,17 +35,17 @@
         tools:layout="@layout/activity_aggiungi" />
 
     <fragment
-        android:id="@+id/riposoFragment"
-        android:name="it.unimib.brain_alarm.RiposoFragment"
-        android:label="fragment_riposo"
-        tools:layout="@layout/fragment_riposo" >
+        android:id="@+id/newsFragment"
+        android:name="it.unimib.brain_alarm.NewsFragment"
+        android:label="fragment_news"
+        tools:layout="@layout/fragment_news" >
     </fragment>
 
     <fragment
-        android:id="@+id/carrieraFragment"
-        android:name="it.unimib.brain_alarm.CarrieraFragment"
-        android:label="fragment_carriera"
-        tools:layout="@layout/fragment_carriera" >
+        android:id="@+id/profiloFragment"
+        android:name="it.unimib.brain_alarm.ProfiloFragment"
+        android:label="fragment_profilo"
+        tools:layout="@layout/fragment_profilo" >
     </fragment>
 
 

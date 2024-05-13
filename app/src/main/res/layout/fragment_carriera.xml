@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CarrieraFragment">
+    tools:context=".ProfiloFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
 
 
             <ImageView
-                android:id="@+id/carriera"
+                android:id="@+id/fotoProfilo"
                 android:layout_width="179dp"
                 android:layout_height="198dp"
                 android:layout_marginTop="50dp"
@@ -43,7 +43,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/carriera" />
+                app:layout_constraintTop_toBottomOf="@+id/fotoProfilo" />
 
 
             <LinearLayout

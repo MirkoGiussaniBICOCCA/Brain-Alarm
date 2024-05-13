@@ -1,11 +1,5 @@
 package it.unimib.brain_alarm;
 
-import static it.unimib.brain_alarm.util.Constants.FRANCE;
-import static it.unimib.brain_alarm.util.Constants.GERMANY;
-import static it.unimib.brain_alarm.util.Constants.ITALY;
-import static it.unimib.brain_alarm.util.Constants.UNITED_KINGDOM;
-import static it.unimib.brain_alarm.util.Constants.UNITED_STATES;
-
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,8 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -24,36 +16,28 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.textfield.TextInputLayout;
-
 import java.io.IOException;
 
-import it.unimib.brain_alarm.R;
-import it.unimib.brain_alarm.News.News;
-import it.unimib.brain_alarm.News.NewsSource;
-import it.unimib.brain_alarm.ui.MainActivity;
-import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
+public class ProfiloFragment extends Fragment {
 
-public class CarrieraFragment extends Fragment {
-
-    private static final String TAG = CarrieraFragment.class.getSimpleName();
+    private static final String TAG = ProfiloFragment.class.getSimpleName();
 
     TextView nomeProfilo;
 
-    public CarrieraFragment() {
+
+    public ProfiloFragment() {
         // Required empty public constructor
     }
 
-    public static CarrieraFragment newInstance(String param1, String param2) {
-        CarrieraFragment fragment = new CarrieraFragment();
+    public static ProfiloFragment newInstance(String param1, String param2) {
+        ProfiloFragment fragment = new ProfiloFragment();
         return fragment;
     }
 
@@ -86,7 +70,8 @@ public class CarrieraFragment extends Fragment {
                     public void onActivityResult(Uri uri) {
                         try {
                             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
-                            ((ImageView) view.findViewById(R.id.carriera)).setImageBitmap(bitmap);
+                            ((ImageView) view.findViewById(R.id.fotoProfilo)).setImageBitmap(bitmap);
+
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

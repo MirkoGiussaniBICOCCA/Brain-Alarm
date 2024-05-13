@@ -60,13 +60,7 @@ public class JSONParserUtil {
         this.context = application.getApplicationContext();
     }
 
-    /**
-     * Returns a list of News from a JSON file parsed using JsonReader class.
-     * Doc can be read here: <a href="https://developer.android.com/reference/android/util/JsonReader">...</a>
-     * @param fileName The JSON file to be parsed.
-     * @return The NewsApiResponse object associated with the JSON file content.
-     * @throws IOException
-     */
+
     public NewsApiResponse parseJSONFileWithJsonReader(String fileName) throws IOException {
         InputStream inputStream = context.getAssets().open(fileName);
         JsonReader jsonReader = new JsonReader(new InputStreamReader(inputStream));

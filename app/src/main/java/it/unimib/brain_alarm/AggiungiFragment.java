@@ -1,5 +1,6 @@
 package it.unimib.brain_alarm;
 
+import static android.content.ContentValues.TAG;
 import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_FILE_NAME;
 import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_SVEGLIA;
 
@@ -7,11 +8,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Switch;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
@@ -21,6 +24,7 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,6 +36,7 @@ public class AggiungiFragment extends Fragment {
     String settimana;
 
     private TimePicker timeP;
+    private TextInputLayout nomeSveglia;
 
     private CheckBox checkboxL;
     private CheckBox checkboxMa;
@@ -41,6 +46,10 @@ public class AggiungiFragment extends Fragment {
     private CheckBox checkboxS;
 
     private CheckBox checkboxD;
+
+    private static String suono, vibrazione;
+
+    private Switch posticipa;
 
     public AggiungiFragment() {
         // Required empty public constructor
@@ -99,6 +108,8 @@ public class AggiungiFragment extends Fragment {
 
         timeP = view.findViewById(R.id.timePicker);
 
+        nomeSveglia = view.findViewById(R.id.inputLayoutNomeSveglia);
+
         checkboxL = view.findViewById(R.id.lunedi);
         checkboxMa = view.findViewById(R.id.martedi);
         checkboxMe = view.findViewById(R.id.mercoledi);
@@ -106,6 +117,8 @@ public class AggiungiFragment extends Fragment {
         checkboxV = view.findViewById(R.id.venerdi);
         checkboxS = view.findViewById(R.id.sabato);
         checkboxD = view.findViewById(R.id.domenica);
+
+        posticipa = view.findViewById(R.id.posticipa);
 
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
         Set<String> svegliaArray = sharedPref.getStringSet("sveglia", null);
@@ -141,42 +154,64 @@ public class AggiungiFragment extends Fragment {
 
 
     private void saveInformation() {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+
 
         Set<String> sveglia = new HashSet<>();
+        //orario o, etichetta e, ripetizioni r, posticipa p, tipo t, attiva a
 
-        //orario, etichetta, data, suono....
-        sveglia.add(String.valueOf(timeP.getHour()) + String.valueOf(timeP.getMinute()));
+        sveglia.add("o" + String.valueOf(timeP.getHour()) + ":" + String.valueOf(timeP.getMinute()));
 
-        //salvo stringa etichetta
-        //guardare come è stato fatto il salvataggio in impostazioni fragment
+        sveglia.add("e"+nomeSveglia.getEditText().getText().toString());
 
+        settimana = "r";
 
-        //per suoni o si riesce a richiamare questo array sveglie nel fragment suoni oppure si possono creare
-        //due stringhe per salvare vibrazione e suono e poi richiamarle qua dentro con getSharedPreferences
-        //se si fanno due stringhe basta fare due add
+        if (checkboxL.isChecked()) {settimana += "1";}
+        else settimana += "0";
 
+        if (checkboxMa.isChecked()) {settimana += "2";}
+        else settimana += "0";
 
-        //TODO mancano 4 giorni
-        if (checkboxL.isChecked()) {
-            settimana = "1";
-        }
-        if (checkboxMa.isChecked()) {
-            settimana += "2";
-        }
-        if (checkboxMe.isChecked()) {
-            settimana += "3";
-        }
+        if (checkboxMe.isChecked()) {settimana += "3";}
+        else settimana += "0";
 
+        if (checkboxG.isChecked()) {settimana += "4";}
+        else settimana += "0";
+
+        if (checkboxV.isChecked()) {settimana += "5";}
+        else settimana += "0";
+
+        if (checkboxS.isChecked()) {settimana += "6";}
+        else settimana += "0";
+
+        if (checkboxD.isChecked()) {settimana += "7";}
+        else settimana += "0";
+
+        Log.d(TAG, "settimana = " + settimana);
         sveglia.add(settimana);
 
 
-        //posticipa cercare metodo
+        /*
+        suono = (sharedPref.getString("suono", null));
+        vibrazione = (sharedPref.getString("vibrazione", null));
 
-        //classica o sfida c'è già un boolen che si può usare
+        sveglia.add(suono);
+        sveglia.add(vibrazione);
+        */
 
-        //attiva qua dentro va impostato di default ad attiva (dentro home fragment dopo si disattivare)
+        sveglia.add("p" + String.valueOf(posticipa.isChecked()));
 
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+        if (isClassica)
+            sveglia.add("tc");
+        else if (isSfida)
+            sveglia.add("ts");
+
+
+        //TODO salvare per modalità sfida tutte le missioni impostate
+
+       //TODO dentro home fragment si deve poter attivare e disattivare la sveglia
+        sveglia.add("aattiva");
+
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putStringSet("sveglia", sveglia);
         editor.apply();

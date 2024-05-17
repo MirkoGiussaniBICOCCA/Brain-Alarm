@@ -116,7 +116,6 @@ public class ImpostazioniFragment extends Fragment {
         editor.putString("nome", nome);
         editor.putString("stato", stato);
         editor.apply();
-
     }
 
 

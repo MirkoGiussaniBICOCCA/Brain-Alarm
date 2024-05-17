@@ -1,6 +1,8 @@
 package it.unimib.brain_alarm;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 
 import com.google.android.material.chip.Chip;
 
@@ -27,6 +30,10 @@ public class SuoniFragment extends Fragment {
 
     Chip chipVibrazione;
     private boolean isVibrazione = false;
+
+    private static String suono, vibrazione;
+
+    Spinner spinnerSuoni;
 
     public SuoniFragment() {
         // Required empty public constructor
@@ -52,10 +59,6 @@ public class SuoniFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final Button buttonSalva = view.findViewById(R.id.salvaSuono);
-        buttonSalva.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.nav_suoniFragment_to_aggiungiFragment);
-        });
 
 
         chipVibrazione = view.findViewById(R.id.chipVibr);
@@ -74,8 +77,26 @@ public class SuoniFragment extends Fragment {
                     chipVibrazione.setChipIcon(getResources().getDrawable(R.drawable.close));
                     chipVibrazione.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.sfondoTras))); }
             }
+        });
 
 
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+        suono = sharedPref.getString("suono", null);
+        vibrazione = sharedPref.getString("vibrazione", null);
+
+        spinnerSuoni = view.findViewById(R.id.spinnerSuono);
+
+        final Button buttonSalva = view.findViewById(R.id.salvaSuono);
+        buttonSalva.setOnClickListener(v -> {
+
+            suono = spinnerSuoni.getSelectedItem().toString();
+            if (isVibrazione)
+                vibrazione = "1";
+            else
+                vibrazione = "0";
+            saveInformation();
+
+            Navigation.findNavController(v).navigate(R.id.nav_suoniFragment_to_aggiungiFragment);
         });
 
 
@@ -88,7 +109,13 @@ public class SuoniFragment extends Fragment {
         } );
     }
 
-
+    private void saveInformation() {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("suono", suono);
+        editor.putString("vibrazione", vibrazione);
+        editor.apply();
+    }
 
 
 }

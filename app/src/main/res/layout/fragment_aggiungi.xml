@@ -61,7 +61,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nomeSveglia"
+                android:id="@+id/inputLayoutNomeSveglia"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -87,7 +87,7 @@
                 android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="@id/guidelineDX"
                 app:layout_constraintStart_toStartOf="@id/guidelineSX"
-                app:layout_constraintTop_toBottomOf="@id/nomeSveglia"
+                app:layout_constraintTop_toBottomOf="@id/inputLayoutNomeSveglia"
                 tools:ignore="MissingConstraints">
 
                 <CheckBox

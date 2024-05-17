@@ -141,21 +141,21 @@
 
             </LinearLayout>
 
-            <!-- pulsanti di suono/vibrazione/rinvia -->
             <LinearLayout
-                android:id="@+id/impostazioni"
-                android:layout_width="0dp"
+                android:id="@+id/layoutSuono"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical"
+                android:layout_weight="1"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@id/guidelineDX"
                 app:layout_constraintStart_toStartOf="@id/guidelineSX"
                 app:layout_constraintTop_toBottomOf="@id/ripetizioni"
-                tools:ignore="MissingConstraints">
+                tools:layout_editor_absoluteX="72dp"
+                tools:layout_editor_absoluteY="470dp">
 
                 <Button
                     android:id="@+id/bottoneSuono"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="@color/sfondoTras"
                     android:text="@string/suono"
@@ -170,7 +170,19 @@
                     android:layout_height="wrap_content"
                     android:text="@string/suono"
                     android:textColor="@color/white"
-                    android:textSize="20dp"/>
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutPosticipa"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="@id/guidelineDX"
+                app:layout_constraintStart_toStartOf="@id/guidelineSX"
+                app:layout_constraintTop_toBottomOf="@id/layoutSuono"
+                tools:ignore="MissingConstraints">
 
                 <Switch
                     android:id="@+id/posticipa"
@@ -194,7 +206,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@id/center"
                 app:layout_constraintStart_toStartOf="@id/guidelineSX"
-                app:layout_constraintTop_toBottomOf="@id/impostazioni"
+                app:layout_constraintTop_toBottomOf="@id/layoutPosticipa"
                 tools:ignore="MissingConstraints">
 
 
@@ -222,7 +234,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@id/guidelineDX"
                 app:layout_constraintStart_toStartOf="@id/center"
-                app:layout_constraintTop_toBottomOf="@id/impostazioni"
+                app:layout_constraintTop_toBottomOf="@id/layoutPosticipa"
                 tools:ignore="MissingConstraints">
 
 

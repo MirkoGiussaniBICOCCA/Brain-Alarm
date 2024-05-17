@@ -1,5 +1,7 @@
 package it.unimib.brain_alarm;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Application;
 
@@ -195,6 +197,7 @@ public class SfidaFragment extends Fragment {
             if (progCalcolatrice>0 || progMemory>0 || progScrivere>0 || progPassi>0) {
                 Navigation.findNavController(v).navigate(R.id.nav_sfidaFragment_to_aggiungiFragment);
                 Log.d(TAG, "ripetizioni " + progCalcolatrice + progMemory + progScrivere + progPassi);
+                saveInformation();
                 }
             else
                 Snackbar.make(requireActivity().findViewById(android.R.id.content), getString(R.string.mxSfida), Snackbar.LENGTH_LONG).show();
@@ -207,7 +210,17 @@ public class SfidaFragment extends Fragment {
     }
 
 
+    private void saveInformation() {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
 
+        String missioni = new String();
+        missioni = String.valueOf(progCalcolatrice + progMemory);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("missioni", missioni);
+        editor.apply();
+
+    }
 
 }
 

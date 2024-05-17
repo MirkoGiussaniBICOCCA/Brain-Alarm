@@ -33,7 +33,7 @@ import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
 public class AggiungiFragment extends Fragment {
 
-    String settimana;
+    //String settimana;
 
     private TimePicker timeP;
     private TextInputLayout nomeSveglia;
@@ -49,7 +49,7 @@ public class AggiungiFragment extends Fragment {
 
     private static String suono, vibrazione;
 
-    private Switch posticipa;
+    private Switch switchPosticipa;
 
     public AggiungiFragment() {
         // Required empty public constructor
@@ -86,6 +86,7 @@ public class AggiungiFragment extends Fragment {
         buttonClassica.setOnClickListener(v -> {
             if (!isClassica) {
                 isClassica = true;
+                isSfida = false;
                 buttonClassica.setBackgroundColor(getResources().getColor(R.color.grigio)); }
             else {
                 isClassica = false;
@@ -118,10 +119,11 @@ public class AggiungiFragment extends Fragment {
         checkboxS = view.findViewById(R.id.sabato);
         checkboxD = view.findViewById(R.id.domenica);
 
-        posticipa = view.findViewById(R.id.posticipa);
+        switchPosticipa = view.findViewById(R.id.posticipa);
 
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
         Set<String> svegliaArray = sharedPref.getStringSet("sveglia", null);
+
 
 
         final Button buttonConferma = view.findViewById(R.id.conferma);
@@ -129,6 +131,7 @@ public class AggiungiFragment extends Fragment {
             if (isSfida || isClassica) {
                 Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_mainActivity);
                 saveInformation();
+                saveArrayInformation();
             }
             else
                 Snackbar.make(requireActivity().findViewById(android.R.id.content), getString(R.string.mxModalità), Snackbar.LENGTH_LONG).show();
@@ -152,19 +155,18 @@ public class AggiungiFragment extends Fragment {
     }
 
 
-
     private void saveInformation() {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
 
+        String orario = new String();
+        orario = String.valueOf(timeP.getHour()) + ":" + String.valueOf(timeP.getMinute()) ;
 
-        Set<String> sveglia = new HashSet<>();
-        //orario o, etichetta e, ripetizioni r, posticipa p, tipo t, attiva a
+        String etichetta = new String();
+        etichetta = nomeSveglia.getEditText().getText().toString();
 
-        sveglia.add("o" + String.valueOf(timeP.getHour()) + ":" + String.valueOf(timeP.getMinute()));
+        String settimana = new String();
 
-        sveglia.add("e"+nomeSveglia.getEditText().getText().toString());
-
-        settimana = "r";
+        settimana = "";
 
         if (checkboxL.isChecked()) {settimana += "1";}
         else settimana += "0";
@@ -188,35 +190,46 @@ public class AggiungiFragment extends Fragment {
         else settimana += "0";
 
         Log.d(TAG, "settimana = " + settimana);
-        sveglia.add(settimana);
 
 
-        /*
-        suono = (sharedPref.getString("suono", null));
-        vibrazione = (sharedPref.getString("vibrazione", null));
+        String posticipa = new String();
+        posticipa = String.valueOf(switchPosticipa.isChecked());
 
-        sveglia.add(suono);
-        sveglia.add(vibrazione);
-        */
-
-        sveglia.add("p" + String.valueOf(posticipa.isChecked()));
-
+        String modalita = new String();
         if (isClassica)
-            sveglia.add("tc");
+            modalita = "tc";
         else if (isSfida)
-            sveglia.add("ts");
+            modalita = "ts";
 
 
-        //TODO salvare per modalità sfida tutte le missioni impostate
 
-       //TODO dentro home fragment si deve poter attivare e disattivare la sveglia
-        sveglia.add("aattiva");
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("orario", orario);
+        editor.putString("etichetta", etichetta);
+        editor.putString("settimana", settimana);
+        editor.putString("posticipa", posticipa);
+        editor.putString("modalita", modalita);
+        editor.apply();
+
+    }
+
+    private void saveArrayInformation() {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+
+        Set<String> sveglia = new HashSet<>();
+
+        sveglia.add(sharedPref.getString("orario", null));
+        sveglia.add(sharedPref.getString("etichetta", null));
+        sveglia.add(sharedPref.getString("settimana", null));
+        sveglia.add(sharedPref.getString("suono", null));
+        sveglia.add(sharedPref.getString("vibrazione", null));
+        sveglia.add(sharedPref.getString("posticipa", null));
+        sveglia.add(sharedPref.getString("modalita", null));
+        sveglia.add("attiva");  //TODO dentro home fragment si deve poter attivare e disattivare la sveglia
 
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putStringSet("sveglia", sveglia);
         editor.apply();
-
-
 
     }
 

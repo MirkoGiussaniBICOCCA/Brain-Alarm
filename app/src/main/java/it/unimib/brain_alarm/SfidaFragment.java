@@ -214,7 +214,7 @@ public class SfidaFragment extends Fragment {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
 
         String missioni = new String();
-        missioni = String.valueOf(progCalcolatrice + progMemory);
+        missioni = String.valueOf(progCalcolatrice) + String.valueOf(progMemory) + String.valueOf(progScrivere) + String.valueOf(progPassi);
 
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("missioni", missioni);

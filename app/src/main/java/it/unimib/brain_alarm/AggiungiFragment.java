@@ -225,6 +225,7 @@ public class AggiungiFragment extends Fragment {
         sveglia.add(sharedPref.getString("vibrazione", null));
         sveglia.add(sharedPref.getString("posticipa", null));
         sveglia.add(sharedPref.getString("modalita", null));
+        sveglia.add(sharedPref.getString("missioni",null));
         sveglia.add("attiva");  //TODO dentro home fragment si deve poter attivare e disattivare la sveglia
 
         SharedPreferences.Editor editor = sharedPref.edit();

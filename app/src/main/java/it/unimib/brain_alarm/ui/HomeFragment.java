@@ -63,11 +63,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         txtCl = view.findViewById(R.id.txtClock);
-
-        // on below line we are setting 12 hour
-        // format for our text clock
         txtCl.setFormat12Hour("hh:mm:ss a");
-
 
         final Button buttonAggiungi = view.findViewById(R.id.bottoneAggiungiSveglia);
 

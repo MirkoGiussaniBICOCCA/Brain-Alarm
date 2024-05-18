@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
@@ -33,8 +34,6 @@ import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
 public class AggiungiFragment extends Fragment {
 
-    //String settimana;
-
     private TimePicker timeP;
     private TextInputLayout nomeSveglia;
 
@@ -47,7 +46,7 @@ public class AggiungiFragment extends Fragment {
 
     private CheckBox checkboxD;
 
-    private static String suono, vibrazione;
+    TextView suonoScelto;
 
     private Switch switchPosticipa;
 
@@ -125,6 +124,13 @@ public class AggiungiFragment extends Fragment {
         Set<String> svegliaArray = sharedPref.getStringSet("sveglia", null);
 
 
+        final Button buttoneSuono = view.findViewById(R.id.bottoneSuono);
+        buttoneSuono.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_suoniFragment);
+        });
+
+       suonoScelto = view.findViewById(R.id.txtSuono);
+       suonoScelto.setText(sharedPref.getString("suono", null));
 
         final Button buttonConferma = view.findViewById(R.id.conferma);
         buttonConferma.setOnClickListener(v -> {
@@ -142,15 +148,6 @@ public class AggiungiFragment extends Fragment {
         buttonAnnulla.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_mainActivity);
         } );
-
-        final Button buttoneSuono = view.findViewById(R.id.bottoneSuono);
-        buttoneSuono.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_suoniFragment);
-
-        });
-
-
-
 
     }
 

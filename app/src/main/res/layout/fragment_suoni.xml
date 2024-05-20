@@ -47,29 +47,6 @@
                                     android:textColor="@color/white"
                                     android:textSize="20dp" />
 
-                                <com.google.android.material.chip.Chip
-                                    android:id="@+id/chipVibr"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="20dp"
-                                    android:layout_marginStart="30dp"
-                                    android:layout_marginEnd="30dp"
-                                    android:checkable="true"
-                                    app:chipIcon="@drawable/close"
-                                    android:text="@string/vibrazione"
-                                    />
-
-                                <Spinner
-                                    android:id="@+id/spinnerSuono"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="30dp"
-                                    android:layout_marginTop="20dp"
-                                    android:layout_marginEnd="30dp"
-                                    android:background="@color/white"
-                                    android:entries="@array/suoni_array"
-                                    android:isScrollContainer="false"
-                                    android:minHeight="48dp" />
 
 
                         </LinearLayout>

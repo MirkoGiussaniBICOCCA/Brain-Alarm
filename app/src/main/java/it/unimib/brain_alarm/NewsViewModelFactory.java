@@ -7,10 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import it.unimib.brain_alarm.Repository.INewsRepositoryWithLiveData;
 
-/**
- * Custom ViewModelProvider to be able to have a custom constructor
- * for the NewsViewModel class.
- */
+
 public class NewsViewModelFactory implements ViewModelProvider.Factory {
 
     private final INewsRepositoryWithLiveData iNewsRepositoryWithLiveData;

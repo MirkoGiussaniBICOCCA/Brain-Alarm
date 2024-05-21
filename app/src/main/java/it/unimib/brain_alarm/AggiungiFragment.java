@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -27,6 +28,7 @@ import android.widget.TimePicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.chip.Chip;
@@ -34,13 +36,24 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import it.unimib.brain_alarm.News.News;
+import it.unimib.brain_alarm.Repository.INewsRepositoryWithLiveData;
+import it.unimib.brain_alarm.Sveglia.Sveglie;
+import it.unimib.brain_alarm.adapter.NewsRecyclerViewAdapter;
+import it.unimib.brain_alarm.util.ServiceLocator;
 import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
 public class AggiungiFragment extends Fragment {
-
+    private List<Sveglie> sveglieList;
+    private NewsRecyclerViewAdapter newsRecyclerViewAdapter;
+    private SharedPreferencesUtil sharedPreferencesUtil;
+    private ProgressBar progressBar;
+    private NewsViewModel newsViewModel;
     private TimePicker timeP;
     private TextInputLayout nomeSveglia;
 
@@ -104,6 +117,7 @@ public class AggiungiFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override

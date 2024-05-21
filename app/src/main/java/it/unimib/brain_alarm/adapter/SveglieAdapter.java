@@ -26,44 +26,31 @@ import java.util.Set;
 
 import it.unimib.brain_alarm.R;
 import it.unimib.brain_alarm.News.News;
+import it.unimib.brain_alarm.Sveglia.Sveglie;
 import it.unimib.brain_alarm.util.DateTimeUtil;
 
 
 
 public class SveglieAdapter extends RecyclerView.Adapter<SveglieAdapter.ViewHolder> {
 
-    private String[] localDataSet;
 
-
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView textView;
-
-        public ViewHolder(View view) {
-            super(view);
-            // Define click listener for the ViewHolder's View
-
-            textView = (TextView) view.findViewById(R.id.textview_orario);
-        }
-
-        public TextView getTextView() {
-            return textView;
-        }
+    public interface OnItemClickListener {
+        void onSveglieItemClick(Sveglie sveglie);
     }
 
+    private final List<Sveglie> sveglieList;
+    private final Application application;
+    private final OnItemClickListener onItemClickListener;
 
-    public SveglieAdapter(Context context, String[] dataSet) {
-
-        SharedPreferences sharedPreferences =  context.getSharedPreferences("information_shared", Context.MODE_PRIVATE);
-        Set<String> set = sharedPreferences.getStringSet("mySetKey", new HashSet<>());
-        List<String> dataList = new ArrayList<>(set);
-
-        localDataSet = dataList.toArray(new String[0]);
+    public SveglieAdapter(List<Sveglie> sveglieList, Application application, SveglieAdapter.OnItemClickListener onItemClickListener) {
+        this.sveglieList = sveglieList;
+        this.application = application;
+        this.onItemClickListener = onItemClickListener;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.sveglie_list_item, viewGroup, false);
@@ -71,18 +58,43 @@ public class SveglieAdapter extends RecyclerView.Adapter<SveglieAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.getTextView().setText(localDataSet[position]);
+        viewHolder.bind(sveglieList.get(position));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return localDataSet.length;
+        if (sveglieList != null) {
+            return sveglieList.size();
+        }
+        return 0;
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private final TextView textViewOrario;
+
+        public ViewHolder(View view) {
+            super(view);
+            // Define click listener for the ViewHolder's View
+
+            textViewOrario = (TextView) view.findViewById(R.id.textview_orario);
+            itemView.setOnClickListener(this);
+        }
+
+        public void bind(Sveglie sveglie) {
+            textViewOrario.setText(sveglie.getOrario());
+        }
+
+        @Override
+        public void onClick(View v) {
+
+        }
     }
 }

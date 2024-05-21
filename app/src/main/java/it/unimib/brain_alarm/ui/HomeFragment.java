@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,12 +35,20 @@ import java.util.Set;
 
 import it.unimib.brain_alarm.AggiungiActivity;
 import it.unimib.brain_alarm.News.News;
+import it.unimib.brain_alarm.NewsViewModel;
 import it.unimib.brain_alarm.R;
+import it.unimib.brain_alarm.Sveglia.Sveglie;
 import it.unimib.brain_alarm.adapter.NewsRecyclerViewAdapter;
 import it.unimib.brain_alarm.adapter.SveglieAdapter;
+import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
 
 public class HomeFragment extends Fragment {
+    private List<Sveglie> sveglieList;
+    private NewsRecyclerViewAdapter newsRecyclerViewAdapter;
+    private SharedPreferencesUtil sharedPreferencesUtil;
+    private ProgressBar progressBarSveglie;
+    private ViewModel viewModel;
 
     private static final String TAG = AggiungiActivity.class.getSimpleName();
 
@@ -51,14 +61,21 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance(String param1, String param2) {
+    public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
 
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {super.onCreate(savedInstanceState);}
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        sharedPreferencesUtil = new SharedPreferencesUtil(requireActivity().getApplication());
+
+        viewModel = new ViewModelProvider();
+
+        sveglieList = new ArrayList<>();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -105,20 +122,27 @@ public class HomeFragment extends Fragment {
                 new LinearLayoutManager(requireContext(),
                         LinearLayoutManager.VERTICAL, false);
 
-
+        sveglieAdapter = new SveglieAdapter(sveglieList,
+                requireActivity().getApplication(),
+                new SveglieAdapter().OnItemClickListener() {
+                    @Override
+                    public void onNewsItemClick(Sveglie sveglie) {
+                        Snackbar.make(view, sveglie.getOrario(), Snackbar.LENGTH_SHORT).show();
+                    }
+                });
 
         // Utilizzare un layout manager per la RecyclerView
         recyclerView.setLayoutManager(layoutManager);
 
-
+        // Specificare l'adapter
+        recyclerView.setAdapter(sveglieAdapter);
 
         // Caricare i dati da SharedPreferences
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
         Set<String> set = sharedPreferences.getStringSet("sveglia_keys", new HashSet<>());
-        List<String> dataList = new ArrayList<>(set);
+        sveglieList = new ArrayList<>(set);
 
-        // Specificare l'adapter
-        recyclerView.setAdapter(sveglieAdapter);
+
 
 
 

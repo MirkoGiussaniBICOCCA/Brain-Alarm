@@ -29,8 +29,8 @@ public class Sveglie implements Parcelable {
         this.etichetta = etichetta;
     }
 
-    public Sveglie(String orario, String etichetta) {
-        this(orario, etichetta);
+    public Sveglie(String orario) {
+        this(orario, null);
     }
 
     public long getId() {

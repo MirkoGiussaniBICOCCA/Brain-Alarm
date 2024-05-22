@@ -1,8 +1,11 @@
 package it.unimib.brain_alarm.source;
 
+import static android.content.ContentValues.TAG;
 import static it.unimib.brain_alarm.util.Constants.API_KEY_ERROR;
 import static it.unimib.brain_alarm.util.Constants.RETROFIT_ERROR;
 import static it.unimib.brain_alarm.util.Constants.TOP_HEADLINES_PAGE_SIZE_VALUE;
+
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -40,6 +43,10 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
                     newsCallback.onSuccessFromRemote(response.body(), System.currentTimeMillis());
 
                 } else {
+                    Log.d(TAG, "problema : " + response.body() );
+                    Log.d(TAG, "problema : " + response.isSuccessful());
+                    Log.d(TAG, "problema : " + !response.body().getStatus().equals("error"));
+                    Log.d(TAG, "NewsRemoteDataSource" );
                     newsCallback.onFailureFromRemote(new Exception(API_KEY_ERROR));
                 }
             }

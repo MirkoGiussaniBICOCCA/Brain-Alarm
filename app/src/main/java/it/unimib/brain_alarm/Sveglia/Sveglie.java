@@ -12,10 +12,11 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Objects;
+import java.util.Set;
 
 
 @Entity
-public class Sveglie implements Parcelable {
+public class Sveglie { //implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
@@ -24,6 +25,13 @@ public class Sveglie implements Parcelable {
 
     public Sveglie() {}
 
+    private Set<String> elementi;
+
+    public Sveglie(Set<String> elementi) {
+            this.elementi = elementi;
+    }
+
+        /*
     public Sveglie(String orario, String etichetta) {
         this.orario = orario;
         this.etichetta = etichetta;
@@ -32,6 +40,7 @@ public class Sveglie implements Parcelable {
     public Sveglie(String orario) {
         this(orario, null);
     }
+    */
 
     public long getId() {
         return id;
@@ -79,6 +88,8 @@ public class Sveglie implements Parcelable {
     public int hashCode() {
         return Objects.hash(orario, etichetta);
     }
+
+    /*
     @Override
     public int describeContents() {
         return 0;
@@ -92,6 +103,8 @@ public class Sveglie implements Parcelable {
 
     }
 
+
+     */
     public void readFromParcel(Parcel source) {
         this.id = source.readLong();
         this.orario = source.readString();

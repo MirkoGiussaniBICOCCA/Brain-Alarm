@@ -1,9 +1,12 @@
 package it.unimib.brain_alarm.source;
 
 
+import static android.content.ContentValues.TAG;
 import static it.unimib.brain_alarm.util.Constants.API_KEY_ERROR;
 import static it.unimib.brain_alarm.util.Constants.NEWS_API_TEST_JSON_FILE;
 import static it.unimib.brain_alarm.util.Constants.UNEXPECTED_ERROR;
+
+import android.util.Log;
 
 import org.json.JSONException;
 
@@ -63,6 +66,7 @@ public class NewsMockRemoteDataSource extends BaseNewsRemoteDataSource {
             newsCallback.onSuccessFromRemote(newsApiResponse, System.currentTimeMillis());
         } else {
             newsCallback.onFailureFromRemote(new Exception(API_KEY_ERROR));
+            Log.d(TAG, "NewsMockRemoteDataSource");
         }
     }
 }

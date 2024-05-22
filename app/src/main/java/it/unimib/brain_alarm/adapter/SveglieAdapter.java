@@ -34,17 +34,16 @@ import it.unimib.brain_alarm.util.DateTimeUtil;
 public class SveglieAdapter extends RecyclerView.Adapter<SveglieAdapter.ViewHolder> {
 
 
-    public interface OnItemClickListener {
-        void onSveglieItemClick(Sveglie sveglie);
+    public interface OnItemClickListenerS  {
+        void onNewsItemClick(Sveglie sveglie);
+
     }
 
     private final List<Sveglie> sveglieList;
-    private final Application application;
-    private final OnItemClickListener onItemClickListener;
+    private final OnItemClickListenerS onItemClickListener;
 
-    public SveglieAdapter(List<Sveglie> sveglieList, Application application, SveglieAdapter.OnItemClickListener onItemClickListener) {
+    public SveglieAdapter(List<Sveglie> sveglieList, SveglieAdapter.OnItemClickListenerS onItemClickListener) {
         this.sveglieList = sveglieList;
-        this.application = application;
         this.onItemClickListener = onItemClickListener;
     }
 

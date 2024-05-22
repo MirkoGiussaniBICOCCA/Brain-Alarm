@@ -4,29 +4,30 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextClock;
-import android.widget.TextSwitcher;
 
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -34,8 +35,6 @@ import java.util.List;
 import java.util.Set;
 
 import it.unimib.brain_alarm.AggiungiActivity;
-import it.unimib.brain_alarm.News.News;
-import it.unimib.brain_alarm.NewsViewModel;
 import it.unimib.brain_alarm.R;
 import it.unimib.brain_alarm.Sveglia.Sveglie;
 import it.unimib.brain_alarm.adapter.NewsRecyclerViewAdapter;
@@ -44,7 +43,13 @@ import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
 
 public class HomeFragment extends Fragment {
-    private List<Sveglie> sveglieList;
+
+    private static final String PREFERENCES_NAME = "MyAppPreferences";
+    private static final String SVEGLIE_KEY = "SveglieKey";
+    private SharedPreferences sharedPreferences;
+    private Gson gson;
+
+
     private NewsRecyclerViewAdapter newsRecyclerViewAdapter;
     private SharedPreferencesUtil sharedPreferencesUtil;
     private ProgressBar progressBarSveglie;
@@ -70,11 +75,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sharedPreferencesUtil = new SharedPreferencesUtil(requireActivity().getApplication());
-
-        viewModel = new ViewModelProvider();
-
-        sveglieList = new ArrayList<>();
     }
 
     @Override
@@ -115,20 +115,38 @@ public class HomeFragment extends Fragment {
         */
 
 
-        progressBar = view.findViewById(R.id.progress_bar);
+        requireActivity().addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menu.clear();
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                return false;
+            }
+        });
+
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview_sveglie);
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(),
                         LinearLayoutManager.VERTICAL, false);
 
-        sveglieAdapter = new SveglieAdapter(sveglieList,
-                requireActivity().getApplication(),
-                new SveglieAdapter().OnItemClickListener() {
+
+        Log.d(TAG, "proba");
+        List<Sveglie> sveglieList = getSveglie();
+
+        Log.d(TAG, sveglieList.toString());
+
+        SveglieAdapter sveglieAdapter = new SveglieAdapter(sveglieList,
+                new SveglieAdapter.OnItemClickListenerS() {
                     @Override
                     public void onNewsItemClick(Sveglie sveglie) {
                         Snackbar.make(view, sveglie.getOrario(), Snackbar.LENGTH_SHORT).show();
                     }
+
+
                 });
 
         // Utilizzare un layout manager per la RecyclerView
@@ -137,20 +155,53 @@ public class HomeFragment extends Fragment {
         // Specificare l'adapter
         recyclerView.setAdapter(sveglieAdapter);
 
-        // Caricare i dati da SharedPreferences
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
-        Set<String> set = sharedPreferences.getStringSet("sveglia_keys", new HashSet<>());
-        sveglieList = new ArrayList<>(set);
-
-
-
-
-
-
-
-
     }
 
+    private List<Sveglie> getSveglie() {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+
+        // Recupera l'elenco delle chiavi e rimuove ogni set associato
+        Set<String> keySet = sharedPref.getStringSet("sveglia_keys", new HashSet<>());
+
+        Log.d(TAG, "keySet " + keySet);
+
+        List<Set<String>> setList = new ArrayList<>();
+        List<Sveglie> listSveglie = new ArrayList<>();
+
+        for (String key : keySet) {
+            Log.d(TAG, "elenco key " + key);
+            Set<String> sveglieSet = sharedPref.getStringSet(key, new HashSet<>());
+            Log.d(TAG, "sveglieSet " + sveglieSet);
+            setList.add(sveglieSet);
+
+            Sveglie sveglia = new Sveglie(sveglieSet);
+            listSveglie.add(sveglia);
+            }
+        Log.d(TAG, "keySet " + keySet);
+        Log.d(TAG, "listSveglie " + listSveglie);
+
+        /*
+        // Convertire i set di stringhe in una lista di oggetti Sveglia
+        List<Sveglie> listSveglie = new ArrayList<>();
+        for (Set<String> set : setList) {
+            Log.d(TAG,"set passato a Sveglie() " + setList);
+            //crea gli oggetti sveglia
+            Sveglie sveglia = new Sveglie(set);
+            listSveglie.add(sveglia); }
+        */
+
+
+        return listSveglie;
+    }
+
+        /*
+    public void saveSveglie(List<Sveglie> sveglieList) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String jsonSveglie = gson.toJson(sveglieList);
+        editor.putString(SVEGLIE_KEY, jsonSveglie);
+        editor.apply();
+    }
+    */
 
     private void removeAllSavedSets() {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);

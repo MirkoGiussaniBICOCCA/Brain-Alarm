@@ -45,7 +45,7 @@ import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 public class HomeFragment extends Fragment {
 
     private static final String PREFERENCES_NAME = "MyAppPreferences";
-    private static final String SVEGLIE_KEY = "SveglieKey";
+    public static final String SVEGLIE_KEY = "SveglieKey";
     private SharedPreferences sharedPreferences;
     private Gson gson;
 
@@ -134,18 +134,25 @@ public class HomeFragment extends Fragment {
                         LinearLayoutManager.VERTICAL, false);
 
 
-        Log.d(TAG, "proba");
+        Log.d(TAG, "prova");
         List<Sveglie> sveglieList = getSveglie();
 
         Log.d(TAG, sveglieList.toString());
 
-        SveglieAdapter sveglieAdapter = new SveglieAdapter(sveglieList,
+
+        Context context;
+        context = null;
+        SveglieAdapter sveglieAdapter = new SveglieAdapter(context, sveglieList,
                 new SveglieAdapter.OnItemClickListenerS() {
                     @Override
-                    public void onNewsItemClick(Sveglie sveglie) {
+                    public void onSveglieItemClick(Sveglie sveglie) {
                         Snackbar.make(view, sveglie.getOrario(), Snackbar.LENGTH_SHORT).show();
                     }
-
+                    @Override
+                    public void onDeleteButtonPressed(int position) {
+                        Snackbar.make(view, getString(R.string.list_size_message) + sveglieList.size(),
+                                Snackbar.LENGTH_SHORT).show();
+                    }
 
                 });
 
@@ -180,28 +187,18 @@ public class HomeFragment extends Fragment {
         Log.d(TAG, "keySet " + keySet);
         Log.d(TAG, "listSveglie " + listSveglie);
 
-        /*
-        // Convertire i set di stringhe in una lista di oggetti Sveglia
-        List<Sveglie> listSveglie = new ArrayList<>();
-        for (Set<String> set : setList) {
-            Log.d(TAG,"set passato a Sveglie() " + setList);
-            //crea gli oggetti sveglia
-            Sveglie sveglia = new Sveglie(set);
-            listSveglie.add(sveglia); }
-        */
-
-
         return listSveglie;
     }
 
-        /*
+/*
     public void saveSveglie(List<Sveglie> sveglieList) {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String jsonSveglie = gson.toJson(sveglieList);
         editor.putString(SVEGLIE_KEY, jsonSveglie);
         editor.apply();
     }
-    */
+*/
 
     private void removeAllSavedSets() {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);

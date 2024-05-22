@@ -3,6 +3,7 @@ package it.unimib.brain_alarm.Sveglia;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
@@ -14,55 +15,110 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Objects;
 import java.util.Set;
 
+import it.unimib.brain_alarm.AggiungiActivity;
+
 
 @Entity
 public class Sveglie { //implements Parcelable {
 
-    @PrimaryKey(autoGenerate = true)
-    private long id;
+    private static final String TAG = Sveglie.class.getSimpleName();
+    private String id;
+
     private String orario;
     private String etichetta;
 
-    public Sveglie() {}
+    private String ripetizioni;
 
     private Set<String> elementi;
 
+    private String key;
+
     public Sveglie(Set<String> elementi) {
             this.elementi = elementi;
+            Log.d(TAG, "elementi " + elementi);
     }
 
-        /*
-    public Sveglie(String orario, String etichetta) {
-        this.orario = orario;
-        this.etichetta = etichetta;
-    }
 
-    public Sveglie(String orario) {
-        this(orario, null);
-    }
-    */
+    public String getId() {
 
-    public long getId() {
+        for (String e : elementi) {
+            e.toString();
+            Log.d(TAG, "prima parola " + e.toString());
+
+            if (!e.toString().isEmpty())
+                if ((e.toString()).charAt(0) == 's')
+                    id = e.toString();
+        }
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public String getOrario() {
+
+       for (String e : elementi) {
+            e.toString();
+            Log.d(TAG, "prima parola " + e.toString());
+
+            if (!e.toString().isEmpty())
+                if ((e.toString()).charAt(0) == 'o')
+                    orario = e.toString().substring(1);
+        }
         return orario;
     }
 
-    public void setOrario(String author) {
+    public void setOrario(String orario) {
         this.orario = orario;
     }
 
     public String getEtichetta() {
+        for (String e : elementi) {
+            e.toString();
+
+            if (!e.toString().isEmpty())
+                if ((e.toString()).charAt(0) == 'e')
+                    etichetta = e.toString().substring(1);
+        }
         return etichetta;
     }
 
-    public void setEtichetta(String author) {
+    public void setEtichetta(String etichetta) {
+        this.etichetta = etichetta;
+    }
+
+    public String getRipetizioni() {
+        String ripetizioni1 = "";
+        for (String e : elementi) {
+            e.toString();
+            if (!e.toString().isEmpty())
+                if ((e.toString()).charAt(0) == 'r')
+                    ripetizioni1 = e.toString().substring(1);
+        }
+        ripetizioni = "";
+        for (int i=0; i<(ripetizioni1.length()-1); i++) {
+            if (ripetizioni1.charAt(i) == '1')
+                ripetizioni += "Lunedì ";
+            if (ripetizioni1.charAt(i) == '2')
+                ripetizioni += "Martedì ";
+            if (ripetizioni1.charAt(i) == '3')
+                ripetizioni += "Mercoledì ";
+            if (ripetizioni1.charAt(i) == '4')
+                ripetizioni += "Giovedì ";
+            if (ripetizioni1.charAt(i) == '5')
+                ripetizioni += "Venerdì ";
+            if (ripetizioni1.charAt(i) == '6')
+                ripetizioni += "Sabato ";
+            if (ripetizioni1.charAt(i) == '7')
+                ripetizioni += "Domenica";
+            Log.d(TAG, "ripetizioni" + ripetizioni);
+        }
+
+        return ripetizioni;
+    }
+
+    public void setRipetizioni(String ripetizioni) {
         this.etichetta = etichetta;
     }
 
@@ -73,6 +129,7 @@ public class Sveglie { //implements Parcelable {
         return "Sveglia{" +
                 "orario='" + orario +
                 ", etichetta='" + etichetta + '\'' +
+                ", ripetizioni='" + ripetizioni + '\'' +
                 '}';
     }
 
@@ -106,14 +163,14 @@ public class Sveglie { //implements Parcelable {
 
      */
     public void readFromParcel(Parcel source) {
-        this.id = source.readLong();
+        this.id = source.readString();
         this.orario = source.readString();
         this.etichetta = source.readString();
 
     }
 
     protected Sveglie(Parcel in) {
-        this.id = in.readLong();
+        this.id = in.readString();
         this.orario = in.readString();
         this.etichetta = in.readString();
 

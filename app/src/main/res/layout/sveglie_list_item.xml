@@ -8,16 +8,71 @@
     android:descendantFocusability="blocksDescendants"
     android:padding="12dp">
 
-    <TextView
-        android:id="@+id/textview_orario"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textAppearance="?attr/textAppearanceTitleMedium"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/news_list_item_title" />
+    <LinearLayout
+        android:id="@+id/layoutRigaSveglie"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
+
+
+        <LinearLayout
+            android:id="@+id/layoutTesti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textview_orario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="parent"
+                android:layout_marginTop="16dp"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                tools:text="orario" />
+
+            <TextView
+                android:id="@+id/textview_etichetta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/textview_orario"
+                android:layout_marginTop="16dp"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                tools:text="etichetta" />
+
+            <TextView
+                android:id="@+id/textview_ripetizioni"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                tools:text="ripetizioni" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonEliminaSingolaSveglia"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/sfondoTras"
+            android:text="Canc"
+            app:icon="@drawable/cestino"
+            app:iconTint="@color/white" />
+    </LinearLayout>
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_centerVertical="true"
+        app:layout_constraintTop_toBottomOf="@id/layoutRigaSveglie"
+    android:layout_marginTop="10dp"
+    android:background="@color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>

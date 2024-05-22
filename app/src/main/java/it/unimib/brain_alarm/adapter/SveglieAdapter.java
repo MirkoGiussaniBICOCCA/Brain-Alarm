@@ -4,9 +4,12 @@ package it.unimib.brain_alarm.adapter;
 
 import static com.google.android.material.internal.ContextUtils.getActivity;
 
+import static it.unimib.brain_alarm.ui.HomeFragment.SVEGLIE_KEY;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.arch.core.internal.FastSafeIterableMap;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,23 +35,29 @@ import it.unimib.brain_alarm.util.DateTimeUtil;
 
 
 
-public class SveglieAdapter extends RecyclerView.Adapter<SveglieAdapter.ViewHolder> {
+public class SveglieAdapter extends
+        RecyclerView.Adapter<SveglieAdapter.ViewHolder> {
 
 
     public interface OnItemClickListenerS  {
-        void onNewsItemClick(Sveglie sveglie);
+        void onSveglieItemClick(Sveglie sveglie);
+        void onDeleteButtonPressed(int position);
 
     }
 
+    private static final String TAG = SveglieAdapter.class.getSimpleName();
+    private Context context;
     private final List<Sveglie> sveglieList;
-    private final OnItemClickListenerS onItemClickListener;
+    private final OnItemClickListenerS onItemClickListenerS;
 
-    public SveglieAdapter(List<Sveglie> sveglieList, SveglieAdapter.OnItemClickListenerS onItemClickListener) {
+    public SveglieAdapter(Context context, List<Sveglie> sveglieList, SveglieAdapter.OnItemClickListenerS onItemClickListener) {
+        this.context = context;
         this.sveglieList = sveglieList;
-        this.onItemClickListener = onItemClickListener;
+        this.onItemClickListenerS = onItemClickListener;
     }
 
     // Create new views (invoked by the layout manager)
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
@@ -76,23 +86,53 @@ public class SveglieAdapter extends RecyclerView.Adapter<SveglieAdapter.ViewHold
         return 0;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView textViewOrario;
+        private final TextView textViewEtichetta;
+        private final TextView textViewRipetizioni;
+
+
 
         public ViewHolder(View view) {
             super(view);
-            // Define click listener for the ViewHolder's View
-
             textViewOrario = (TextView) view.findViewById(R.id.textview_orario);
+            textViewEtichetta = (TextView) view.findViewById(R.id.textview_etichetta);
+            textViewRipetizioni = (TextView) view.findViewById(R.id.textview_ripetizioni);
+            Button buttonDelete = itemView.findViewById(R.id.buttonEliminaSingolaSveglia);
             itemView.setOnClickListener(this);
+            buttonDelete.setOnClickListener(this);
         }
 
         public void bind(Sveglie sveglie) {
             textViewOrario.setText(sveglie.getOrario());
+            textViewEtichetta.setText(sveglie.getEtichetta());
+            textViewRipetizioni.setText(sveglie.getRipetizioni());
         }
+
 
         @Override
         public void onClick(View v) {
+            if (v.getId() == R.id.buttonEliminaSingolaSveglia) {
+                sveglieList.remove(getAdapterPosition());
+                // Call this method to refresh the UI after the deletion of an item
+                // and update the content of RecyclerView
+                notifyItemRemoved(getAdapterPosition());
+                onItemClickListenerS.onDeleteButtonPressed(getAdapterPosition());
+
+                SharedPreferences sharedPref = context.getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                Log.d(TAG, "prima di e.getID " );
+                for (Sveglie e : sveglieList) {
+                    Log.d(TAG, "e.getID " + e.getId());
+                    //editor.remove(e.getId());
+                }
+                editor.apply();
+
+            } else {
+                onItemClickListenerS.onSveglieItemClick(sveglieList.get(getAdapterPosition()));
+            }
 
         }
     }

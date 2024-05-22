@@ -357,15 +357,16 @@ public class AggiungiFragment extends Fragment {
 
         Set<String> sveglia = new HashSet<>();
 
+
         //ora
-        sveglia.add( String.valueOf(timeP.getHour()) + ":" + String.valueOf(timeP.getMinute()) );
+        sveglia.add("o" + String.valueOf(timeP.getHour()) + ":" + String.valueOf(timeP.getMinute()) );
 
         //etichetta
-        sveglia.add( nomeSveglia.getEditText().getText().toString());
+        sveglia.add("e" + nomeSveglia.getEditText().getText().toString());
 
         //ripetizioni
         String settimana = new String();
-        settimana = "";
+        settimana = "r";
 
         if (checkboxL.isChecked()) {settimana += "1";}
         else settimana += "0";
@@ -397,9 +398,9 @@ public class AggiungiFragment extends Fragment {
         //suono, vibrazione
         sveglia.add(spinnerSuoni.getSelectedItem().toString());
         if (isVibrazione)
-            sveglia.add("1");
+            sveglia.add("v1");
         else
-            sveglia.add("0");
+            sveglia.add("v0");
 
 
 
@@ -418,12 +419,16 @@ public class AggiungiFragment extends Fragment {
 
         SharedPreferences.Editor editor = sharedPref.edit();
         String uniqueKey = "sveglia_" + System.currentTimeMillis();
+        sveglia.add(uniqueKey);
 
         editor.putStringSet(uniqueKey, sveglia);
 
         // Recupera e aggiorna l'elenco delle chiavi
         Set<String> keySet = sharedPref.getStringSet("sveglia_keys", new HashSet<>());
         keySet.add(uniqueKey);
+
+
+
         editor.putStringSet("sveglia_keys", keySet);
 
         editor.apply();

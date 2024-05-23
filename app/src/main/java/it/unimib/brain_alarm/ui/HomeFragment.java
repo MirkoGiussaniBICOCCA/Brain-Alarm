@@ -101,8 +101,8 @@ public class HomeFragment extends Fragment {
         final Button buttonEliminaSveglie = view.findViewById(R.id.cancellaSveglie);
 
         buttonEliminaSveglie.setOnClickListener(v -> {
-            Log.d(TAG, "click remove tutte" );
-            removeAllSavedSets();
+            Log.d(TAG, "click remove tutte");
+            removeAllSveglie();
         });
 
         /*
@@ -140,14 +140,13 @@ public class HomeFragment extends Fragment {
         Log.d(TAG, sveglieList.toString());
 
 
-        Context context;
-        context = null;
-        SveglieAdapter sveglieAdapter = new SveglieAdapter(context, sveglieList,
+        SveglieAdapter sveglieAdapter = new SveglieAdapter(getContext(), sveglieList,
                 new SveglieAdapter.OnItemClickListenerS() {
                     @Override
                     public void onSveglieItemClick(Sveglie sveglie) {
                         Snackbar.make(view, sveglie.getOrario(), Snackbar.LENGTH_SHORT).show();
                     }
+
                     @Override
                     public void onDeleteButtonPressed(int position) {
                         Snackbar.make(view, getString(R.string.list_size_message) + sveglieList.size(),
@@ -190,7 +189,7 @@ public class HomeFragment extends Fragment {
         return listSveglie;
     }
 
-/*
+
     public void saveSveglie(List<Sveglie> sveglieList) {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -198,9 +197,9 @@ public class HomeFragment extends Fragment {
         editor.putString(SVEGLIE_KEY, jsonSveglie);
         editor.apply();
     }
-*/
 
-    private void removeAllSavedSets() {
+
+    private void removeAllSveglie() {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
@@ -220,21 +219,6 @@ public class HomeFragment extends Fragment {
         editor.apply();
     }
 
-
-    private void removeSavedSet(String key) {
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-
-        // Rimuove il set associato alla chiave
-        editor.remove(key);
-
-        // Aggiorna l'elenco delle chiavi
-        Set<String> keySet = sharedPref.getStringSet("sveglia_keys", new HashSet<>());
-        keySet.remove(key);
-        editor.putStringSet("sveglia_keys", keySet);
-
-        editor.apply();
-    }
 
 
 }

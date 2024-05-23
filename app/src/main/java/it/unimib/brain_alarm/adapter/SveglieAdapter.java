@@ -116,20 +116,15 @@ public class SveglieAdapter extends
         public void onClick(View v) {
             if (v.getId() == R.id.buttonEliminaSingolaSveglia) {
                 sveglieList.remove(getAdapterPosition());
-                // Call this method to refresh the UI after the deletion of an item
-                // and update the content of RecyclerView
+                Log.d(TAG, "getID " + (sveglieList.get(getAdapterPosition())).getId());
+                //getAdapterPosition mi restituisce la posizione della sveglia da cancellare, partono da 0
                 notifyItemRemoved(getAdapterPosition());
                 onItemClickListenerS.onDeleteButtonPressed(getAdapterPosition());
 
                 SharedPreferences sharedPref = context.getSharedPreferences("information_shared", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
-                Log.d(TAG, "prima di e.getID " );
-                for (Sveglie e : sveglieList) {
-                    Log.d(TAG, "e.getID " + e.getId());
-                    //editor.remove(e.getId());
-                }
+                editor.remove((sveglieList.get(getAdapterPosition())).getId());
                 editor.apply();
-
             } else {
                 onItemClickListenerS.onSveglieItemClick(sveglieList.get(getAdapterPosition()));
             }

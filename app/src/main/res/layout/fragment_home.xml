@@ -80,7 +80,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
                 android:layout_marginTop="44dp"
                 android:background="@drawable/background_navbar"
                 android:orientation="vertical"
@@ -128,19 +128,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:text="eliminaTutteLeSveglie"
+                app:icon="@drawable/cestino"
+                app:iconTint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-            <Button
-                android:id="@+id/cancellaSingolaSveglia"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="eliminaSingolaSveglia"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cancellaSveglie" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

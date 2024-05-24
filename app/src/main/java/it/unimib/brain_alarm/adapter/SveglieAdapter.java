@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -47,11 +48,14 @@ public class SveglieAdapter extends
 
     private static final String TAG = SveglieAdapter.class.getSimpleName();
     private Context context;
+    private final Application application;
+
     private final List<Sveglie> sveglieList;
     private final OnItemClickListenerS onItemClickListenerS;
 
-    public SveglieAdapter(Context context, List<Sveglie> sveglieList, SveglieAdapter.OnItemClickListenerS onItemClickListener) {
+    public SveglieAdapter(Context context, Application application, List<Sveglie> sveglieList, SveglieAdapter.OnItemClickListenerS onItemClickListener) {
         this.context = context;
+        this.application = application;
         this.sveglieList = sveglieList;
         this.onItemClickListenerS = onItemClickListener;
     }
@@ -94,39 +98,67 @@ public class SveglieAdapter extends
         private final TextView textViewRipetizioni;
 
 
+        private final ImageView imageSfida;
 
         public ViewHolder(View view) {
             super(view);
             textViewOrario = (TextView) view.findViewById(R.id.textview_orario);
             textViewEtichetta = (TextView) view.findViewById(R.id.textview_etichetta);
             textViewRipetizioni = (TextView) view.findViewById(R.id.textview_ripetizioni);
-            Button buttonDelete = itemView.findViewById(R.id.buttonEliminaSingolaSveglia);
+            Button buttonDelete = itemView.findViewById(R.id.buttonEliminaSveglia);
+            Switch switchAttiva = itemView.findViewById(R.id.switchAttiva);
+            imageSfida = itemView.findViewById(R.id.imageSfida);
             itemView.setOnClickListener(this);
             buttonDelete.setOnClickListener(this);
+            switchAttiva.setOnClickListener(this);
         }
 
         public void bind(Sveglie sveglie) {
             textViewOrario.setText(sveglie.getOrario());
             textViewEtichetta.setText(sveglie.getEtichetta());
             textViewRipetizioni.setText(sveglie.getRipetizioni());
+
+
+            if ((sveglieList.get(getAdapterPosition())).getModalita().equals("tc")) {
+                imageSfida.setImageDrawable(
+                        AppCompatResources.getDrawable(application,
+                                R.drawable.sveglia));
+                imageSfida.setColorFilter(
+                        ContextCompat.getColor(
+                                imageSfida.getContext(),
+                                R.color.white)
+                );
+            } else if ((sveglieList.get(getAdapterPosition())).getModalita().equals("ts")){
+                imageSfida.setImageDrawable(
+                        AppCompatResources.getDrawable(application,
+                                R.drawable.puzzle));
+                imageSfida.setColorFilter(
+                        ContextCompat.getColor(
+                                imageSfida.getContext(),
+                                R.color.white)
+                );
+            }
+
+
         }
 
 
         @Override
         public void onClick(View v) {
-            if (v.getId() == R.id.buttonEliminaSingolaSveglia) {
-                SharedPreferences sharedPref = context.getSharedPreferences("information_shared", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
+            SharedPreferences sharedPref = context.getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            String key = (sveglieList.get(getAdapterPosition())).getId();
 
-                Log.d(TAG, "rimuovo " + (sveglieList.get(getAdapterPosition())).getId());
+            if (v.getId() == R.id.buttonEliminaSveglia) {
+                //Log.d(TAG, "rimuovo " + (sveglieList.get(getAdapterPosition())).getId());
                 // Rimuove la sveglia usando la chiave specificata
-                editor.remove((sveglieList.get(getAdapterPosition())).getId());
+                editor.remove(key);
 
                 // Rimuove la chiave dalla lista delle chiavi
                 Set<String> keySet = sharedPref.getStringSet("sveglia_keys", new HashSet<>());
-                Log.d(TAG,"keySet prima " + keySet);
-                keySet.remove((sveglieList.get(getAdapterPosition())).getId());
-                Log.d(TAG,"keySet dopo " + keySet);
+                //Log.d(TAG,"keySet prima " + keySet);
+                keySet.remove(key);
+                //Log.d(TAG,"keySet dopo " + keySet);
                 editor.putStringSet("sveglia_keys", keySet);
 
                 editor.apply();
@@ -136,9 +168,34 @@ public class SveglieAdapter extends
                 notifyItemRemoved(getAdapterPosition());
                 onItemClickListenerS.onDeleteButtonPressed(getAdapterPosition());
 
-            } else {
+            }
+
+
+            else if (v.getId() == R.id.switchAttiva) {
+
+                Log.d(TAG,"switch " + (sveglieList.get(getAdapterPosition())).getId());
+
+                Set<String> sveglieSet = sharedPref.getStringSet(key, new HashSet<>());
+                Log.d(TAG, "switch sveglia prima " + sveglieSet);
+
+                if (sveglieSet.contains("attiva")) {
+                    Log.d (TAG, "switch trova attiva");
+                    sveglieSet.remove("attiva");
+                    sveglieSet.add("non attiva"); }
+                else if (sveglieSet.contains("non attiva")) {
+                        Log.d (TAG, "switch trova non attiva");
+                        sveglieSet.remove("non attiva");
+                        sveglieSet.add("attiva"); }
+                Log.d(TAG, "switch sveglia dopo " + sveglieSet);
+
+                editor.putStringSet(key, sveglieSet);
+
+            }
+
+            else {
                 onItemClickListenerS.onSveglieItemClick(sveglieList.get(getAdapterPosition()));
             }
+
 
         }
     }

@@ -1,9 +1,6 @@
 package it.unimib.brain_alarm;
 
 import static android.content.ContentValues.TAG;
-import static androidx.constraintlayout.widget.ConstraintSet.VISIBLE;
-import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_FILE_NAME;
-import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_SVEGLIA;
 
 import android.content.Context;
 import android.content.Intent;
@@ -36,7 +33,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.BreakIterator;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,11 +48,6 @@ import it.unimib.brain_alarm.util.ServiceLocator;
 import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
 public class AggiungiFragment extends Fragment {
-    private List<Sveglie> sveglieList;
-    private NewsRecyclerViewAdapter newsRecyclerViewAdapter;
-    private SharedPreferencesUtil sharedPreferencesUtil;
-    private ProgressBar progressBar;
-    private NewsViewModel newsViewModel;
     private TimePicker timeP;
     private TextInputLayout nomeSveglia;
 
@@ -189,7 +183,6 @@ public class AggiungiFragment extends Fragment {
                 layoutSfida.setVisibility(view.VISIBLE);
             }
             else {
-                //TODO quando imposto sfida e la salvo devo mantenere isSfida = true
                 isSfida = false;
                 buttonSfida.setBackgroundColor(getResources().getColor(R.color.arancione));
             }
@@ -387,11 +380,9 @@ public class AggiungiFragment extends Fragment {
         if (checkboxD.isChecked()) {settimana += "7";}
         else settimana += "0";
 
-        Log.d(TAG, "settimana = " + settimana);
+        //Log.d(TAG, "settimana = " + settimana);
 
         sveglia.add(settimana);
-
-
 
         //suono, vibrazione
         sveglia.add(spinnerSuoni.getSelectedItem().toString());
@@ -399,8 +390,6 @@ public class AggiungiFragment extends Fragment {
             sveglia.add("v1");
         else
             sveglia.add("v0");
-
-
 
         sveglia.add(String.valueOf(switchPosticipa.isChecked()));
 
@@ -413,7 +402,7 @@ public class AggiungiFragment extends Fragment {
 
         sveglia.add(String.valueOf(progCalcolatrice) + String.valueOf(progMemory) + String.valueOf(progScrivere) + String.valueOf(progPassi));
 
-        sveglia.add("attiva");  //TODO dentro home fragment si deve poter attivare e disattivare la sveglia
+        sveglia.add("non attiva");  //TODO dentro home fragment si deve poter attivare e disattivare la sveglia
 
         SharedPreferences.Editor editor = sharedPref.edit();
         String uniqueKey = "sveglia_" + System.currentTimeMillis();

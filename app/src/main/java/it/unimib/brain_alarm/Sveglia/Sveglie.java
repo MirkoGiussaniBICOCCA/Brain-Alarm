@@ -29,6 +29,8 @@ public class Sveglie { //implements Parcelable {
 
     private String ripetizioni;
 
+    private String modalita;
+
     private Set<String> elementi;
 
     private String key;
@@ -60,7 +62,7 @@ public class Sveglie { //implements Parcelable {
 
        for (String e : elementi) {
             e.toString();
-            Log.d(TAG, "prima parola " + e.toString());
+            //Log.d(TAG, "prima parola " + e.toString());
 
             if (!e.toString().isEmpty())
                 if ((e.toString()).charAt(0) == 'o')
@@ -122,6 +124,23 @@ public class Sveglie { //implements Parcelable {
         this.etichetta = etichetta;
     }
 
+    public String getModalita() {
+
+        for (String e : elementi) {
+            e.toString();
+            //Log.d(TAG, "prima parola " + e.toString());
+
+            if (!e.toString().isEmpty())
+                if (e.toString().equals("tc") || e.toString().equals("ts"))
+                    modalita = e.toString();
+        }
+        return modalita;
+    }
+
+    public void setModalita(String orario) {
+        this.modalita = modalita;
+    }
+
 
     //parcelable implementa tutta la logica per leggere e scrivere
     @Override
@@ -130,6 +149,7 @@ public class Sveglie { //implements Parcelable {
                 "orario='" + orario +
                 ", etichetta='" + etichetta + '\'' +
                 ", ripetizioni='" + ripetizioni + '\'' +
+                ", modalita='" + modalita + '\'' +
                 '}';
     }
 
@@ -138,12 +158,12 @@ public class Sveglie { //implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         it.unimib.brain_alarm.Sveglia.Sveglie sveglia = (it.unimib.brain_alarm.Sveglia.Sveglie) o;
-        return Objects.equals(orario, sveglia.orario) && Objects.equals(etichetta, sveglia.etichetta);
+        return Objects.equals(orario, sveglia.orario) && Objects.equals(etichetta, sveglia.etichetta) && Objects.equals(ripetizioni, sveglia.ripetizioni) && Objects.equals(modalita, sveglia.modalita);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orario, etichetta);
+        return Objects.hash(orario, etichetta, ripetizioni, modalita);
     }
 
     /*
@@ -166,14 +186,16 @@ public class Sveglie { //implements Parcelable {
         this.id = source.readString();
         this.orario = source.readString();
         this.etichetta = source.readString();
-
+        this.ripetizioni = source.readString();
+        this.modalita = source.readString();
     }
 
     protected Sveglie(Parcel in) {
         this.id = in.readString();
         this.orario = in.readString();
         this.etichetta = in.readString();
-
+        this.ripetizioni = in.readString();
+        this.modalita = in.readString();
     }
 
     public static final Parcelable.Creator<it.unimib.brain_alarm.Sveglia.Sveglie> CREATOR = new Parcelable.Creator<it.unimib.brain_alarm.Sveglia.Sveglie>() {

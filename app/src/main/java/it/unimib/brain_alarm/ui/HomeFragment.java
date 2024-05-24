@@ -46,14 +46,8 @@ public class HomeFragment extends Fragment {
 
     private static final String PREFERENCES_NAME = "MyAppPreferences";
     public static final String SVEGLIE_KEY = "SveglieKey";
-    private SharedPreferences sharedPreferences;
-    private Gson gson;
 
 
-    private NewsRecyclerViewAdapter newsRecyclerViewAdapter;
-    private SharedPreferencesUtil sharedPreferencesUtil;
-    private ProgressBar progressBarSveglie;
-    private ViewModel viewModel;
 
     private static final String TAG = AggiungiActivity.class.getSimpleName();
 
@@ -140,7 +134,7 @@ public class HomeFragment extends Fragment {
         Log.d(TAG, sveglieList.toString());
 
 
-        SveglieAdapter sveglieAdapter = new SveglieAdapter(getContext(), sveglieList,
+        SveglieAdapter sveglieAdapter = new SveglieAdapter(getContext(), requireActivity().getApplication(), sveglieList,
                 new SveglieAdapter.OnItemClickListenerS() {
                     @Override
                     public void onSveglieItemClick(Sveglie sveglie) {

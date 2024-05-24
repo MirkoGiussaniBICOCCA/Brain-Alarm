@@ -331,8 +331,6 @@ public class AggiungiFragment extends Fragment {
         Set<String> svegliaArray = sharedPref.getStringSet("sveglia", null);
 
 
-
-
         final Button buttonConferma = view.findViewById(R.id.conferma);
         buttonConferma.setOnClickListener(v -> {
             if (isSfida || isClassica) {

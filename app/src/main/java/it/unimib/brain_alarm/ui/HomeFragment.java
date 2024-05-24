@@ -190,13 +190,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public void saveSveglie(List<Sveglie> sveglieList) {
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String jsonSveglie = gson.toJson(sveglieList);
-        editor.putString(SVEGLIE_KEY, jsonSveglie);
-        editor.apply();
-    }
+
 
 
     private void removeAllSveglie() {

@@ -115,16 +115,27 @@ public class SveglieAdapter extends
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.buttonEliminaSingolaSveglia) {
-                sveglieList.remove(getAdapterPosition());
-                Log.d(TAG, "getID " + (sveglieList.get(getAdapterPosition())).getId());
+                SharedPreferences sharedPref = context.getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+
+                Log.d(TAG, "rimuovo " + (sveglieList.get(getAdapterPosition())).getId());
+                // Rimuove la sveglia usando la chiave specificata
+                editor.remove((sveglieList.get(getAdapterPosition())).getId());
+
+                // Rimuove la chiave dalla lista delle chiavi
+                Set<String> keySet = sharedPref.getStringSet("sveglia_keys", new HashSet<>());
+                Log.d(TAG,"keySet prima " + keySet);
+                keySet.remove((sveglieList.get(getAdapterPosition())).getId());
+                Log.d(TAG,"keySet dopo " + keySet);
+                editor.putStringSet("sveglia_keys", keySet);
+
+                editor.apply();
+
                 //getAdapterPosition mi restituisce la posizione della sveglia da cancellare, partono da 0
+                sveglieList.remove(getAdapterPosition());
                 notifyItemRemoved(getAdapterPosition());
                 onItemClickListenerS.onDeleteButtonPressed(getAdapterPosition());
 
-                SharedPreferences sharedPref = context.getSharedPreferences("information_shared", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.remove((sveglieList.get(getAdapterPosition())).getId());
-                editor.apply();
             } else {
                 onItemClickListenerS.onSveglieItemClick(sveglieList.get(getAdapterPosition()));
             }

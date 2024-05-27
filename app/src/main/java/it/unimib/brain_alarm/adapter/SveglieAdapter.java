@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -105,7 +106,7 @@ public class SveglieAdapter extends
             textViewOrario = (TextView) view.findViewById(R.id.textview_orario);
             textViewEtichetta = (TextView) view.findViewById(R.id.textview_etichetta);
             textViewRipetizioni = (TextView) view.findViewById(R.id.textview_ripetizioni);
-            Button buttonDelete = itemView.findViewById(R.id.buttonEliminaSveglia);
+            ImageButton buttonDelete = itemView.findViewById(R.id.buttonEliminaSveglia);
             Switch switchAttiva = itemView.findViewById(R.id.switchAttiva);
             imageSfida = itemView.findViewById(R.id.imageSfida);
             itemView.setOnClickListener(this);
@@ -115,8 +116,15 @@ public class SveglieAdapter extends
 
         public void bind(Sveglie sveglie) {
             textViewOrario.setText(sveglie.getOrario());
-            textViewEtichetta.setText(sveglie.getEtichetta());
-            textViewRipetizioni.setText(sveglie.getRipetizioni());
+            if(!sveglie.getEtichetta().equals(""))
+                textViewEtichetta.setText(sveglie.getEtichetta());
+            else
+                textViewEtichetta.setVisibility(View.GONE);
+
+            if(!sveglie.getRipetizioni().equals(""))
+                textViewRipetizioni.setText(sveglie.getRipetizioni());
+            else
+                textViewRipetizioni.setVisibility(View.GONE);
 
 
             if ((sveglieList.get(getAdapterPosition())).getModalita().equals("tc")) {
@@ -178,18 +186,20 @@ public class SveglieAdapter extends
                 Set<String> sveglieSet = sharedPref.getStringSet(key, new HashSet<>());
                 Log.d(TAG, "switch sveglia prima " + sveglieSet);
 
-                if (sveglieSet.contains("attiva")) {
+                Set<String> newSet = new HashSet<>(sveglieSet);
+
+                if (newSet.contains("attiva")) {
                     Log.d (TAG, "switch trova attiva");
-                    sveglieSet.remove("attiva");
-                    sveglieSet.add("non attiva"); }
-                else if (sveglieSet.contains("non attiva")) {
+                    newSet.remove("attiva");
+                    newSet.add("non attiva"); }
+                else if (newSet.contains("non attiva")) {
                         Log.d (TAG, "switch trova non attiva");
-                        sveglieSet.remove("non attiva");
-                        sveglieSet.add("attiva"); }
+                        newSet.remove("non attiva");
+                        newSet.add("attiva"); }
                 Log.d(TAG, "switch sveglia dopo " + sveglieSet);
 
-                editor.putStringSet(key, sveglieSet);
-
+                editor.putStringSet(key, newSet);
+                editor.apply();
             }
 
             else {

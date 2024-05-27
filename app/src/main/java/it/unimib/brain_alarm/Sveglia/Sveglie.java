@@ -98,8 +98,10 @@ public class Sveglie { //implements Parcelable {
                 if ((e.toString()).charAt(0) == 'r')
                     ripetizioni1 = e.toString().substring(1);
         }
+
         ripetizioni = "";
-        for (int i=0; i<(ripetizioni1.length()-1); i++) {
+
+        for (int i=0; i<(ripetizioni1.length()); i++) {
             if (ripetizioni1.charAt(i) == '1')
                 ripetizioni += "Lunedì ";
             if (ripetizioni1.charAt(i) == '2')

@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextClock;
 
@@ -44,17 +45,12 @@ import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
 public class HomeFragment extends Fragment {
 
-    private static final String PREFERENCES_NAME = "MyAppPreferences";
     public static final String SVEGLIE_KEY = "SveglieKey";
-
-
 
     private static final String TAG = AggiungiActivity.class.getSimpleName();
 
     private TextClock txtCl;
-    private ProgressBar progressBar;
 
-    private SveglieAdapter sveglieAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -99,14 +95,6 @@ public class HomeFragment extends Fragment {
             removeAllSveglie();
         });
 
-        /*
-        final Button buttonEliminaSingolaSveglia = view.findViewById(R.id.cancellaSingolaSveglia);
-
-        buttonEliminaSveglie.setOnClickListener(v -> {
-            Log.d(TAG, "click remove una" );
-            removeSavedSet(key);
-        });
-        */
 
 
         requireActivity().addMenuProvider(new MenuProvider() {

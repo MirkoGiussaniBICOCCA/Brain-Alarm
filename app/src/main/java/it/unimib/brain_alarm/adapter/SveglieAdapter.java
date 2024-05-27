@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.arch.core.internal.FastSafeIterableMap;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -204,9 +205,12 @@ public class SveglieAdapter extends
 
             else {
                 onItemClickListenerS.onSveglieItemClick(sveglieList.get(getAdapterPosition()));
+                Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_svegliaFragment);
+
             }
 
 
         }
+
     }
 }

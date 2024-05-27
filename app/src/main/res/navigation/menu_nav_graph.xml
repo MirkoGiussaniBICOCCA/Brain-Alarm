@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_homeFragment_to_aggiungiActivity"
             app:destination="@id/aggiungiActivity" />
+        <action
+            android:id="@+id/action_homeFragment_to_svegliaFragment"
+            app:destination="@id/svegliaFragment" />
     </fragment>
     <activity
         android:id="@+id/aggiungiActivity"
@@ -46,6 +49,15 @@
         android:name="it.unimib.brain_alarm.ProfiloFragment"
         android:label="fragment_profilo"
         tools:layout="@layout/fragment_profilo" >
+    </fragment>
+    <fragment
+        android:id="@+id/svegliaFragment"
+        android:name="it.unimib.brain_alarm.SvegliaFragment"
+        android:label="fragment_sveglia"
+        tools:layout="@layout/fragment_sveglia" >
+        <action
+            android:id="@+id/action_svegliaFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
 

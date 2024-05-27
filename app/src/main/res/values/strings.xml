@@ -44,7 +44,6 @@
     <string name="check_login_data_message">Check the data you inserted</string>
 
 
-
     <string name="nav_drawer_subtitle">Stay tuned for news from the world</string>
 
     <string name="error_retrieving_news">Error in retrieving the news</string>
@@ -82,5 +81,7 @@
     <string name="classicaSuono">Classica</string>
     <string name="radar">Radar</string>
     <string name="arpeggio">Arpeggio</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

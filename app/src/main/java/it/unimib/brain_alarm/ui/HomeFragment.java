@@ -93,6 +93,34 @@ public class HomeFragment extends Fragment {
         buttonEliminaSveglie.setOnClickListener(v -> {
             Log.d(TAG, "click remove tutte");
             removeAllSveglie();
+
+            RecyclerView recyclerView = view.findViewById(R.id.recyclerview_sveglie);
+            RecyclerView.LayoutManager layoutManager =
+                    new LinearLayoutManager(requireContext(),
+                            LinearLayoutManager.VERTICAL, false);
+            List<Sveglie> sveglieList = getSveglie();
+
+            SveglieAdapter sveglieAdapter = new SveglieAdapter(getContext(), requireActivity().getApplication(), sveglieList,
+                    new SveglieAdapter.OnItemClickListenerS() {
+                        @Override
+                        public void onSveglieItemClick(Sveglie sveglie) {
+                            Snackbar.make(view, sveglie.getOrario(), Snackbar.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onDeleteButtonPressed(int position) {
+                            Snackbar.make(view, getString(R.string.list_size_message) + sveglieList.size(),
+                                    Snackbar.LENGTH_SHORT).show();
+                        }
+
+                    });
+
+            recyclerView.setLayoutManager(layoutManager);
+
+            // Specificare l'adapter
+            recyclerView.setAdapter(sveglieAdapter);
+
+
         });
 
 
@@ -116,10 +144,10 @@ public class HomeFragment extends Fragment {
                         LinearLayoutManager.VERTICAL, false);
 
 
-        Log.d(TAG, "prova");
+        //Log.d(TAG, "prova");
         List<Sveglie> sveglieList = getSveglie();
 
-        Log.d(TAG, sveglieList.toString());
+        //Log.d(TAG, sveglieList.toString());
 
 
         SveglieAdapter sveglieAdapter = new SveglieAdapter(getContext(), requireActivity().getApplication(), sveglieList,

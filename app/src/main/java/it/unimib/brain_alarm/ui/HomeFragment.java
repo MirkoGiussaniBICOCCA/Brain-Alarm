@@ -79,6 +79,8 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
         txtCl = view.findViewById(R.id.txtClock);
         txtCl.setFormat12Hour("hh:mm:ss a");
 

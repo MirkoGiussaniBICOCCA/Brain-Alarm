@@ -9,6 +9,7 @@ import static it.unimib.brain_alarm.ui.HomeFragment.SVEGLIE_KEY;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -204,8 +205,13 @@ public class SveglieAdapter extends
             }
 
             else {
+                /*
+                Bundle args = new Bundle();
+                args.putString("navigation_source", "SveglieAdapter");
+
+                 */
                 onItemClickListenerS.onSveglieItemClick(sveglieList.get(getAdapterPosition()));
-                Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_svegliaFragment);
+                Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_aggiungiActivity); // , args);
 
             }
 

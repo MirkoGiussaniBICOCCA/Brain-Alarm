@@ -35,7 +35,8 @@
         android:id="@+id/aggiungiActivity"
         android:name="it.unimib.brain_alarm.AggiungiActivity"
         android:label="activity_aggiungi"
-        tools:layout="@layout/activity_aggiungi" />
+        tools:layout="@layout/activity_aggiungi">
+    </activity>
 
     <fragment
         android:id="@+id/newsFragment"

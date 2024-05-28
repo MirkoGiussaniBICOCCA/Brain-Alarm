@@ -4,6 +4,8 @@ package it.unimib.brain_alarm;
 import static it.unimib.brain_alarm.util.Constants.FRANCE;
 import static it.unimib.brain_alarm.util.Constants.GERMANY;
 import static it.unimib.brain_alarm.util.Constants.ITALY;
+import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_COUNTRY_OF_INTEREST;
+import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_FILE_NAME;
 import static it.unimib.brain_alarm.util.Constants.UNITED_KINGDOM;
 import static it.unimib.brain_alarm.util.Constants.UNITED_STATES;
 
@@ -25,6 +27,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
+
+import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
 public class ImpostazioniFragment extends Fragment {
 
@@ -99,6 +103,7 @@ public class ImpostazioniFragment extends Fragment {
                 //visualizzare nuovo nome
                 nomeImpostazioni.setText("Nome: " + sharedPref.getString("nome", null));
                 statoImpostazioni.setText("Stato: " + sharedPref.getString("stato", null));
+
                 layoutModifica.setVisibility(view.GONE);
             } else
                 nomeImpostazioni.setText("null");
@@ -113,6 +118,14 @@ public class ImpostazioniFragment extends Fragment {
     private void saveInformation() {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
+
+        String countryShortName = getShortNameCountryOfInterest(stato);
+
+        SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(getActivity().getApplication());
+        sharedPreferencesUtil.writeStringData(
+                SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST,
+                countryShortName);
+
         editor.putString("nome", nome);
         editor.putString("stato", stato);
         editor.apply();

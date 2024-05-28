@@ -1,6 +1,8 @@
 package it.unimib.brain_alarm;
 
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -35,9 +37,11 @@ public class NewsViewModel extends ViewModel {
     //questo newsListLiveData è quello che sarà osservato dal fragment o dall'activity
     //se newsListLiveData = null chiamo fetchnews altrimenti uso instanza che ho già
     public MutableLiveData<Result> getNews(String country, long lastUpdate) {
+        Log.d(TAG, "NEWS LIST LIVE DATA : " + newsListLiveData );
         if (newsListLiveData == null) {
             fetchNews(country, lastUpdate); //restituisce mutable live data
         }
+        Log.d(TAG, "NEWS LIST LIVE DATA : " + newsListLiveData );
         return newsListLiveData;
     }
 

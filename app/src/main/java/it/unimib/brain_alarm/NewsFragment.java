@@ -1,5 +1,6 @@
 package it.unimib.brain_alarm;
 
+import static android.content.ContentValues.TAG;
 import static it.unimib.brain_alarm.util.Constants.LAST_UPDATE;
 import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_COUNTRY_OF_INTEREST;
 import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_FILE_NAME;
@@ -163,16 +164,32 @@ public class NewsFragment extends Fragment {
                 //uso inizializzazione anonima
                 //livedata è associato a result quindi controllo se ho result success o error
                 result -> {
+                    Log.d(TAG, "result : " + result );
+
                     //o aggiorno la lista o mostro messaggio di errore
                     if (result.isSuccess()) {
+
                         //logica per aggiornare recycler view
                         int initialSize = this.newsList.size();
                         this.newsList.clear();
                         this.newsList.addAll(((Result.Success) result).getData().getNewsList());
                         newsRecyclerViewAdapter.notifyItemRangeInserted(initialSize, this.newsList.size());
                         progressBar.setVisibility(View.GONE);
+
+                        /*
+                        Log.d(TAG, "result succes : " + result.isSuccess() );
+                        Log.d(TAG, "result argomento newsList1 : " + ((Result.Success) result).getData().getNewsList());
+                        Log.d(TAG, "result argomento newsList2 : " + ((Result.Success) result).getData());
+                        Log.d(TAG, "result argomento newsList3 : " + ((Result.Success) result));
+
+                        Log.d(TAG, "result newsList : " + newsList );
+
+                         */
                     } else {
                         //per mostrare snackbar dell'errore
+                        Log.d(TAG, "else RESULT : " + result.toString() );
+                        Log.d(TAG, "else RESULT : " + result.isSuccess() );
+
                         ErrorMessagesUtil errorMessagesUtil =
                                 new ErrorMessagesUtil(requireActivity().getApplication());
                         Snackbar.make(view, errorMessagesUtil.

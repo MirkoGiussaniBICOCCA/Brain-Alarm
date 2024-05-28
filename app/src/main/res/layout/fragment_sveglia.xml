@@ -22,7 +22,7 @@
 
 
             <LinearLayout
-                android:id="@+id/linearLayout2"
+                android:id="@+id/layoutBottoni"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -49,13 +49,18 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutModifica"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutBottoni"
                 android:orientation="vertical">
 
 
-
-
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="prova" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -65,6 +65,7 @@ public class NewsMockRemoteDataSource extends BaseNewsRemoteDataSource {
         if (newsApiResponse != null) {
             newsCallback.onSuccessFromRemote(newsApiResponse, System.currentTimeMillis());
         } else {
+            Log.d(TAG, "PROBLEMA");
             newsCallback.onFailureFromRemote(new Exception(API_KEY_ERROR));
             Log.d(TAG, "NewsMockRemoteDataSource");
         }

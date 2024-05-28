@@ -125,6 +125,14 @@ public class AggiungiFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        /*
+        Log.d(TAG, "navigation source" );
+        Bundle args = getArguments();
+        if(args!=null) {
+            String navigationSource = args.getString("navigationSource");
+            Log.d(TAG, "navigation source" + navigationSource);
+        }
+        */
 
         timeP = view.findViewById(R.id.timePicker);
 

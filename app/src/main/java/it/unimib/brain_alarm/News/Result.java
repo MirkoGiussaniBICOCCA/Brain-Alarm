@@ -1,8 +1,12 @@
 package it.unimib.brain_alarm.News;
 
 
-//rappresenta il tisultato di una chiamta
-//a seconda se ho chiamta anmdata a buon fiune avrò success oppure il messaggio con il relativo errore
+//rappresenta il risultato di una chiamata
+//a seconda se ho chiamta andata a buon fine avrò success oppure il messaggio con il relativo errore
+
+import android.util.Log;
+
+import it.unimib.brain_alarm.NewsFragment;
 
 public abstract class Result {
     private Result() {}
@@ -13,11 +17,14 @@ public abstract class Result {
 
 
     public static final class Success extends Result {
+
+        private static final String TAG = Result.class.getSimpleName();
         private final NewsResponse newsResponse;
         public Success(NewsResponse newsResponse) {
             this.newsResponse = newsResponse;
         }
         public NewsResponse getData() {
+            Log.d(TAG, "get Data " + newsResponse);
             return newsResponse;
         }
     }

@@ -28,14 +28,4 @@ public class HomeActivity extends AppCompatActivity {
 
 }
 
-    /*private void startActivityBasedOnCondition(Class<?> destinationActivity, int destination){
-        if(USE_NAVIGATION_COMPONENT){
-            Navigation.findNavController(requireView()).navigate(destination);
-        }else{
-            Intent intent=new Intent(requireContext(),destinationActivity);
-            startActivity(intent);
-        }
-        requireActivity().finish();
-        }*/
-
 

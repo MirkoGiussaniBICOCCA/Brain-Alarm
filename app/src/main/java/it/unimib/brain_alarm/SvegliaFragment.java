@@ -7,12 +7,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 public class SvegliaFragment extends Fragment {
+
+    private static final String TAG = AggiungiActivity.class.getSimpleName();
+
 
     public SvegliaFragment() {
         // Required empty public constructor
@@ -31,7 +35,8 @@ public class SvegliaFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+
 
         final Button buttonAnnullaModifiche = view.findViewById(R.id.buttonAnnullaModificheSveglia);
 

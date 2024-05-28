@@ -38,14 +38,17 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
             public void onResponse(@NonNull Call<NewsApiResponse> call,
                                    @NonNull Response<NewsApiResponse> response) {
 
+                Log.d(TAG, "response " + response );
                 if (response.body() != null && response.isSuccessful() &&
                         !response.body().getStatus().equals("error")) {
+
                     newsCallback.onSuccessFromRemote(response.body(), System.currentTimeMillis());
+                    Log.d(TAG, "dentro if response " + response.body());
 
                 } else {
                     Log.d(TAG, "problema : " + response.body() );
                     Log.d(TAG, "problema : " + response.isSuccessful());
-                    Log.d(TAG, "problema : " + !response.body().getStatus().equals("error"));
+                    //Log.d(TAG, "problema : " + !response.body().getStatus().equals("error"));
                     Log.d(TAG, "NewsRemoteDataSource" );
                     newsCallback.onFailureFromRemote(new Exception(API_KEY_ERROR));
                 }

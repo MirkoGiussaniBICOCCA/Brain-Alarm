@@ -1,6 +1,9 @@
 package it.unimib.brain_alarm;
 
 
+import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_COUNTRY_OF_INTEREST;
+import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_FILE_NAME;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -23,6 +26,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
+
+import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
 
 public class ProfiloFragment extends Fragment {
@@ -71,7 +76,6 @@ public class ProfiloFragment extends Fragment {
                         try {
                             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
                             ((ImageView) view.findViewById(R.id.fotoProfilo)).setImageBitmap(bitmap);
-
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

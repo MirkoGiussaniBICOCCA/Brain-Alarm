@@ -70,8 +70,9 @@
                     android:id="@+id/ripetizioni"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="20dp"
                     tools:ignore="MissingConstraints">
 
                     <CheckBox
@@ -144,7 +145,9 @@
                     android:id="@+id/inputLayoutNomeSveglia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="20dp"
                     app:boxBackgroundColor="#00FFFFFF"
                     tools:ignore="MissingConstraints">
 
@@ -152,7 +155,6 @@
                         android:id="@+id/inputNomeSveglia"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
                         android:hint="@string/nomeSveglia"
                         android:textColorHint="@color/white"
                         android:textSize="16sp"
@@ -163,7 +165,9 @@
                     android:id="@+id/layoutSuono"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="vertical">
 
                     <com.google.android.material.chip.Chip
@@ -604,21 +608,20 @@
             </LinearLayout>
 
 
-
             <LinearLayout
                 android:id="@+id/layoutConferma"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/layoutSfida"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/layoutSfida">
 
                 <Button
                     android:id="@+id/annulla"
-                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/sfondoTras"
                     android:text="@string/annulla"
                     android:textColor="@color/black"
@@ -626,16 +629,28 @@
 
                 <Button
                     android:id="@+id/conferma"
-                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/sfondoTras"
                     android:text="@string/conferma"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
             </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonEliminaSveglia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="16dp"
+                android:text="@string/elimina"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutConferma" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

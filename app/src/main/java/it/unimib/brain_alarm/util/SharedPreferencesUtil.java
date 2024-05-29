@@ -2,6 +2,10 @@ package it.unimib.brain_alarm.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
+
+import androidx.activity.result.ActivityResultCallback;
 
 import it.unimib.brain_alarm.AggiungiFragment;
 
@@ -9,7 +13,11 @@ import it.unimib.brain_alarm.AggiungiFragment;
 public class SharedPreferencesUtil {
 
     private final Context context;
-    public SharedPreferencesUtil(Context context) {this.context = context;}
+
+
+    public SharedPreferencesUtil(Context context) {
+        this.context = context;
+    }
 
 
     public void writeStringData(String sharedPreferencesFileName, String key, String value) {
@@ -26,17 +34,20 @@ public class SharedPreferencesUtil {
         return sharedPref.getString(key, null);
     }
 
-    public void writeSveglie (String sharedPreferencesFileName, String key) {
+    public void writeSveglie(String sharedPreferencesFileName, String key) {
         SharedPreferences sharedPref = context.getSharedPreferences(sharedPreferencesFileName,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.apply();
     }
 
-    public String readSveglie (String sharedPreferencesFileName, String key) {
+    public String readSveglie(String sharedPreferencesFileName, String key) {
         SharedPreferences sharedPref = context.getSharedPreferences(sharedPreferencesFileName,
                 Context.MODE_PRIVATE);
         return sharedPref.getString(key, null);
     }
 
+
 }
+
+

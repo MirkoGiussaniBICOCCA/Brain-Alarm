@@ -369,6 +369,13 @@ public class AggiungiFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_mainActivity);
         } );
 
+        final Button buttonEliminaSveglia = view.findViewById(R.id.buttonEliminaSveglia);
+        buttonEliminaSveglia.setOnClickListener(v -> {
+
+            //TODO elimina singla sveglia prendendo ad esempio adapter
+            Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_mainActivity);
+        } );
+
     }
 
 
@@ -376,7 +383,6 @@ public class AggiungiFragment extends Fragment {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
 
         Set<String> sveglia = new HashSet<>();
-
 
         //ora
         sveglia.add("o" + String.valueOf(timeP.getHour()) + ":" + String.valueOf(timeP.getMinute()) );

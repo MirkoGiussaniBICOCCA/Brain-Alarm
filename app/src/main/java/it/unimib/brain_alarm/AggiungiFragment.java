@@ -169,11 +169,14 @@ public class AggiungiFragment extends Fragment {
         switchPosticipa = view.findViewById(R.id.posticipa);
 
         final Button buttonClassica = view.findViewById(R.id.classica);
+        final Button buttonSfida = view.findViewById(R.id.sfida);
+
         buttonClassica.setOnClickListener(v -> {
             if (!isClassica) {
                 isClassica = true;
                 isSfida = false;
-                buttonClassica.setBackgroundColor(getResources().getColor(R.color.grigio)); }
+                buttonClassica.setBackgroundColor(getResources().getColor(R.color.grigio));
+                buttonSfida.setBackgroundColor(getResources().getColor(R.color.arancione));}
             else {
                 isClassica = false;
                 buttonClassica.setBackgroundColor(getResources().getColor(R.color.azzurro));
@@ -182,17 +185,19 @@ public class AggiungiFragment extends Fragment {
 
         layoutSfida = view.findViewById(R.id.layoutSfida);
 
-        final Button buttonSfida = view.findViewById(R.id.sfida);
+
         buttonSfida.setOnClickListener(v -> {
             if (!isSfida) {
                 isSfida = true;
                 isClassica = false;
                 buttonSfida.setBackgroundColor(getResources().getColor(R.color.grigio));
+                buttonClassica.setBackgroundColor(getResources().getColor(R.color.azzurro));
                 layoutSfida.setVisibility(view.VISIBLE);
             }
             else {
                 isSfida = false;
                 buttonSfida.setBackgroundColor(getResources().getColor(R.color.arancione));
+                layoutSfida.setVisibility(view.GONE);
             }
         } );
 
@@ -334,9 +339,21 @@ public class AggiungiFragment extends Fragment {
 
         final Button buttonConferma = view.findViewById(R.id.conferma);
         buttonConferma.setOnClickListener(v -> {
+
+
             if (isSfida || isClassica) {
+                //TODO sistemare conferma senza avere selezionato sfide es. aggiungere boolean sfide impostate
+                if (isSfida) {
+                    if (progCalcolatrice>0 || progMemory>0 || progScrivere>0 || progPassi>0) {
+                        isSfida = true;
+                        layoutSfida.setVisibility(view.GONE);
+                    }
+                    else
+                        Snackbar.make(requireActivity().findViewById(android.R.id.content), getString(R.string.mxSfida), Snackbar.LENGTH_LONG).show();
+                }
                 Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_mainActivity);
                 saveInformation();
+
             }
             else
                 Snackbar.make(requireActivity().findViewById(android.R.id.content), getString(R.string.mxModalità), Snackbar.LENGTH_LONG).show();

@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextClock;
@@ -48,8 +49,6 @@ public class HomeFragment extends Fragment {
     public static final String SVEGLIE_KEY = "SveglieKey";
 
     private static final String TAG = AggiungiActivity.class.getSimpleName();
-
-    private TextClock txtCl;
 
 
     public HomeFragment() {
@@ -81,8 +80,7 @@ public class HomeFragment extends Fragment {
 
 
 
-        txtCl = view.findViewById(R.id.txtClock);
-        txtCl.setFormat12Hour("hh:mm:ss a");
+
 
         final Button buttonAggiungi = view.findViewById(R.id.bottoneAggiungiSveglia);
 

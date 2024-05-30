@@ -32,6 +32,8 @@
     <string name="impostaNome">Scegli il tuo nome:</string>
     <string name="sveglieAttive">Sveglie attive:</string>
     <string name="mancano">Mancano </string>
+    <string name="Sì">Sì </string>
+    <string name="No">No </string>
 
 
     <string name="mxModalità">Devi scegliere la modalità della sveglia (classica o sfida)!</string>

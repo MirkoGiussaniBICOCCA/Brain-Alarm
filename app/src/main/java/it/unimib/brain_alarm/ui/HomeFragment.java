@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextClock;
 
@@ -31,7 +32,12 @@ import android.content.SharedPreferences;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,6 +55,8 @@ public class HomeFragment extends Fragment {
     public static final String SVEGLIE_KEY = "SveglieKey";
 
     private static final String TAG = AggiungiActivity.class.getSimpleName();
+
+    LinearLayout layoutConfermaEliminazione;
 
 
     public HomeFragment() {
@@ -78,7 +86,19 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //TODO countdown
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+        Set<String> attive= sharedPref.getStringSet("sveglieAttive", new HashSet<>());
 
+        Date currentTime = new Date();
+
+        // Definisci un formato per l'ora
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+
+        // Format l'ora corrente come stringa
+        String oraLocale = formatter.format(currentTime);
+
+        String temp;
 
 
 
@@ -88,9 +108,22 @@ public class HomeFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_aggiungiActivity);
         });
 
+
+        layoutConfermaEliminazione = view.findViewById(R.id.layoutConfermaEliminazione);
+
         final Button buttonEliminaSveglie = view.findViewById(R.id.cancellaSveglie);
 
         buttonEliminaSveglie.setOnClickListener(v -> {
+
+                    layoutConfermaEliminazione.setVisibility(view.VISIBLE);
+        });
+
+        final Button buttonSiEliminazione = view.findViewById(R.id.buttonSiEliminazione);
+
+        buttonSiEliminazione.setOnClickListener(v -> {
+
+            layoutConfermaEliminazione.setVisibility(view.GONE);
+
             Log.d(TAG, "click remove tutte");
             removeAllSveglie();
 
@@ -98,6 +131,7 @@ public class HomeFragment extends Fragment {
             RecyclerView.LayoutManager layoutManager =
                     new LinearLayoutManager(requireContext(),
                             LinearLayoutManager.VERTICAL, false);
+
             List<Sveglie> sveglieList = getSveglie();
 
             SveglieAdapter sveglieAdapter = new SveglieAdapter(getContext(), requireActivity().getApplication(), sveglieList,
@@ -119,13 +153,19 @@ public class HomeFragment extends Fragment {
 
             // Specificare l'adapter
             recyclerView.setAdapter(sveglieAdapter);
+        });
 
+        final Button buttonNoEliminazione = view.findViewById(R.id.buttonNoEliminazione);
 
+        buttonNoEliminazione.setOnClickListener(v -> {
+
+            layoutConfermaEliminazione.setVisibility(view.GONE);
         });
 
 
 
-        requireActivity().addMenuProvider(new MenuProvider() {
+
+            requireActivity().addMenuProvider(new MenuProvider() {
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
                 menu.clear();
@@ -147,7 +187,6 @@ public class HomeFragment extends Fragment {
         //Log.d(TAG, "prova");
         List<Sveglie> sveglieList = getSveglie();
 
-        //Log.d(TAG, sveglieList.toString());
 
 
         SveglieAdapter sveglieAdapter = new SveglieAdapter(getContext(), requireActivity().getApplication(), sveglieList,
@@ -210,15 +249,22 @@ public class HomeFragment extends Fragment {
         Log.d(TAG, "remove " );
         // Recupera l'elenco delle chiavi e rimuove ogni set associato
         Set<String> keySet = sharedPref.getStringSet("sveglia_keys", new HashSet<>());
+        Set<String> sveglieAttive = sharedPref.getStringSet("sveglieAttive", new HashSet<>());
 
         for (String key : keySet) {
-            Log.d(TAG, "key " + key);
+            //Log.d(TAG, "key " + key);
             editor.remove(key);
         }
 
-        Log.d(TAG, "dopo for");
+        for (String attiva : sveglieAttive) {
+            //Log.d(TAG, "attiva " + attiva);
+            editor.remove(attiva);
+        }
+
+        //Log.d(TAG, "dopo for");
         // Rimuove l'elenco delle chiavi
         editor.remove("sveglia_keys");
+        editor.remove("sveglieAttive");
 
         editor.apply();
     }

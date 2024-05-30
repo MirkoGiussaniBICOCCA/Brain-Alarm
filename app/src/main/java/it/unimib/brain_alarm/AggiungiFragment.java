@@ -136,6 +136,7 @@ public class AggiungiFragment extends Fragment {
 
         timeP = view.findViewById(R.id.timePicker);
 
+
         nomeSveglia = view.findViewById(R.id.inputLayoutNomeSveglia);
 
         checkboxL = view.findViewById(R.id.lunedi);
@@ -342,7 +343,7 @@ public class AggiungiFragment extends Fragment {
 
 
             if (isSfida || isClassica) {
-                //TODO sistemare conferma senza avere selezionato sfide es. aggiungere boolean sfide impostate
+
                 if (isSfida) {
                     if (progCalcolatrice>0 || progMemory>0 || progScrivere>0 || progPassi>0) {
                         isSfida = true;
@@ -369,12 +370,7 @@ public class AggiungiFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_mainActivity);
         } );
 
-        final Button buttonEliminaSveglia = view.findViewById(R.id.buttonEliminaSveglia);
-        buttonEliminaSveglia.setOnClickListener(v -> {
 
-            //TODO elimina singla sveglia prendendo ad esempio adapter
-            Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_mainActivity);
-        } );
 
     }
 
@@ -384,8 +380,16 @@ public class AggiungiFragment extends Fragment {
 
         Set<String> sveglia = new HashSet<>();
 
-        //ora
-        sveglia.add("o" + String.valueOf(timeP.getHour()) + ":" + String.valueOf(timeP.getMinute()) );
+        //orario
+        String ora = String.valueOf(timeP.getHour());
+        if (ora.length()!=2)
+            ora = "0" + ora;
+
+        String min = String.valueOf(timeP.getMinute());
+        if (min.length()!=2)
+            min = "0" + min;
+
+        sveglia.add("o" + ora + ":" + min );
 
         //etichetta
         sveglia.add("e" + nomeSveglia.getEditText().getText().toString());
@@ -437,7 +441,7 @@ public class AggiungiFragment extends Fragment {
 
         sveglia.add(String.valueOf(progCalcolatrice) + String.valueOf(progMemory) + String.valueOf(progScrivere) + String.valueOf(progPassi));
 
-        sveglia.add("non attiva");  //TODO dentro home fragment si deve poter attivare e disattivare la sveglia
+        sveglia.add("attiva");
 
         SharedPreferences.Editor editor = sharedPref.edit();
         String uniqueKey = "sveglia_" + System.currentTimeMillis();
@@ -449,9 +453,11 @@ public class AggiungiFragment extends Fragment {
         Set<String> keySet = sharedPref.getStringSet("sveglia_keys", new HashSet<>());
         keySet.add(uniqueKey);
 
-
+        Set<String> sveglieAttive = sharedPref.getStringSet("sveglieAttive", new HashSet<>());
+        sveglieAttive.add(uniqueKey);
 
         editor.putStringSet("sveglia_keys", keySet);
+        editor.putStringSet("sveglieAttive", sveglieAttive);
 
         editor.apply();
     }

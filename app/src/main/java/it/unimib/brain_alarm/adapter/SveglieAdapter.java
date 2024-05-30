@@ -54,6 +54,7 @@ public class SveglieAdapter extends
     private final Application application;
 
     private final List<Sveglie> sveglieList;
+
     private final OnItemClickListenerS onItemClickListenerS;
 
     public SveglieAdapter(Context context, Application application, List<Sveglie> sveglieList, SveglieAdapter.OnItemClickListenerS onItemClickListener) {
@@ -103,13 +104,15 @@ public class SveglieAdapter extends
 
         private final ImageView imageSfida;
 
+        private final Switch switchAttiva;
+
         public ViewHolder(View view) {
             super(view);
             textViewOrario = (TextView) view.findViewById(R.id.textview_orario);
             textViewEtichetta = (TextView) view.findViewById(R.id.textview_etichetta);
             textViewRipetizioni = (TextView) view.findViewById(R.id.textview_ripetizioni);
             ImageButton buttonDelete = itemView.findViewById(R.id.buttonEliminaSveglia);
-            Switch switchAttiva = itemView.findViewById(R.id.switchAttiva);
+            switchAttiva = itemView.findViewById(R.id.switchAttiva);
             imageSfida = itemView.findViewById(R.id.imageSfida);
             itemView.setOnClickListener(this);
             buttonDelete.setOnClickListener(this);
@@ -118,12 +121,12 @@ public class SveglieAdapter extends
 
         public void bind(Sveglie sveglie) {
             textViewOrario.setText(sveglie.getOrario());
-            if(!sveglie.getEtichetta().equals(""))
+            if (!sveglie.getEtichetta().equals(""))
                 textViewEtichetta.setText(sveglie.getEtichetta());
             else
                 textViewEtichetta.setVisibility(View.GONE);
 
-            if(!sveglie.getRipetizioni().equals(""))
+            if (!sveglie.getRipetizioni().equals(""))
                 textViewRipetizioni.setText(sveglie.getRipetizioni());
             else
                 textViewRipetizioni.setVisibility(View.GONE);
@@ -138,7 +141,7 @@ public class SveglieAdapter extends
                                 imageSfida.getContext(),
                                 R.color.white)
                 );
-            } else if ((sveglieList.get(getAdapterPosition())).getModalita().equals("ts")){
+            } else if ((sveglieList.get(getAdapterPosition())).getModalita().equals("ts")) {
                 imageSfida.setImageDrawable(
                         AppCompatResources.getDrawable(application,
                                 R.drawable.puzzle));
@@ -149,7 +152,22 @@ public class SveglieAdapter extends
                 );
             }
 
+            SharedPreferences sharedPref = context.getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            String key = (sveglieList.get(getAdapterPosition())).getId();
 
+            Set<String> sveglieSet = sharedPref.getStringSet(key, new HashSet<>());
+
+            Set<String> newSet = new HashSet<>(sveglieSet);
+
+            if (newSet.contains("attiva")) {
+                switchAttiva.setChecked(true);
+
+            }
+            else if (newSet.contains("non attiva")) {
+                switchAttiva.setChecked(false);
+
+            }
         }
 
 
@@ -191,17 +209,40 @@ public class SveglieAdapter extends
                 Set<String> newSet = new HashSet<>(sveglieSet);
 
                 if (newSet.contains("attiva")) {
-                    Log.d (TAG, "switch trova attiva");
+                    //Log.d (TAG, "switch trova attiva");
                     newSet.remove("attiva");
-                    newSet.add("non attiva"); }
+                    newSet.add("non attiva");
+
+                    // Rimuove la chiave dalla lista delle attive
+                    Set<String> attive= sharedPref.getStringSet("sveglieAttive", new HashSet<>());
+
+                    attive.remove(key);
+
+                    editor.putStringSet("sveglieAttive", attive);
+
+                    editor.apply();
+                }
                 else if (newSet.contains("non attiva")) {
-                        Log.d (TAG, "switch trova non attiva");
-                        newSet.remove("non attiva");
-                        newSet.add("attiva"); }
+                    //Log.d (TAG, "switch trova non attiva");
+                    newSet.remove("non attiva");
+                    newSet.add("attiva");
+
+                    Set<String> attive= sharedPref.getStringSet("sveglieAttive", new HashSet<>());
+
+                    attive.add(key);
+
+                    editor.putStringSet("sveglieAttive", attive);
+
+                    editor.apply();
+
+                }
+
                 Log.d(TAG, "switch sveglia dopo " + sveglieSet);
 
                 editor.putStringSet(key, newSet);
                 editor.apply();
+
+
             }
 
             else {

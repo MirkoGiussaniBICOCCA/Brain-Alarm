@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,10 +30,8 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -50,6 +49,10 @@ public class HomeFragment extends Fragment {
     public static final String SVEGLIE_KEY = "SveglieKey";
 
     private static final String TAG = AggiungiActivity.class.getSimpleName();
+
+    private Handler handler = new Handler();
+    private Runnable runnable;
+
 
     TextView textCountDown;
     LinearLayout layoutConfermaEliminazione;
@@ -84,77 +87,18 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //countdown
-        //TODO sistemare che quando disattivo una sveglie deve aggiornarsi countDown (funziona solo cambiando pagina)
-        //TODO orario deve aggiornarsi sempre non solo quando entro nel fragment
         //TODO sistemare che quando guardo le ripetizioni devo prendere il giorno più vicino se ho più di uno
 
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
-        Set<String> attiveSet = sharedPref.getStringSet("sveglieAttive", new HashSet<>());
-
-
-        String dataOrarioTemp = ""; //dataOrarioTemp è la data e l'orario della sveglia che sto controllando
-        String countDown = "";
-        int secondiMancanti = -1;
-
-        for (String attive : attiveSet) {
-            Log.d(TAG, "elenco attive " + attive); //attive è la chiave della sveglia attiva
-
-            Set<String> sveglieSetAttive = sharedPref.getStringSet(attive, new HashSet<>());
-            Log.d(TAG, "elenco sveglieAttive " + sveglieSetAttive); //elenco stringhe della sveglia attiva
-
-
-            String data = "";
-            String orario = "";
-
-            for (String attiva : sveglieSetAttive) {
-                //Log.d(TAG, "dati attiva " + attiva.toString());
-
-                if (!attiva.toString().isEmpty()) {
-                    if ((attiva.toString()).charAt(0) == 'd')
-                        data += attiva.toString().substring(1) + " ";
-
-                    if ((attiva.toString()).charAt(0) == 'o')
-                        orario += attiva.toString().substring(1);
-                }
-
-            }
-
-            dataOrarioTemp = data + orario;
-            Log.d(TAG, "data e orario Attiva " + dataOrarioTemp); //data e orario della sveglia che sto controllando
-
-
-            //mancanoDHM contiene giorno ora e minuti che mancano
-            String mancanoDHM = calculateTimeDifference(dataOrarioTemp);
-            Log.d(TAG, "mancanoDHM " + mancanoDHM);
-
-            //imposto da valori di default a valori della prima sveglia
-            if (secondiMancanti == -1 || countDown.equals("")) {
-                secondiMancanti = getSecondiMancanti(mancanoDHM);
-                Log.d(TAG, "secondiMancanti " + secondiMancanti);
-                countDown = mancanoDHM;
-                Log.d(TAG, "countDown " + countDown);
-            } else {
-                if (secondiMancanti > getSecondiMancanti(mancanoDHM)) {
-                    secondiMancanti = getSecondiMancanti(mancanoDHM);
-                    countDown = mancanoDHM; }
-            }
-
-        }
-
-
+        String countDown = getCountDown();
         textCountDown = view.findViewById(R.id.textCountDown);
-        if (countDown.toString().equals("")) {
-            textCountDown.setText("nessuna sveglia attiva");
-        }
-        else{
-            if (countDown.charAt(0) == '0')
-                textCountDown.setText(countDown.toString().substring(1));
-            else
-                textCountDown.setText(countDown.charAt(0) + " giorni e " + countDown.toString().substring(1));
-        }
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                setText(getCountDown());
+                handler.postDelayed(this, 1000); // Chiamata ogni 1000 millisecondi (1 secondo)
+            }
+        };
 
-        Log.d(TAG, "aggiornamento secondiMancanti " + secondiMancanti);
-        Log.d(TAG, "aggiornamento countDown" + countDown);
 
         final Button buttonAggiungi = view.findViewById(R.id.bottoneAggiungiSveglia);
 
@@ -323,6 +267,88 @@ public class HomeFragment extends Fragment {
         editor.apply();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void setText (String countDown) {
+
+        if (countDown.toString().equals("")) {
+            textCountDown.setText("nessuna sveglia attiva");
+        }
+        else{
+            if (countDown.charAt(0) == '0')
+                textCountDown.setText(countDown.toString().substring(1));
+            else
+                textCountDown.setText(countDown.charAt(0) + " giorni e " + countDown.toString().substring(1));
+        }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        handler.post(runnable); // Avvia il runnable quando il fragment è visibile
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public String getCountDown() {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+        Set<String> attiveSet = sharedPref.getStringSet("sveglieAttive", new HashSet<>());
+
+
+        String dataOrarioTemp = ""; //dataOrarioTemp è la data e l'orario della sveglia che sto controllando
+        String countDown = "";
+        int secondiMancanti = -1;
+
+        for (String attive : attiveSet) {
+            Log.d(TAG, "elenco attive " + attive); //attive è la chiave della sveglia attiva
+
+            Set<String> sveglieSetAttive = sharedPref.getStringSet(attive, new HashSet<>());
+            Log.d(TAG, "elenco sveglieAttive " + sveglieSetAttive); //elenco stringhe della sveglia attiva
+
+
+            String data = "";
+            String orario = "";
+
+            for (String attiva : sveglieSetAttive) {
+                //Log.d(TAG, "dati attiva " + attiva.toString());
+
+                if (!attiva.toString().isEmpty()) {
+                    if ((attiva.toString()).charAt(0) == 'd')
+                        data += attiva.toString().substring(1) + " ";
+
+                    if ((attiva.toString()).charAt(0) == 'o')
+                        orario += attiva.toString().substring(1);
+                }
+
+            }
+
+            dataOrarioTemp = data + orario;
+            Log.d(TAG, "data e orario Attiva " + dataOrarioTemp); //data e orario della sveglia che sto controllando
+
+
+            //mancanoDHM contiene giorno ora e minuti che mancano
+            String mancanoDHM = calculateTimeDifference(dataOrarioTemp);
+            Log.d(TAG, "mancanoDHM " + mancanoDHM);
+
+            //imposto da valori di default a valori della prima sveglia
+            if (secondiMancanti == -1 || countDown.equals("")) {
+                secondiMancanti = getSecondiMancanti(mancanoDHM);
+                Log.d(TAG, "secondiMancanti " + secondiMancanti);
+                countDown = mancanoDHM;
+                Log.d(TAG, "countDown " + countDown);
+            } else {
+                if (secondiMancanti > getSecondiMancanti(mancanoDHM)) {
+                    secondiMancanti = getSecondiMancanti(mancanoDHM);
+                    countDown = mancanoDHM; }
+            }
+
+        }
+
+        return countDown;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String calculateTimeDifference(String futureTime) {

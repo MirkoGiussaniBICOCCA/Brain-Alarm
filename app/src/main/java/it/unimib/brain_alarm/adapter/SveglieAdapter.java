@@ -189,6 +189,12 @@ public class SveglieAdapter extends
                 //Log.d(TAG,"keySet dopo " + keySet);
                 editor.putStringSet("sveglia_keys", keySet);
 
+                // Rimuove la chiave dalla lista delle sveglie attive
+                Set<String> attiveSet = sharedPref.getStringSet("sveglieAttive", new HashSet<>());
+                attiveSet.remove(key);
+                editor.putStringSet("sveglieAttive", keySet);
+
+
                 editor.apply();
 
                 //getAdapterPosition mi restituisce la posizione della sveglia da cancellare, partono da 0

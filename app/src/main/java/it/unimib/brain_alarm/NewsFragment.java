@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +27,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -47,7 +49,7 @@ public class NewsFragment extends Fragment {
     private static final String TAG = NewsFragment.class.getSimpleName();
 
 
-    TextView textStatoSelezionato;
+    ImageButton buttonStato;
 
     private List<News> newsList;
     private NewsRecyclerViewAdapter newsRecyclerViewAdapter;
@@ -105,8 +107,35 @@ public class NewsFragment extends Fragment {
 
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
 
-        textStatoSelezionato = view.findViewById((R.id.statoNotizie));
-        textStatoSelezionato.setText(sharedPref.getString("stato", null));
+
+        buttonStato = view.findViewById(R.id.imageButtonStato);
+
+        //cliccando sulla bandiera va a impostazioni
+        /*
+        buttonStato.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_newsFragment_to_impostazioniFragment);
+        });
+        */
+
+        switch (sharedPref.getString("stato", null)) {
+            case "Italia":
+                buttonStato.setImageDrawable(getResources().getDrawable(R.drawable.italia));
+            break;
+            case "Francia":
+                buttonStato.setImageDrawable(getResources().getDrawable(R.drawable.francia));
+            break;
+            case "Germania":
+                buttonStato.setImageDrawable(getResources().getDrawable(R.drawable.germania));
+                break;
+            case "Uk":
+                buttonStato.setImageDrawable(getResources().getDrawable(R.drawable.uk));
+                break;
+            case "Usa":
+                buttonStato.setImageDrawable(getResources().getDrawable(R.drawable.usa));
+                break;
+
+
+        }
 
         requireActivity().addMenuProvider(new MenuProvider() {
             @Override

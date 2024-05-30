@@ -43,6 +43,11 @@
         android:name="it.unimib.brain_alarm.NewsFragment"
         android:label="fragment_news"
         tools:layout="@layout/fragment_news" >
+        <!--
+        <action
+            android:id="@+id/action_newsFragment_to_impostazioniFragment"
+            app:destination="@id/impostazioniFragment" />
+        -->
     </fragment>
 
     <fragment

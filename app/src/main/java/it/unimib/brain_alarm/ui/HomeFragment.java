@@ -88,7 +88,7 @@ public class HomeFragment extends Fragment {
 
         //TODO countdown
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
-        Set<String> attive= sharedPref.getStringSet("sveglieAttive", new HashSet<>());
+        Set<String> attiveSet = sharedPref.getStringSet("sveglieAttive", new HashSet<>());
 
         Date currentTime = new Date();
 
@@ -98,7 +98,28 @@ public class HomeFragment extends Fragment {
         // Format l'ora corrente come stringa
         String oraLocale = formatter.format(currentTime);
 
-        String temp;
+        String orarioTemp = "";
+
+        for (String attive : attiveSet) {
+            Log.d(TAG, "elenco attive " + attive); //attive è la chiave della sveglia attiva
+
+            Set<String> sveglieSetAttive = sharedPref.getStringSet(attive, new HashSet<>());
+            Log.d(TAG, "elenco sveglieAttive " + sveglieSetAttive); //elenco stringhe della sveglia attiva
+
+
+            for (String attiva : sveglieSetAttive) {
+                attiva.toString();
+                //cerco stringa che inizia con o
+                if (!attiva.toString().isEmpty())
+                    if ((attiva.toString()).charAt(0) == 'o')
+                        orarioTemp = attiva.toString().substring(1);
+            }
+            Log.d(TAG, "orario Attiva " + orarioTemp); //orarioTemp è l'orario della sveglia che sto controllando
+
+
+            //controllo orarioTemp con orario locale
+
+        }
 
 
 

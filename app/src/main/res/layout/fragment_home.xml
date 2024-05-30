@@ -53,7 +53,7 @@
 
 
                 <TextView
-                    android:id="@+id/countDown"
+                    android:id="@+id/textCountDown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="countdown"

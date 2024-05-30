@@ -37,7 +37,7 @@ public class Sveglie { //implements Parcelable {
 
     public Sveglie(Set<String> elementi) {
             this.elementi = elementi;
-            Log.d(TAG, "elementi " + elementi);
+            //Log.d(TAG, "elementi " + elementi);
     }
 
 
@@ -45,7 +45,7 @@ public class Sveglie { //implements Parcelable {
 
         for (String e : elementi) {
             e.toString();
-            Log.d(TAG, "prima parola " + e.toString());
+            //Log.d(TAG, "prima parola " + e.toString());
 
             if (!e.toString().isEmpty())
                 if ((e.toString()).charAt(0) == 's')
@@ -116,7 +116,7 @@ public class Sveglie { //implements Parcelable {
                 ripetizioni += "Sabato ";
             if (ripetizioni1.charAt(i) == '7')
                 ripetizioni += "Domenica";
-            Log.d(TAG, "ripetizioni" + ripetizioni);
+            //Log.d(TAG, "ripetizioni" + ripetizioni);
         }
 
         return ripetizioni;

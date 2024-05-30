@@ -3,9 +3,9 @@ package it.unimib.brain_alarm;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -24,28 +23,21 @@ import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.text.BreakIterator;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import it.unimib.brain_alarm.News.News;
-import it.unimib.brain_alarm.Repository.INewsRepositoryWithLiveData;
 import it.unimib.brain_alarm.Sveglia.Sveglie;
-import it.unimib.brain_alarm.adapter.NewsRecyclerViewAdapter;
-import it.unimib.brain_alarm.util.ServiceLocator;
-import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
 public class AggiungiFragment extends Fragment {
     private TimePicker timeP;
@@ -122,6 +114,7 @@ public class AggiungiFragment extends Fragment {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -211,7 +204,7 @@ public class AggiungiFragment extends Fragment {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progressoCalcolatrice, boolean fromUser) {
-                Log.d(TAG, "N calcolatrice " + progressoCalcolatrice);
+                //Log.d(TAG, "N calcolatrice " + progressoCalcolatrice);
                 value.setText(progressoCalcolatrice + "/" + "5");
                 if (progressoCalcolatrice>0) {
                     imgCalcolaltrice.setImageDrawable(getResources().getDrawable(R.drawable.calcolatrice2));
@@ -238,7 +231,7 @@ public class AggiungiFragment extends Fragment {
         seekBarM.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBarM, int progressoMemory, boolean fromUser) {
-                Log.d(TAG, "N memory " + progressoMemory);
+                //Log.d(TAG, "N memory " + progressoMemory);
                 valueM.setText(progressoMemory + "/" + "5");
                 if (progressoMemory>0) {
                     imgMemory.setImageDrawable(getResources().getDrawable(R.drawable.memory2));
@@ -265,7 +258,7 @@ public class AggiungiFragment extends Fragment {
         seekBarS.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBarS, int progressoScrivere, boolean fromUser) {
-                Log.d(TAG, "N scrivere " + progressoScrivere);
+                //Log.d(TAG, "N scrivere " + progressoScrivere);
                 valueS.setText(progressoScrivere + "/" + "5");
                 if (progressoScrivere>0)   {
                     imgScrivere.setImageDrawable(getResources().getDrawable(R.drawable.scrivere2));
@@ -294,7 +287,7 @@ public class AggiungiFragment extends Fragment {
         seekBarP.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBarP, int progressoPassi, boolean fromUser) {
-                Log.d(TAG, "N passi " + progressoPassi);
+                //Log.d(TAG, "N passi " + progressoPassi);
                 valueP.setText(progressoPassi + "/" + "5");
                 if (progressoPassi>0) {
                     imgPassi.setImageDrawable(getResources().getDrawable(R.drawable.passi2));
@@ -375,6 +368,7 @@ public class AggiungiFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void saveInformation() {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
 
@@ -389,7 +383,7 @@ public class AggiungiFragment extends Fragment {
         if (min.length()!=2)
             min = "0" + min;
 
-        sveglia.add("o" + ora + ":" + min );
+        sveglia.add("o" + ora + ":" + min + ":00");
 
         //etichetta
         sveglia.add("e" + nomeSveglia.getEditText().getText().toString());
@@ -422,6 +416,8 @@ public class AggiungiFragment extends Fragment {
         //Log.d(TAG, "settimana = " + settimana);
 
         sveglia.add(settimana);
+
+        sveglia.add(getDateRipetizioni(settimana));
 
         //suono, vibrazione
         sveglia.add(spinnerSuoni.getSelectedItem().toString());
@@ -462,5 +458,54 @@ public class AggiungiFragment extends Fragment {
         editor.apply();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public final String getDateRipetizioni(String settimana) {
+        String dateRipetizioni = "";
+
+        LocalDate oggi = LocalDate.now(); //giorno ordierno
+
+        if (settimana.equals("r0000000")) {
+            dateRipetizioni = "d" + String.valueOf(oggi);
+        }
+        else {
+            DayOfWeek dayOfWeek = oggi.getDayOfWeek();
+            //Log.d(TAG, "DAY " + dayOfWeek);
+
+            for (int i=0; i<(settimana.length()); i++) {
+                if (settimana.charAt(i) == '1')
+                    dateRipetizioni = "d" + String.valueOf(getNextDay(oggi, DayOfWeek.MONDAY));
+                if (settimana.charAt(i) == '2')
+                    dateRipetizioni = "d" + String.valueOf(getNextDay(oggi, DayOfWeek.TUESDAY));
+                if (settimana.charAt(i) == '3')
+                    dateRipetizioni = "d" + String.valueOf(getNextDay(oggi, DayOfWeek.WEDNESDAY));
+                if (settimana.charAt(i) == '4')
+                    dateRipetizioni = "d" + String.valueOf(getNextDay(oggi, DayOfWeek.THURSDAY));
+                if (settimana.charAt(i) == '5')
+                    dateRipetizioni = "d" + String.valueOf(getNextDay(oggi, DayOfWeek.FRIDAY));
+                if (settimana.charAt(i) == '6')
+                    dateRipetizioni = "d" +String.valueOf(getNextDay(oggi, DayOfWeek.SATURDAY));
+                if (settimana.charAt(i) == '7')
+                    dateRipetizioni = "d" + String.valueOf(getNextDay(oggi, DayOfWeek.SUNDAY));
+            }
+        }
+        return dateRipetizioni;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static LocalDate getNextDay(LocalDate oggi, DayOfWeek dayOfWeek) {
+        // Ottieni il giorno della settimana della data fornita
+        DayOfWeek currentDayOfWeek = oggi.getDayOfWeek();
+
+        // Calcola i giorni rimanenti per arrivare al prossimo giorno desiderato
+        int daysUntilNextTarget = dayOfWeek.getValue() - currentDayOfWeek.getValue();
+
+        // Se il giorno corrente è uguale o dopo il giorno desiderato, aggiungi 7 giorni
+        if (daysUntilNextTarget <= 0) {
+            daysUntilNextTarget += 7;
+        }
+
+        // Aggiungi i giorni calcolati alla data iniziale per ottenere il prossimo giorno desiderato
+        return oggi.plusDays(daysUntilNextTarget);
+    }
 
 }

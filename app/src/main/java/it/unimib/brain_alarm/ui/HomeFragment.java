@@ -1,12 +1,13 @@
 package it.unimib.brain_alarm.ui;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,24 +20,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Chronometer;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextClock;
 
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -45,10 +40,10 @@ import java.util.Set;
 import it.unimib.brain_alarm.AggiungiActivity;
 import it.unimib.brain_alarm.R;
 import it.unimib.brain_alarm.Sveglia.Sveglie;
-import it.unimib.brain_alarm.adapter.NewsRecyclerViewAdapter;
 import it.unimib.brain_alarm.adapter.SveglieAdapter;
-import it.unimib.brain_alarm.util.SharedPreferencesUtil;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class HomeFragment extends Fragment {
 
@@ -56,6 +51,7 @@ public class HomeFragment extends Fragment {
 
     private static final String TAG = AggiungiActivity.class.getSimpleName();
 
+    TextView textCountDown;
     LinearLayout layoutConfermaEliminazione;
 
 
@@ -82,23 +78,23 @@ public class HomeFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //TODO countdown
+        //countdown
+        //TODO sistemare che quando disattivo una sveglie deve aggiornarsi countDown (funziona solo cambiando pagina)
+        //TODO orario deve aggiornarsi sempre non solo quando entro nel fragment
+        //TODO sistemare che quando guardo le ripetizioni devo prendere il giorno più vicino se ho più di uno
+
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
         Set<String> attiveSet = sharedPref.getStringSet("sveglieAttive", new HashSet<>());
 
-        Date currentTime = new Date();
 
-        // Definisci un formato per l'ora
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-
-        // Format l'ora corrente come stringa
-        String oraLocale = formatter.format(currentTime);
-
-        String orarioTemp = "";
+        String dataOrarioTemp = ""; //dataOrarioTemp è la data e l'orario della sveglia che sto controllando
+        String countDown = "";
+        int secondiMancanti = -1;
 
         for (String attive : attiveSet) {
             Log.d(TAG, "elenco attive " + attive); //attive è la chiave della sveglia attiva
@@ -107,21 +103,58 @@ public class HomeFragment extends Fragment {
             Log.d(TAG, "elenco sveglieAttive " + sveglieSetAttive); //elenco stringhe della sveglia attiva
 
 
+            String data = "";
+            String orario = "";
+
             for (String attiva : sveglieSetAttive) {
-                attiva.toString();
-                //cerco stringa che inizia con o
-                if (!attiva.toString().isEmpty())
+                //Log.d(TAG, "dati attiva " + attiva.toString());
+
+                if (!attiva.toString().isEmpty()) {
+                    if ((attiva.toString()).charAt(0) == 'd')
+                        data += attiva.toString().substring(1) + " ";
+
                     if ((attiva.toString()).charAt(0) == 'o')
-                        orarioTemp = attiva.toString().substring(1);
+                        orario += attiva.toString().substring(1);
+                }
+
             }
-            Log.d(TAG, "orario Attiva " + orarioTemp); //orarioTemp è l'orario della sveglia che sto controllando
+
+            dataOrarioTemp = data + orario;
+            Log.d(TAG, "data e orario Attiva " + dataOrarioTemp); //data e orario della sveglia che sto controllando
 
 
-            //controllo orarioTemp con orario locale
+            //mancanoDHM contiene giorno ora e minuti che mancano
+            String mancanoDHM = calculateTimeDifference(dataOrarioTemp);
+            Log.d(TAG, "mancanoDHM " + mancanoDHM);
+
+            //imposto da valori di default a valori della prima sveglia
+            if (secondiMancanti == -1 || countDown.equals("")) {
+                secondiMancanti = getSecondiMancanti(mancanoDHM);
+                Log.d(TAG, "secondiMancanti " + secondiMancanti);
+                countDown = mancanoDHM;
+                Log.d(TAG, "countDown " + countDown);
+            } else {
+                if (secondiMancanti > getSecondiMancanti(mancanoDHM)) {
+                    secondiMancanti = getSecondiMancanti(mancanoDHM);
+                    countDown = mancanoDHM; }
+            }
 
         }
 
 
+        textCountDown = view.findViewById(R.id.textCountDown);
+        if (countDown.toString().equals("")) {
+            textCountDown.setText("nessuna sveglia attiva");
+        }
+        else{
+            if (countDown.charAt(0) == '0')
+                textCountDown.setText(countDown.toString().substring(1));
+            else
+                textCountDown.setText(countDown.charAt(0) + " giorni e " + countDown.toString().substring(1));
+        }
+
+        Log.d(TAG, "aggiornamento secondiMancanti " + secondiMancanti);
+        Log.d(TAG, "aggiornamento countDown" + countDown);
 
         final Button buttonAggiungi = view.findViewById(R.id.bottoneAggiungiSveglia);
 
@@ -291,5 +324,42 @@ public class HomeFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static String calculateTimeDifference(String futureTime) {
+        // Formattatore per l'orario di input
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        // Parso l'orario futuro
+        LocalDateTime futureDateTime = LocalDateTime.parse(futureTime, formatter);
+
+        // Ottengo data e orario attuale
+        LocalDateTime now = LocalDateTime.now();
+
+        // Calcolo la durata tra l'orario attuale e l'orario futuro
+        Duration duration = Duration.between(now, futureDateTime);
+
+        // Ottengo giorni, ore, minuti e secondi dalla durata
+        long days = duration.toDays();
+        long hours = duration.toHours() % 24;
+        long minutes = duration.toMinutes() % 60;
+        long seconds = duration.getSeconds() % 60;
+
+        // Formatto il risultato
+        return days + " " + hours + ":" + minutes + ":" + seconds;
+    }
+
+    public static int getSecondiMancanti(String mancanoDHM) {
+        // Divide la stringa in due parti: giorni e il resto (ore, minuti, secondi)
+        String[] parts = mancanoDHM.split(" ");
+        int days = Integer.parseInt(parts[0]) * 24 * 60 * 60;
+
+        // Divide la parte del tempo (ore, minuti, secondi)
+        String[] timeParts = parts[1].split(":");
+        int hours = Integer.parseInt(timeParts[0]) * 60 * 60;
+        int minutes = Integer.parseInt(timeParts[1]) * 60;
+        int seconds = Integer.parseInt(timeParts[2]);
+
+        return days+hours+minutes+seconds;
+    }
 
 }

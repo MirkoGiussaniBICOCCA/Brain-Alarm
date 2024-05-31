@@ -469,7 +469,8 @@ public class AggiungiFragment extends Fragment {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
         LocalTime orarioSveglia = LocalTime.parse(orario, formatter);
-        LocalTime oraAttuale = LocalTime.parse(LocalDateTime.now().format(formatter));//giorno ordierno
+
+        LocalTime oraAttuale = LocalTime.parse(LocalDateTime.now().format(formatter));
         LocalDate oggi = LocalDate.now(); //giorno ordierno
 
 

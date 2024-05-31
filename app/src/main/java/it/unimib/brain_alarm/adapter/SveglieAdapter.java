@@ -9,6 +9,7 @@ import static it.unimib.brain_alarm.ui.HomeFragment.SVEGLIE_KEY;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,12 +22,17 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.arch.core.internal.FastSafeIterableMap;
 import androidx.core.content.ContextCompat;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -168,40 +174,25 @@ public class SveglieAdapter extends
                     Set<String> sveglieSet = sharedPref.getStringSet(keyDaDisattivare, new HashSet<>());
 
                     Set<String> newSet = new HashSet<>(sveglieSet);
-                    Log.d (TAG, "prova sveglieSet: " + sveglieSet + " newSet: " + newSet);
-
-                    Log.d(TAG, "prova da disattivare scaduta");
 
 
                     if (newSet.contains("attiva")) {
-
-                        Log.d(TAG, "prova newSet" + newSet);
-                        Log.d(TAG, "prova da disattivare è attiva prima: " + newSet.contains("attiva"));
 
                         newSet.remove("attiva");
                         newSet.add("non attiva");
 
                         editor.putStringSet(keyDaDisattivare, newSet);
 
-
-                        Log.d(TAG, "prova newSet" + newSet);
-
-                        Log.d(TAG, "prova da disattivare è attiva dopo: " + newSet.contains("attiva"));
-
                         // Rimuove la chiave dalla lista delle attive
                         Set<String> attive = sharedPref.getStringSet("sveglieAttive", new HashSet<>());
-                        Log.d(TAG, "prova prima attive " + attive);
 
                         attive.remove(keyDaDisattivare);
-
-                        Log.d(TAG, "prova dopo attive " + attive);
 
                         editor.putStringSet("sveglieAttive", attive);
 
                         editor.apply();
 
                         switchAttiva.setChecked(false);
-                        Log.d(TAG, "checked1 ");
 
                     }
                 }
@@ -217,10 +208,8 @@ public class SveglieAdapter extends
 
                 Set<String> newSet = new HashSet<>(sveglieSet);
 
-                Log.d (TAG, "prova sveglieSet: " + sveglieSet + " newSet: " + newSet);
 
 
-                Log.d(TAG, "prova nuova sveglia");
                 if (newSet.contains("attiva")) {
                     switchAttiva.setChecked(true);
                     Log.d(TAG, "checked2 ");
@@ -234,6 +223,7 @@ public class SveglieAdapter extends
         }
 
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onClick(View v) {
             SharedPreferences sharedPref = context.getSharedPreferences("information_shared", Context.MODE_PRIVATE);
@@ -296,11 +286,38 @@ public class SveglieAdapter extends
                     newSet.remove("non attiva");
                     newSet.add("attiva");
 
+                    String dataSveglia = (sveglieList.get(getAdapterPosition()).getData()).substring(0);
+                    LocalDate data = LocalDate.parse(dataSveglia);
+                    LocalDate oggi = LocalDate.now(); //giorno ordierno
+
+                    String orarioSveglia = (sveglieList.get(getAdapterPosition()).getOrario()).substring(0);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                    LocalTime orario = LocalTime.parse(orarioSveglia, formatter);
+                    LocalTime oraAttuale = LocalTime.parse(LocalDateTime.now().format(formatter));//giorno ordierno
+
+                    //oggi se l'orario non è ancora arrivato e la data è passata
+                    //domani se ora è passata sia se la data era vecchia sia se la data era quella di oggi
+                    if (orario.isAfter(oraAttuale)) {
+                        if(data.isBefore(oggi)) {
+                            newSet.remove("d" + dataSveglia);
+                            newSet.add("d" + String.valueOf(oggi));
+                        }
+                    }
+                    else {
+                        newSet.remove("d" + dataSveglia);
+                        newSet.add("d" + String.valueOf(oggi.plusDays(1)));
+                    }
+
+                    Log.d(TAG, "NewSet dopo agg data" + newSet);
+
+
                     Set<String> attive= sharedPref.getStringSet("sveglieAttive", new HashSet<>());
 
                     attive.add(key);
 
                     editor.putStringSet("sveglieAttive", attive);
+
+
 
                     editor.apply();
 

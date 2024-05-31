@@ -28,47 +28,62 @@
                 android:id="@+id/layoutSveglieAttive"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_navbar"
+                android:background="@color/azzurro"
                 android:orientation="vertical"
-                android:padding="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/txtSveglieAttive"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sveglieAttive"
-                    android:textColor="@color/white"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/textTempoMancante"
+                    android:id="@+id/textCountDown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/mancano"
+                    android:backgroundTint="@color/sfondoTras"
+                    android:text="@string/NussunaSvegliaAttiva"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20dp" />
-
+                    android:textSize="34dp" />
 
                 <LinearLayout
+                    android:id="@+id/layoutCountdown"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:visibility="gone">
 
                     <TextView
-                        android:id="@+id/textCountDown"
-                        android:layout_width="match_parent"
+                        android:id="@+id/textCountDownOra"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="countdown"
-                        android:textColor="@color/white"
+                        android:backgroundTint="@color/sfondoTras"
+                        android:text="ora"
                         android:textAlignment="center"
-                        android:textSize="20dp" />
+                        android:textColor="@color/white"
+                        android:textSize="34dp" />
+
+                    <TextView
+                        android:id="@+id/textCountDownMin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/sfondoTras"
+                        android:text="min"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="34dp" />
+
+                    <TextView
+                        android:id="@+id/textCountDownSec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/sfondoTras"
+                        android:text="sec"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="34dp" />
+
 
                 </LinearLayout>
-
-
             </LinearLayout>
 
             <Button

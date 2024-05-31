@@ -25,6 +25,8 @@ public class Sveglie { //implements Parcelable {
     private String id;
 
     private String orario;
+
+    private String data;
     private String etichetta;
 
     private String ripetizioni;
@@ -73,6 +75,23 @@ public class Sveglie { //implements Parcelable {
 
     public void setOrario(String orario) {
         this.orario = orario;
+    }
+
+    public String getData() {
+
+        for (String e : elementi) {
+            e.toString();
+            //Log.d(TAG, "prima parola " + e.toString());
+
+            if (!e.toString().isEmpty())
+                if ((e.toString()).charAt(0) == 'd')
+                    data = e.toString().substring(1);
+        }
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 
     public String getEtichetta() {

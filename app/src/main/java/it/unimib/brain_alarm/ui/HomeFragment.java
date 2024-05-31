@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.DecimalFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -55,6 +56,13 @@ public class HomeFragment extends Fragment {
 
 
     TextView textCountDown;
+    LinearLayout layoutCountDown;
+
+    TextView textCountDownOra;
+    TextView textCountDownMin;
+    TextView textCountDownSec;
+
+
     LinearLayout layoutConfermaEliminazione;
 
 
@@ -91,6 +99,11 @@ public class HomeFragment extends Fragment {
 
         String countDown = getCountDown(view);
         textCountDown = view.findViewById(R.id.textCountDown);
+        layoutCountDown = view.findViewById(R.id.layoutCountdown);
+        textCountDownOra = view.findViewById(R.id.textCountDownOra);
+        textCountDownMin = view.findViewById(R.id.textCountDownMin);
+        textCountDownSec = view.findViewById(R.id.textCountDownSec);
+
         runnable = new Runnable() {
             @Override
             public void run() {
@@ -251,15 +264,24 @@ public class HomeFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setText (String countDown) {
-
+        Log.d(TAG, "setText" + countDown.toString());
         if (countDown.toString().equals("")) {
-            textCountDown.setText("nessuna sveglia attiva");
+            textCountDown.setText("Nessuna sveglia attiva");
+            layoutCountDown.setVisibility(getView().GONE);
         }
         else{
-            if (countDown.charAt(0) == '0')
-                textCountDown.setText(countDown.toString().substring(1));
-            else
-                textCountDown.setText(countDown.charAt(0) + " giorni e " + countDown.toString().substring(1));
+            layoutCountDown.setVisibility(getView().VISIBLE);
+            if (countDown.charAt(0) == '0') {
+                textCountDown.setText("giorno 0");
+                //textCountDown.setVisibility(getView().GONE);
+            }
+            else {
+                textCountDown.setText(countDown.charAt(0) + " giorni e ");
+            }
+            textCountDownOra.setText(countDown.toString().substring(1, 5) );
+            textCountDownMin.setText(countDown.toString().substring(5, 8) );
+            textCountDownSec.setText(countDown.toString().substring(8,10));
+
         }
     }
 
@@ -333,22 +355,6 @@ public class HomeFragment extends Fragment {
 
                 aggiornaRecyclerView(view, true, attive);
 
-                /*
-                // Creare una copia del set recuperato
-                Set<String> attiveSetModificato = new HashSet<>(attiveSet);
-
-                // La chiave della sveglia che vuoi rimuovere
-                String key = attive;
-
-                // Rimuove la sveglia se presente nella copia del set
-                attiveSetModificato.remove(key);
-
-                // Salva la copia aggiornata del set nello SharedPreferences
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putStringSet("sveglieAttive", attiveSetModificato);
-                editor.apply();
-                 */
-
                 }
 
         }
@@ -376,8 +382,13 @@ public class HomeFragment extends Fragment {
         long minutes = duration.toMinutes() % 60;
         long seconds = duration.getSeconds() % 60;
 
+        DecimalFormat df = new DecimalFormat("00");
+        String stringHours = df.format(hours);
+        String stringdMinutes = df.format(minutes);
+        String stringSeconds = df.format(seconds);
+
         // Formatto il risultato
-        return days + " " + hours + ":" + minutes + ":" + seconds;
+        return days + " " + stringHours + ":" + stringdMinutes + ":" + stringSeconds;
     }
 
     public static int getSecondiMancanti(String mancanoDHM) {

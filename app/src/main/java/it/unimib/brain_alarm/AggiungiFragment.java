@@ -420,7 +420,7 @@ public class AggiungiFragment extends Fragment {
 
         sveglia.add(settimana);
 
-        sveglia.add(getDateRipetizioni(settimana, orario.substring(1)));
+        sveglia.add(getDataPiuVicina((getDateRipetizioni(settimana, orario.substring(1)))));
 
         //suono, vibrazione
         sveglia.add(spinnerSuoni.getSelectedItem().toString());
@@ -470,9 +470,9 @@ public class AggiungiFragment extends Fragment {
 
         LocalTime orarioSveglia = LocalTime.parse(orario, formatter);
 
+        //data e orario attuali
         LocalTime oraAttuale = LocalTime.parse(LocalDateTime.now().format(formatter));
         LocalDate oggi = LocalDate.now(); //giorno ordierno
-
 
 
         if (settimana.equals("r0000000")) {
@@ -486,25 +486,53 @@ public class AggiungiFragment extends Fragment {
         else {
             DayOfWeek dayOfWeek = oggi.getDayOfWeek();
             //Log.d(TAG, "DAY " + dayOfWeek);
-
+            dateRipetizioni = "";
             for (int i=0; i<(settimana.length()); i++) {
                 if (settimana.charAt(i) == '1')
-                    dateRipetizioni = "d" + String.valueOf(getNextDay(oggi, DayOfWeek.MONDAY));
+                    dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.MONDAY));
                 if (settimana.charAt(i) == '2')
-                    dateRipetizioni = "d" + String.valueOf(getNextDay(oggi, DayOfWeek.TUESDAY));
+                    dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.TUESDAY));
                 if (settimana.charAt(i) == '3')
-                    dateRipetizioni = "d" + String.valueOf(getNextDay(oggi, DayOfWeek.WEDNESDAY));
+                    dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.WEDNESDAY));
                 if (settimana.charAt(i) == '4')
-                    dateRipetizioni = "d" + String.valueOf(getNextDay(oggi, DayOfWeek.THURSDAY));
+                    dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.THURSDAY));
                 if (settimana.charAt(i) == '5')
-                    dateRipetizioni = "d" + String.valueOf(getNextDay(oggi, DayOfWeek.FRIDAY));
+                    dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.FRIDAY));
                 if (settimana.charAt(i) == '6')
-                    dateRipetizioni = "d" +String.valueOf(getNextDay(oggi, DayOfWeek.SATURDAY));
+                    dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.SATURDAY));
                 if (settimana.charAt(i) == '7')
-                    dateRipetizioni = "d" + String.valueOf(getNextDay(oggi, DayOfWeek.SUNDAY));
+                    dateRipetizioni += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.SUNDAY));
             }
         }
+
+
         return dateRipetizioni;
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public final String getDataPiuVicina(String elencoDate) {
+        String dataPiuVicina = "d";
+        LocalDate bestDate = null;
+        //elencoDate è un una stringa del tipo AAAA:MM:GGAAAA:MM:GG...
+
+
+        for (int i=0; i<elencoDate.length(); i+=11) {
+
+            dataPiuVicina = elencoDate.substring(i,i+11);
+            //Log.d(TAG, "datapiùvicina" + dataPiuVicina);
+
+            LocalDate data = LocalDate.parse(dataPiuVicina.substring(1));
+
+            if (bestDate == null || bestDate.isAfter(data)){
+                bestDate = data;
+            }
+        }
+
+        dataPiuVicina = "d" + bestDate.toString();
+
+        //Log.d(TAG, "datapiùvicina vincitrice " + dataPiuVicina);
+        return dataPiuVicina;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

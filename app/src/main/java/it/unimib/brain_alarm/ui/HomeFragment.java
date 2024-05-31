@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment {
 
             layoutConfermaEliminazione.setVisibility(view.GONE);
 
-            Log.d(TAG, "click remove tutte");
+            //Log.d(TAG, "click remove tutte");
             removeAllSveglie();
 
             RecyclerView recyclerView = view.findViewById(R.id.recyclerview_sveglie);
@@ -249,6 +249,8 @@ public class HomeFragment extends Fragment {
         Set<String> keySet = sharedPref.getStringSet("sveglia_keys", new HashSet<>());
         Set<String> sveglieAttive = sharedPref.getStringSet("sveglieAttive", new HashSet<>());
 
+
+
         for (String key : keySet) {
             //Log.d(TAG, "key " + key);
             editor.remove(key);
@@ -345,6 +347,27 @@ public class HomeFragment extends Fragment {
                     secondiMancanti = getSecondiMancanti(mancanoDHM);
                     countDown = mancanoDHM; }
             }
+
+
+            if (secondiMancanti <= 0) {
+
+                // Creare una copia del set recuperato
+                Set<String> attiveSetModificato = new HashSet<>(attiveSet);
+
+                // La chiave della sveglia che vuoi rimuovere
+                String key = attive;
+
+                // Rimuove la sveglia se presente nella copia del set
+                attiveSetModificato.remove(key);
+
+                // Salva la copia aggiornata del set nello SharedPreferences
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putStringSet("sveglieAttive", attiveSetModificato);
+                editor.apply();
+
+
+
+                }
 
         }
 

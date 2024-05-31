@@ -120,7 +120,9 @@ public class SveglieAdapter extends
         }
 
         public void bind(Sveglie sveglie) {
-            textViewOrario.setText(sveglie.getOrario());
+
+            textViewOrario.setText(sveglie.getOrario().substring(0,5));
+
             if (!sveglie.getEtichetta().equals(""))
                 textViewEtichetta.setText(sveglie.getEtichetta());
             else

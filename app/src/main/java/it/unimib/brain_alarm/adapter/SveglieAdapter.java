@@ -2,6 +2,7 @@ package it.unimib.brain_alarm.adapter;
 
 
 
+import static android.content.ContentValues.TAG;
 import static com.google.android.material.internal.ContextUtils.getActivity;
 
 import static it.unimib.brain_alarm.ui.HomeFragment.SVEGLIE_KEY;
@@ -42,7 +43,7 @@ import it.unimib.brain_alarm.R;
 import it.unimib.brain_alarm.News.News;
 import it.unimib.brain_alarm.Sveglia.Sveglie;
 import it.unimib.brain_alarm.util.DateTimeUtil;
-
+import it.unimib.brain_alarm.util.GetDateTime;
 
 
 public class SveglieAdapter extends
@@ -295,29 +296,45 @@ public class SveglieAdapter extends
                     LocalTime orario = LocalTime.parse(orarioSveglia, formatter);
                     LocalTime oraAttuale = LocalTime.parse(LocalDateTime.now().format(formatter));//giorno ordierno
 
-                    //oggi se l'orario non è ancora arrivato e la data è passata
-                    //domani se ora è passata sia se la data era vecchia sia se la data era quella di oggi
-                    if (orario.isAfter(oraAttuale)) {
-                        if(data.isBefore(oggi)) {
-                            newSet.remove("d" + dataSveglia);
-                            newSet.add("d" + String.valueOf(oggi));
+
+                    //data passata se NON HO RIPETIZIONI controllo orario e scelgo quella di oggi o domani invece
+                    //             se HO RIPETIZIONI calcolo la data più vicina
+                    //data di oggi se NON HO RIPETIZIONI controllo orario e scelgo tra oggi e domani altrimenti
+                    //             se HO RIPETIZIONI calcolo data più vicina
+                    //data futura lascio quella
+
+                    //se la data è futura non voflio entrare nell'if perchè non devo fare niente
+                    if(!data.isAfter(oggi)) {
+                        //se NON HO RIPETIZIONI
+                        if (sveglieList.get(getAdapterPosition()).getRipetizioni().equals("r0000000")) {
+
+                            //data passata o di oggi scelgo tra oggi e domani
+                            if (data.isBefore(oggi) || data.isEqual(oggi)) {
+                                //controllo se l'ora è passata per scegliere tra oggi e domani
+                                if (orario.isAfter(oraAttuale)) {
+                                    newSet.remove("d" + dataSveglia);
+                                    newSet.add("d" + String.valueOf(oggi));
+                                } else {
+                                    newSet.remove("d" + dataSveglia);
+                                    newSet.add("d" + String.valueOf(oggi.plusDays(1)));
+                                }
+                            }
+
                         }
-                    }
-                    else {
-                        newSet.remove("d" + dataSveglia);
-                        newSet.add("d" + String.valueOf(oggi.plusDays(1)));
+                        //HO RIPETIZIONI quindi devo calcolare la data più vicina
+                        else {
+                            newSet.remove("d" + dataSveglia);
+                            newSet.add(GetDateTime.getDateRipetizioni(sveglieList.get(getAdapterPosition()).getRipetizioni(), sveglieList.get(getAdapterPosition()).getOrario().substring(1)));
+                        }
                     }
 
                     Log.d(TAG, "NewSet dopo agg data" + newSet);
-
 
                     Set<String> attive= sharedPref.getStringSet("sveglieAttive", new HashSet<>());
 
                     attive.add(key);
 
                     editor.putStringSet("sveglieAttive", attive);
-
-
 
                     editor.apply();
 

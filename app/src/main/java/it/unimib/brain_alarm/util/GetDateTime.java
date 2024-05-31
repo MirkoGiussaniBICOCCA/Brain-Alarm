@@ -32,6 +32,7 @@ public class GetDateTime {
         LocalDate oggi = LocalDate.now(); //giorno ordierno
 
 
+        //TODO sistemare data riattivazione sveglia
         if (settimana.equals("r0000000")) {
             //Se l'orario impostato non è già passato metto oggi altrimenti domani
             if (orarioSveglia.isAfter(oraAttuale)) {
@@ -49,24 +50,59 @@ public class GetDateTime {
             for (int i=0; i<(settimana.length()); i++) {
                 switch (settimana.charAt(i)) {
                     case '1':
-                        dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.MONDAY));
+                        if (dayOfWeek.equals(DayOfWeek.MONDAY) && orarioSveglia.isAfter(oraAttuale)) {
+                            dateRipetizioni += "d" + oggi;
+                        }
+                        else {
+                            dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.MONDAY));
+                        }
                     break;
                     case '2':
-                        dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.TUESDAY));
+                        if (dayOfWeek.equals(DayOfWeek.TUESDAY) && orarioSveglia.isAfter(oraAttuale)) {
+                            dateRipetizioni += "d" + oggi;
+                        }
+                        else {
+                            dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.TUESDAY));
+                        }
                     case '3':
-                        dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.WEDNESDAY));
+                        if (dayOfWeek.equals(DayOfWeek.WEDNESDAY) && orarioSveglia.isAfter(oraAttuale)) {
+                            dateRipetizioni += "d" + oggi;
+                        }
+                        else {
+                            dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.WEDNESDAY));
+                        }
                     break;
                     case '4':
-                        dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.THURSDAY));
+                        if (dayOfWeek.equals(DayOfWeek.THURSDAY) && orarioSveglia.isAfter(oraAttuale)) {
+                            dateRipetizioni += "d" + oggi;
+                        }
+                        else {
+                            dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.THURSDAY));
+                        }
                     break;
                     case '5':
-                        dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.FRIDAY));
+                        if (dayOfWeek.equals(DayOfWeek.FRIDAY) && orarioSveglia.isAfter(oraAttuale)) {
+                            dateRipetizioni += "d" + oggi;
+                        }
+                        else {
+                            dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.FRIDAY));
+                        }
                     break;
                     case '6':
-                        dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.SATURDAY));
+                        if (dayOfWeek.equals(DayOfWeek.SATURDAY) && orarioSveglia.isAfter(oraAttuale)) {
+                            dateRipetizioni += "d" + oggi;
+                        }
+                        else {
+                            dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.SATURDAY));
+                        }
                     break;
                     case '7':
-                        dateRipetizioni += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.SUNDAY));
+                        if (dayOfWeek.equals(DayOfWeek.SUNDAY) && orarioSveglia.isAfter(oraAttuale)) {
+                            dateRipetizioni += "d" + oggi;
+                        }
+                        else {
+                            dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.SUNDAY));
+                        }
                     break;
                 }
             }

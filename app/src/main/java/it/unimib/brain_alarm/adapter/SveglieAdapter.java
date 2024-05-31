@@ -54,13 +54,18 @@ public class SveglieAdapter extends
     private final Application application;
 
     private final List<Sveglie> sveglieList;
+    private final boolean disattiva;
+
+    private final String keyDaDisattivare;
 
     private final OnItemClickListenerS onItemClickListenerS;
 
-    public SveglieAdapter(Context context, Application application, List<Sveglie> sveglieList, SveglieAdapter.OnItemClickListenerS onItemClickListener) {
+    public SveglieAdapter(Context context, Application application, List<Sveglie> sveglieList, Boolean disattiva, String keyDaDisattivare, SveglieAdapter.OnItemClickListenerS onItemClickListener) {
         this.context = context;
         this.application = application;
         this.sveglieList = sveglieList;
+        this.disattiva = disattiva;
+        this.keyDaDisattivare = keyDaDisattivare;
         this.onItemClickListenerS = onItemClickListener;
     }
 
@@ -156,19 +161,75 @@ public class SveglieAdapter extends
 
             SharedPreferences sharedPref = context.getSharedPreferences("information_shared", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            String key = (sveglieList.get(getAdapterPosition())).getId();
 
-            Set<String> sveglieSet = sharedPref.getStringSet(key, new HashSet<>());
+            if (disattiva){
+                if(!keyDaDisattivare.equals("")) {
 
-            Set<String> newSet = new HashSet<>(sveglieSet);
+                    Set<String> sveglieSet = sharedPref.getStringSet(keyDaDisattivare, new HashSet<>());
 
-            if (newSet.contains("attiva")) {
-                switchAttiva.setChecked(true);
+                    Set<String> newSet = new HashSet<>(sveglieSet);
+                    Log.d (TAG, "prova sveglieSet: " + sveglieSet + " newSet: " + newSet);
 
+                    Log.d(TAG, "prova da disattivare scaduta");
+
+
+                    if (newSet.contains("attiva")) {
+
+                        Log.d(TAG, "prova newSet" + newSet);
+                        Log.d(TAG, "prova da disattivare è attiva prima: " + newSet.contains("attiva"));
+
+                        newSet.remove("attiva");
+                        newSet.add("non attiva");
+
+                        editor.putStringSet(keyDaDisattivare, newSet);
+
+
+                        Log.d(TAG, "prova newSet" + newSet);
+
+                        Log.d(TAG, "prova da disattivare è attiva dopo: " + newSet.contains("attiva"));
+
+                        // Rimuove la chiave dalla lista delle attive
+                        Set<String> attive = sharedPref.getStringSet("sveglieAttive", new HashSet<>());
+                        Log.d(TAG, "prova prima attive " + attive);
+
+                        attive.remove(keyDaDisattivare);
+
+                        Log.d(TAG, "prova dopo attive " + attive);
+
+                        editor.putStringSet("sveglieAttive", attive);
+
+                        editor.apply();
+
+                        switchAttiva.setChecked(false);
+                        Log.d(TAG, "checked1 ");
+
+                    }
+                }
             }
-            else if (newSet.contains("non attiva")) {
-                switchAttiva.setChecked(false);
 
+
+            else {
+                String key = (sveglieList.get(getAdapterPosition())).getId();
+
+                Set<String> sveglieSet = sharedPref.getStringSet(key, new HashSet<>());
+                if(!keyDaDisattivare.equals(""))
+                    sveglieSet = sharedPref.getStringSet(keyDaDisattivare, new HashSet<>());
+
+                Set<String> newSet = new HashSet<>(sveglieSet);
+
+                Log.d (TAG, "prova sveglieSet: " + sveglieSet + " newSet: " + newSet);
+
+
+                Log.d(TAG, "prova nuova sveglia");
+                if (newSet.contains("attiva")) {
+                    switchAttiva.setChecked(true);
+                    Log.d(TAG, "checked2 ");
+
+                } else if (newSet.contains("non attiva")) {
+                    switchAttiva.setChecked(false);
+                    Log.d(TAG, "checked3 ");
+
+                }
             }
         }
 

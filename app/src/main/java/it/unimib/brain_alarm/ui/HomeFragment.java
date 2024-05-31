@@ -89,16 +89,17 @@ public class HomeFragment extends Fragment {
         //countdown
         //TODO sistemare che quando guardo le ripetizioni devo prendere il giorno più vicino se ho più di uno
 
-        String countDown = getCountDown();
+        String countDown = getCountDown(view);
         textCountDown = view.findViewById(R.id.textCountDown);
         runnable = new Runnable() {
             @Override
             public void run() {
-                setText(getCountDown());
+                setText(getCountDown(view));
                 handler.postDelayed(this, 1000); // Chiamata ogni 1000 millisecondi (1 secondo)
             }
         };
 
+        aggiornaRecyclerView(view, false, "");
 
         final Button buttonAggiungi = view.findViewById(R.id.bottoneAggiungiSveglia);
 
@@ -125,32 +126,7 @@ public class HomeFragment extends Fragment {
             //Log.d(TAG, "click remove tutte");
             removeAllSveglie();
 
-            RecyclerView recyclerView = view.findViewById(R.id.recyclerview_sveglie);
-            RecyclerView.LayoutManager layoutManager =
-                    new LinearLayoutManager(requireContext(),
-                            LinearLayoutManager.VERTICAL, false);
-
-            List<Sveglie> sveglieList = getSveglie();
-
-            SveglieAdapter sveglieAdapter = new SveglieAdapter(getContext(), requireActivity().getApplication(), sveglieList,
-                    new SveglieAdapter.OnItemClickListenerS() {
-                        @Override
-                        public void onSveglieItemClick(Sveglie sveglie) {
-                            Snackbar.make(view, sveglie.getOrario(), Snackbar.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onDeleteButtonPressed(int position) {
-                            Snackbar.make(view, getString(R.string.list_size_message) + sveglieList.size(),
-                                    Snackbar.LENGTH_SHORT).show();
-                        }
-
-                    });
-
-            recyclerView.setLayoutManager(layoutManager);
-
-            // Specificare l'adapter
-            recyclerView.setAdapter(sveglieAdapter);
+            aggiornaRecyclerView(view, false, "");
         });
 
         final Button buttonNoEliminazione = view.findViewById(R.id.buttonNoEliminazione);
@@ -176,6 +152,10 @@ public class HomeFragment extends Fragment {
         });
 
 
+    }
+
+    private void aggiornaRecyclerView (View view, Boolean disattiva, String keyDaDisattivare) {
+
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview_sveglie);
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(),
@@ -187,7 +167,7 @@ public class HomeFragment extends Fragment {
 
 
 
-        SveglieAdapter sveglieAdapter = new SveglieAdapter(getContext(), requireActivity().getApplication(), sveglieList,
+        SveglieAdapter sveglieAdapter = new SveglieAdapter(getContext(), requireActivity().getApplication(), sveglieList, disattiva, keyDaDisattivare,
                 new SveglieAdapter.OnItemClickListenerS() {
                     @Override
                     public void onSveglieItemClick(Sveglie sveglie) {
@@ -296,7 +276,7 @@ public class HomeFragment extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public String getCountDown() {
+    public String getCountDown(View view) {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
         Set<String> attiveSet = sharedPref.getStringSet("sveglieAttive", new HashSet<>());
 
@@ -351,6 +331,9 @@ public class HomeFragment extends Fragment {
 
             if (secondiMancanti <= 0) {
 
+                aggiornaRecyclerView(view, true, attive);
+
+                /*
                 // Creare una copia del set recuperato
                 Set<String> attiveSetModificato = new HashSet<>(attiveSet);
 
@@ -364,8 +347,7 @@ public class HomeFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putStringSet("sveglieAttive", attiveSetModificato);
                 editor.apply();
-
-
+                 */
 
                 }
 

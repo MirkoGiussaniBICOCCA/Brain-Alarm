@@ -34,6 +34,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -383,7 +385,8 @@ public class AggiungiFragment extends Fragment {
         if (min.length()!=2)
             min = "0" + min;
 
-        sveglia.add("o" + ora + ":" + min + ":00");
+        String orario = "o" + ora + ":" + min + ":00";
+        sveglia.add(orario);
 
         //etichetta
         sveglia.add("e" + nomeSveglia.getEditText().getText().toString());
@@ -417,7 +420,7 @@ public class AggiungiFragment extends Fragment {
 
         sveglia.add(settimana);
 
-        sveglia.add(getDateRipetizioni(settimana));
+        sveglia.add(getDateRipetizioni(settimana, orario.substring(1)));
 
         //suono, vibrazione
         sveglia.add(spinnerSuoni.getSelectedItem().toString());
@@ -459,13 +462,25 @@ public class AggiungiFragment extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public final String getDateRipetizioni(String settimana) {
+    public final String getDateRipetizioni(String settimana, String orario) {
+
         String dateRipetizioni = "";
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        LocalTime orarioSveglia = LocalTime.parse(orario, formatter);
+        LocalTime oraAttuale = LocalTime.parse(LocalDateTime.now().format(formatter));//giorno ordierno
         LocalDate oggi = LocalDate.now(); //giorno ordierno
 
+
+
         if (settimana.equals("r0000000")) {
-            dateRipetizioni = "d" + String.valueOf(oggi);
+            //Se l'orario impostato non è già passato metto oggi altrimenti domani
+            if (orarioSveglia.isAfter(oraAttuale)) {
+                dateRipetizioni = "d" + String.valueOf(oggi); }
+            else {
+                dateRipetizioni = "d" + String.valueOf(oggi.plusDays(1)); }
+            Log.d(TAG, "DAY " + dateRipetizioni);
         }
         else {
             DayOfWeek dayOfWeek = oggi.getDayOfWeek();

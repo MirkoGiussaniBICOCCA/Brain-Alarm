@@ -286,10 +286,10 @@ public class HomeFragment extends Fragment {
         int secondiMancanti = -1;
 
         for (String attive : attiveSet) {
-            Log.d(TAG, "elenco attive " + attive); //attive è la chiave della sveglia attiva
+            //Log.d(TAG, "elenco attive " + attive); //attive è la chiave della sveglia attiva
 
             Set<String> sveglieSetAttive = sharedPref.getStringSet(attive, new HashSet<>());
-            Log.d(TAG, "elenco sveglieAttive " + sveglieSetAttive); //elenco stringhe della sveglia attiva
+            //Log.d(TAG, "elenco sveglieAttive " + sveglieSetAttive); //elenco stringhe della sveglia attiva
 
 
             String data = "";
@@ -314,14 +314,14 @@ public class HomeFragment extends Fragment {
 
             //mancanoDHM contiene giorno ora e minuti che mancano
             String mancanoDHM = calculateTimeDifference(dataOrarioTemp);
-            Log.d(TAG, "mancanoDHM " + mancanoDHM);
+            //Log.d(TAG, "mancanoDHM " + mancanoDHM);
 
             //imposto da valori di default a valori della prima sveglia
             if (secondiMancanti == -1 || countDown.equals("")) {
                 secondiMancanti = getSecondiMancanti(mancanoDHM);
-                Log.d(TAG, "secondiMancanti " + secondiMancanti);
+                //Log.d(TAG, "secondiMancanti " + secondiMancanti);
                 countDown = mancanoDHM;
-                Log.d(TAG, "countDown " + countDown);
+                //Log.d(TAG, "countDown " + countDown);
             } else {
                 if (secondiMancanti > getSecondiMancanti(mancanoDHM)) {
                     secondiMancanti = getSecondiMancanti(mancanoDHM);

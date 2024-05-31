@@ -280,6 +280,7 @@ public class HomeFragment extends Fragment {
                 textCountDown.setText(countDown.charAt(0) + " giorni e " + countDown.toString().substring(1));
         }
     }
+
     @Override
     public void onResume() {
         super.onResume();

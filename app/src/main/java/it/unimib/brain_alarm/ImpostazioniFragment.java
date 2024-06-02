@@ -127,7 +127,6 @@ public class ImpostazioniFragment extends Fragment {
                 countryShortName);
 
         editor.putString("nome", nome);
-        editor.putString("stato", stato);
         editor.apply();
     }
 

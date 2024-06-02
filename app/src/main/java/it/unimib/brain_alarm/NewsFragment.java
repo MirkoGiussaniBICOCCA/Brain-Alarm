@@ -71,7 +71,7 @@ public class NewsFragment extends Fragment {
 
         Log.d(TAG, "qui debug mode: " + requireActivity().getResources().getBoolean(R.bool.debug_mode));
 
-        sharedPreferencesUtil = new SharedPreferencesUtil(requireActivity().getApplication());
+
 
         //qui ottengo istanza del repository con serviceLocator
         //con serviceLocator leggo file properties e vedo se sono in debug mode o no
@@ -105,9 +105,6 @@ public class NewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
-
-
         buttonStato = view.findViewById(R.id.imageButtonStato);
 
         //cliccando sulla bandiera va a impostazioni
@@ -117,7 +114,16 @@ public class NewsFragment extends Fragment {
         });
         */
 
-        switch (sharedPref.getString("stato", null)) {
+        sharedPreferencesUtil = new SharedPreferencesUtil(requireActivity().getApplication());
+
+        SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(getActivity().getApplication());
+        if (sharedPreferencesUtil.readStringData(SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST) == null)
+            sharedPreferencesUtil.writeStringData(
+                    SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST,
+                    "it");
+
+        switch (sharedPreferencesUtil.readStringData(
+                SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST)) {
             case "Italia":
                 buttonStato.setImageDrawable(getResources().getDrawable(R.drawable.italia));
             break;
@@ -177,7 +183,7 @@ public class NewsFragment extends Fragment {
 
         String country = sharedPreferencesUtil.readStringData(
                 SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST);
-        Log.d(TAG, "country :" + country) ;
+        //Log.d(TAG, "country :" + country) ;
 
         String lastUpdate = "0";
         if (sharedPreferencesUtil.readStringData(

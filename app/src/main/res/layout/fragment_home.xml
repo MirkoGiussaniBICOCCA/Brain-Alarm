@@ -28,7 +28,6 @@
                 android:id="@+id/layoutSveglieAttive"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/azzurro"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,37 +49,44 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="20dp"
-                    android:visibility="gone">
+                    android:visibility="visible"
+                    >
 
-                    <TextView
-                        android:id="@+id/textCountDownOra"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/sfondoTras"
-                        android:text="ora"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="34dp" />
 
-                    <TextView
-                        android:id="@+id/textCountDownMin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/sfondoTras"
-                        android:text="min"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="34dp" />
+                        <TextView
+                            android:id="@+id/textCountDownOra"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/background_countdown"
+                            android:text="ora"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="34dp" />
 
-                    <TextView
-                        android:id="@+id/textCountDownSec"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/sfondoTras"
-                        android:text="sec"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="34dp" />
+                        <TextView
+                            android:id="@+id/textCountDownMin"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/background_countdown"
+                            android:text="min"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="34dp" />
+
+                        <TextView
+                            android:id="@+id/textCountDownSec"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_countdown"
+                            android:text="sec"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="34dp" />
 
 
                 </LinearLayout>
@@ -91,7 +97,7 @@
                 android:layout_width="149dp"
                 android:layout_height="56dp"
                 android:layout_marginTop="12dp"
-                android:backgroundTint="@color/azzurro"
+                android:background="@drawable/background_countdown"
                 android:text="aggiungi"
                 app:icon="@drawable/add"
                 app:iconPadding="15dp"
@@ -105,6 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:background="@drawable/background_countdown"
                 android:text="eliminaTutteLeSveglie"
                 app:icon="@drawable/cestino"
                 app:iconTint="@color/white"
@@ -147,9 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="30dp"
-                android:background="@drawable/background_navbar"
                 android:orientation="vertical"
-                android:padding="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -172,12 +177,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxHeight="350dp"
-                    android:background="@drawable/background_navbar"
-                    android:padding="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/elencoSveglie"
                     android:layout_marginBottom="30dp"/>
 
 

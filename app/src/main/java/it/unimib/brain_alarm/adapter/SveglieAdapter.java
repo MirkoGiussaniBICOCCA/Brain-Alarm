@@ -3,6 +3,7 @@ package it.unimib.brain_alarm.adapter;
 
 
 import static android.content.ContentValues.TAG;
+import static android.text.TextUtils.substring;
 import static com.google.android.material.internal.ContextUtils.getActivity;
 
 import static it.unimib.brain_alarm.ui.HomeFragment.SVEGLIE_KEY;
@@ -305,9 +306,10 @@ public class SveglieAdapter extends
 
                     //se la data è futura non voflio entrare nell'if perchè non devo fare niente
                     if(!data.isAfter(oggi)) {
+                        Log.d(TAG, "adapter data passata");
                         //se NON HO RIPETIZIONI
                         if (sveglieList.get(getAdapterPosition()).getRipetizioni().equals("r0000000")) {
-
+                            Log.d(TAG, "adapet non ho ripetizioni");
                             //data passata o di oggi scelgo tra oggi e domani
                             if (data.isBefore(oggi) || data.isEqual(oggi)) {
                                 //controllo se l'ora è passata per scegliere tra oggi e domani
@@ -323,12 +325,16 @@ public class SveglieAdapter extends
                         }
                         //HO RIPETIZIONI quindi devo calcolare la data più vicina
                         else {
+                            Log.d(TAG ,"adapter ho ripetizoni devo calcolare data");
                             newSet.remove("d" + dataSveglia);
-                            newSet.add(GetDateTime.getDateRipetizioni(sveglieList.get(getAdapterPosition()).getRipetizioni(), sveglieList.get(getAdapterPosition()).getOrario().substring(1)));
+                            Log.d(TAG, "Adapter settimana " + sveglieList.get(getAdapterPosition()).getRipetizioni() + " e orario " + (sveglieList.get(getAdapterPosition()).getOrario()));
+                            newSet.add(GetDateTime.getDateRipetizioni("r0000000", sveglieList.get(getAdapterPosition()).getOrario()));
                         }
                     }
+                    else
+                        Log.d(TAG, "adapter data futura non faccio niente");
 
-                    Log.d(TAG, "NewSet dopo agg data" + newSet);
+                    //Log.d(TAG, "adapetr NewSet dopo agg data" + newSet);
 
                     Set<String> attive= sharedPref.getStringSet("sveglieAttive", new HashSet<>());
 

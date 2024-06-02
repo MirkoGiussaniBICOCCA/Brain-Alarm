@@ -18,6 +18,8 @@ import java.time.format.DateTimeFormatter;
 public class GetDateTime {
 
 
+    //crea una stringa che contiene le date delle ripetizoni, date separate dalla lettera d
+    //input stringa settimana ha la letetra r davanti mentre oraraio non ha la 'o'
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static final String getDateRipetizioni(String settimana, String orario) {
 
@@ -32,78 +34,73 @@ public class GetDateTime {
         LocalDate oggi = LocalDate.now(); //giorno ordierno
 
 
-        //TODO sistemare data riattivazione sveglia
+        //se non ho ripetizioni scelgo tra oggi e domani in base all'orario
         if (settimana.equals("r0000000")) {
             //Se l'orario impostato non è già passato metto oggi altrimenti domani
             if (orarioSveglia.isAfter(oraAttuale)) {
-                dateRipetizioni = "d" + String.valueOf(oggi); }
-            else {
-                dateRipetizioni = "d" + String.valueOf(oggi.plusDays(1)); }
-            Log.d(TAG, "DAY " + dateRipetizioni);
-        }
-        else {
-            //TODO questo codice se oggi è venerdì (anche se l'oraio non è ancora passato) non mi restituisce la data di oggi ma quella di venerdì prossimo
+                dateRipetizioni = "d" + String.valueOf(oggi);
+            } else {
+                dateRipetizioni = "d" + String.valueOf(oggi.plusDays(1));
+            }
 
+        }
+
+
+        //se ho ripetizoni vado a vedere il giorno della settimana
+        else {
             DayOfWeek dayOfWeek = oggi.getDayOfWeek();
             //Log.d(TAG, "DAY " + dayOfWeek);
             dateRipetizioni = "";
-            for (int i=0; i<(settimana.length()); i++) {
+            for (int i = 0; i < (settimana.length()); i++) {
                 switch (settimana.charAt(i)) {
                     case '1':
                         if (dayOfWeek.equals(DayOfWeek.MONDAY) && orarioSveglia.isAfter(oraAttuale)) {
                             dateRipetizioni += "d" + oggi;
+                        } else {
+                            dateRipetizioni += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.MONDAY));
                         }
-                        else {
-                            dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.MONDAY));
-                        }
-                    break;
+                        break;
                     case '2':
                         if (dayOfWeek.equals(DayOfWeek.TUESDAY) && orarioSveglia.isAfter(oraAttuale)) {
                             dateRipetizioni += "d" + oggi;
-                        }
-                        else {
-                            dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.TUESDAY));
+                        } else {
+                            dateRipetizioni += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.TUESDAY));
                         }
                     case '3':
                         if (dayOfWeek.equals(DayOfWeek.WEDNESDAY) && orarioSveglia.isAfter(oraAttuale)) {
                             dateRipetizioni += "d" + oggi;
+                        } else {
+                            dateRipetizioni += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.WEDNESDAY));
                         }
-                        else {
-                            dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.WEDNESDAY));
-                        }
-                    break;
+                        break;
                     case '4':
                         if (dayOfWeek.equals(DayOfWeek.THURSDAY) && orarioSveglia.isAfter(oraAttuale)) {
                             dateRipetizioni += "d" + oggi;
+                        } else {
+                            dateRipetizioni += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.THURSDAY));
                         }
-                        else {
-                            dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.THURSDAY));
-                        }
-                    break;
+                        break;
                     case '5':
                         if (dayOfWeek.equals(DayOfWeek.FRIDAY) && orarioSveglia.isAfter(oraAttuale)) {
                             dateRipetizioni += "d" + oggi;
+                        } else {
+                            dateRipetizioni += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.FRIDAY));
                         }
-                        else {
-                            dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.FRIDAY));
-                        }
-                    break;
+                        break;
                     case '6':
                         if (dayOfWeek.equals(DayOfWeek.SATURDAY) && orarioSveglia.isAfter(oraAttuale)) {
                             dateRipetizioni += "d" + oggi;
+                        } else {
+                            dateRipetizioni += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.SATURDAY));
                         }
-                        else {
-                            dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.SATURDAY));
-                        }
-                    break;
+                        break;
                     case '7':
                         if (dayOfWeek.equals(DayOfWeek.SUNDAY) && orarioSveglia.isAfter(oraAttuale)) {
                             dateRipetizioni += "d" + oggi;
+                        } else {
+                            dateRipetizioni += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.SUNDAY));
                         }
-                        else {
-                            dateRipetizioni  += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.SUNDAY));
-                        }
-                    break;
+                        break;
                 }
             }
 
@@ -114,7 +111,7 @@ public class GetDateTime {
     }
 
 
-
+    //prende in input un elenco di date e restituisce la più vicina
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static final String getDataPiuVicina(String elencoDate) {
         String dataPiuVicina = "d";
@@ -122,27 +119,30 @@ public class GetDateTime {
         //elencoDate è un una stringa del tipo AAAA:MM:GGAAAA:MM:GG...
 
 
-        for (int i=0; i<elencoDate.length(); i+=11) {
+        for (int i = 0; i < elencoDate.length(); i += 11) {
 
-            dataPiuVicina = elencoDate.substring(i,i+11);
+            dataPiuVicina = elencoDate.substring(i, i + 11);
             //Log.d(TAG, "datapiùvicina" + dataPiuVicina);
 
             LocalDate data = LocalDate.parse(dataPiuVicina.substring(1));
 
-            if (bestDate == null || bestDate.isAfter(data)){
+            if (bestDate == null || bestDate.isAfter(data)) {
                 bestDate = data;
             }
+
         }
+
 
         dataPiuVicina = "d" + bestDate.toString();
 
         //Log.d(TAG, "datapiùvicina vincitrice " + dataPiuVicina);
+
+
         return dataPiuVicina;
     }
 
 
-    //TODO sistemare descrizioni metodi di questa pagina
-    //dati in input il giorno di oggi e quale giorno della settimana
+    //dati in input il giorno di oggi il giorno della settimana per cui voglio conoscere la data mi restituisce la data
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static LocalDate getNextDay(LocalDate oggi, DayOfWeek dayOfWeek) {
         // Ottieni il giorno della settimana della data fornita

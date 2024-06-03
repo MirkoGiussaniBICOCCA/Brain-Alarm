@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment {
 
     public static final String SVEGLIE_KEY = "SveglieKey";
 
-    private static final String TAG = AggiungiActivity.class.getSimpleName();
+    private static final String TAG = HomeFragment.class.getSimpleName();
 
     private Handler handler = new Handler();
     private Runnable runnable;
@@ -103,6 +103,9 @@ public class HomeFragment extends Fragment {
         textCountDownOra = view.findViewById(R.id.textCountDownOra);
         textCountDownMin = view.findViewById(R.id.textCountDownMin);
         textCountDownSec = view.findViewById(R.id.textCountDownSec);
+
+
+
 
         runnable = new Runnable() {
             @Override
@@ -307,6 +310,7 @@ public class HomeFragment extends Fragment {
         String countDown = "";
         int secondiMancanti = -1;
 
+
         for (String attive : attiveSet) {
             //Log.d(TAG, "elenco attive " + attive); //attive è la chiave della sveglia attiva
 
@@ -317,6 +321,7 @@ public class HomeFragment extends Fragment {
             String data = "";
             String orario = "";
 
+            //per ogni sveglia attiva prendo il suo oraeio e data
             for (String attiva : sveglieSetAttive) {
                 //Log.d(TAG, "dati attiva " + attiva.toString());
 
@@ -344,18 +349,20 @@ public class HomeFragment extends Fragment {
                 //Log.d(TAG, "secondiMancanti " + secondiMancanti);
                 countDown = mancanoDHM;
                 //Log.d(TAG, "countDown " + countDown);
-            } else {
+            }
+            //cambio valori solo se la sveglia che sto vedendo suona prima di quella già fissata
+            else {
                 if (secondiMancanti > getSecondiMancanti(mancanoDHM)) {
                     secondiMancanti = getSecondiMancanti(mancanoDHM);
                     countDown = mancanoDHM; }
             }
 
 
-            if (secondiMancanti <= 0) {
+            if (getSecondiMancanti(countDown) <= 0) {
 
                 aggiornaRecyclerView(view, true, attive);
-
-                }
+                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_svegliaActivity);
+            }
 
         }
 
@@ -404,5 +411,9 @@ public class HomeFragment extends Fragment {
 
         return days+hours+minutes+seconds;
     }
+
+
+
+
 
 }

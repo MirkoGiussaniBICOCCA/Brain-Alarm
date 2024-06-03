@@ -9,10 +9,7 @@ import android.widget.Button;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class AggiungiActivity extends AppCompatActivity {
-    private static final String TAG = AggiungiActivity.class.getSimpleName();
-
-    private TextInputLayout textInputLayoutEmail;
-    @Override
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiungi);  //da qua cambio l'avvio del programma

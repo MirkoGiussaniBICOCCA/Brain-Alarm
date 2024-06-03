@@ -98,7 +98,7 @@ public class AggiungiFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static AggiungiFragment newInstance(String param1, String param2) {
+    public static AggiungiFragment newInstance() {
         AggiungiFragment fragment = new AggiungiFragment();
         return fragment;
     }

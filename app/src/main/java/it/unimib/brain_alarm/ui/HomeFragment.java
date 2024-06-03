@@ -94,8 +94,6 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //countdown
-        //TODO sistemare che quando guardo le ripetizioni devo prendere il giorno più vicino se ho più di uno
 
         String countDown = getCountDown(view);
         textCountDown = view.findViewById(R.id.textCountDown);

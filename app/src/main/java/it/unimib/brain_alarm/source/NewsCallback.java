@@ -14,7 +14,7 @@ import it.unimib.brain_alarm.News.NewsApiResponse;
 public interface NewsCallback {
     void onSuccessFromRemote(NewsApiResponse newsApiResponse, long lastUpdate);
     void onFailureFromRemote(Exception exception);
-    void onSuccessFromLocal(List<News> newsList);
+    void onSuccessFromLocal(NewsApiResponse newsApiResponse);
     void onFailureFromLocal(Exception exception);
     void onNewsFavoriteStatusChanged(News news, List<News> favoriteNews);
     void onNewsFavoriteStatusChanged(List<News> news);

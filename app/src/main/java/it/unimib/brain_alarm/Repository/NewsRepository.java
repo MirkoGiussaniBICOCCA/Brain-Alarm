@@ -54,7 +54,7 @@ public class NewsRepository implements INewsRepository {
         if (currentTime - lastUpdate > FRESH_TIMEOUT) {
 
             Call<NewsApiResponse> newsResponseCall = newsApiService.getNews(country,
-                    TOP_HEADLINES_PAGE_SIZE_VALUE, application.getString(R.string.news_api_key));
+                    TOP_HEADLINES_PAGE_SIZE_VALUE, page, application.getString(R.string.news_api_key));
 
             newsResponseCall.enqueue(new Callback<NewsApiResponse>() {
                 //onResponse se tutto è andato bene altrimenti onFailure

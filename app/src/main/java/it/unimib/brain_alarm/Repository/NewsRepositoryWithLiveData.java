@@ -51,12 +51,17 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
         // controllo se il tempo dall'ultimo aggiornamento è maggiore di FRESH_TIMEOUT
         //se è maggiore mi appoggio a backend altrimenti leggo dati da locale
         if (currentTime - lastUpdate > FRESH_TIMEOUT) {
-            newsRemoteDataSource.getNews(country);
+            newsRemoteDataSource.getNews(country, page);
         } else {
             newsLocalDataSource.getNews();
         }
         return allNewsMutableLiveData; //restituisce instanza liveData
     }
+
+    public void fetchNews(String country, int page) {
+        newsRemoteDataSource.getNews(country, page);
+    }
+
 
     @Override
     public MutableLiveData<Result> getFavoriteNews() {
@@ -76,7 +81,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
 
     @Override
     public void onSuccessFromRemote(NewsApiResponse newsApiResponse, long lastUpdate) {
-        newsLocalDataSource.insertNews(newsApiResponse.getNewsList());
+        newsLocalDataSource.insertNews(newsApiResponse);
     }
 
     @Override
@@ -86,9 +91,17 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     }
 
     @Override
-    public void onSuccessFromLocal(List<News> newsList) {
-        Result.Success result = new Result.Success(new NewsResponse(newsList));
-        allNewsMutableLiveData.postValue(result); //notifico cambiamento
+    public void onSuccessFromLocal(NewsApiResponse newsApiResponse) {
+        if (allNewsMutableLiveData.getValue() != null && allNewsMutableLiveData.getValue().isSuccess()) {
+            List<News> newsList = ((Result.Success)allNewsMutableLiveData.getValue()).getData().getNewsList();
+            newsList.addAll(newsApiResponse.getNewsList());
+            newsApiResponse.setNewsList(newsList);
+            Result.Success result = new Result.Success(newsApiResponse);
+            allNewsMutableLiveData.postValue(result);
+        } else {
+            Result.Success result = new Result.Success(newsApiResponse);
+            allNewsMutableLiveData.postValue(result);
+        }
     }
 
     @Override

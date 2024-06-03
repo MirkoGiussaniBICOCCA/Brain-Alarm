@@ -7,6 +7,7 @@ import static it.unimib.brain_alarm.util.Constants.UNEXPECTED_ERROR;
 
 import java.util.List;
 
+import it.unimib.brain_alarm.News.NewsApiResponse;
 import it.unimib.brain_alarm.database.NewsDao;
 import it.unimib.brain_alarm.database.NewsRoomDatabase;
 import it.unimib.brain_alarm.News.News;
@@ -34,7 +35,10 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
     @Override
     public void getNews() {
         NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
-            newsCallback.onSuccessFromLocal(newsDao.getAll());
+            //TODO Fix this instruction
+            NewsApiResponse newsApiResponse = new NewsApiResponse();
+            newsApiResponse.setNewsList(newsDao.getAll());
+            newsCallback.onSuccessFromLocal(newsApiResponse);
         });
     }
 
@@ -86,13 +90,14 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
      * Saves the news in the local database.
      * The method is executed with an ExecutorService defined in NewsRoomDatabase class
      * because the database access cannot been executed in the main thread.
-     * @param newsList the list of news to be written in the local database.
+     * @param newsApiResponse the list of news to be written in the local database.
      */
     @Override
-    public void insertNews(List<News> newsList) {
+    public void insertNews(NewsApiResponse newsApiResponse) {
         NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
             // legge news dal database
             List<News> allNews = newsDao.getAll();
+            List<News> newsList = newsApiResponse.getNewsList();
 
             if (newsList != null) {
 
@@ -125,7 +130,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
                 sharedPreferencesUtil.writeStringData(SHARED_PREFERENCES_FILE_NAME,
                         LAST_UPDATE, String.valueOf(System.currentTimeMillis()));
 
-                newsCallback.onSuccessFromLocal(newsList);
+                newsCallback.onSuccessFromLocal(newsApiResponse);
             }
         });
     }

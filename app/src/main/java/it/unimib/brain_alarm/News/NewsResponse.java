@@ -10,6 +10,8 @@ import java.util.List;
 
 public class NewsResponse implements Parcelable {
 
+    private boolean isLoading;
+
     @SerializedName("articles")
     private List<News> newsList;
 
@@ -19,13 +21,18 @@ public class NewsResponse implements Parcelable {
         this.newsList = newsList;
     }
 
-    public List<News> getNewsList() {
-
-        return newsList;
-    }
+    public List<News> getNewsList() {return newsList;}
 
     public void setNewsList(List<News> newsList) {
         this.newsList = newsList;
+    }
+
+    public boolean isLoading() {
+        return isLoading;
+    }
+
+    public void setLoading(boolean loading) {
+        isLoading = loading;
     }
 
     @Override
@@ -35,10 +42,31 @@ public class NewsResponse implements Parcelable {
                 '}';
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte(this.isLoading ? (byte) 1 : (byte) 0);
+        dest.writeTypedList(this.newsList);
+    }
+
+    public void readFromParcel(Parcel source) {
+        this.isLoading = source.readByte() != 0;
+        this.newsList = source.createTypedArrayList(News.CREATOR);
+    }
+
+    protected NewsResponse(Parcel in) {
+        this.isLoading = in.readByte() != 0;
+        this.newsList = in.createTypedArrayList(News.CREATOR);
+    }
+
     public static final Creator<NewsResponse> CREATOR = new Creator<NewsResponse>() {
         @Override
-        public NewsResponse createFromParcel(Parcel in) {
-            return new NewsResponse(in);
+        public NewsResponse createFromParcel(Parcel source) {
+            return new NewsResponse(source);
         }
 
         @Override
@@ -47,21 +75,4 @@ public class NewsResponse implements Parcelable {
         }
     };
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedList(this.newsList);
-    }
-
-    public void readFromParcel(Parcel source) {
-        this.newsList = source.createTypedArrayList(News.CREATOR);
-    }
-
-    protected NewsResponse(Parcel in) {
-        this.newsList = in.createTypedArrayList(News.CREATOR);
-    }
 }

@@ -50,11 +50,16 @@
         android:name="it.unimib.brain_alarm.NewsFragment"
         android:label="fragment_news"
         tools:layout="@layout/fragment_news" >
-        <!--
+
         <action
-            android:id="@+id/action_newsFragment_to_impostazioniFragment"
-            app:destination="@id/impostazioniFragment" />
-        -->
+            android:id="@+id/action_newsFragment_to_newsDetailFragment"
+            app:destination="@id/fragment_news_details"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/newsFragment" />
+
     </fragment>
 
     <fragment
@@ -63,6 +68,21 @@
         android:label="fragment_profilo"
         tools:layout="@layout/fragment_profilo" >
     </fragment>
+
+
+    <fragment
+        android:id="@+id/fragment_news_details"
+        android:name="it.unimib.brain_alarm.NewsDetailFragment"
+        android:label="Notizia"
+        tools:layout="@layout/fragment_news_detail" >
+        <argument
+            android:name="news"
+            app:argType="it.unimib.brain_alarm.News.News" />
+        <action
+            android:id="@+id/action_fragment_news_details_to_newsFragment"
+            app:destination="@id/newsFragment" />
+    </fragment>
+
 
 
 </navigation>

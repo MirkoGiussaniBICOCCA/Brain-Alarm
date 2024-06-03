@@ -2,6 +2,7 @@ package it.unimib.brain_alarm.service;
 
 import static it.unimib.brain_alarm.util.Constants.TOP_HEADLINES_COUNTRY_PARAMETER;
 import static it.unimib.brain_alarm.util.Constants.TOP_HEADLINES_ENDPOINT;
+import static it.unimib.brain_alarm.util.Constants.TOP_HEADLINES_PAGE_PARAMETER;
 import static it.unimib.brain_alarm.util.Constants.TOP_HEADLINES_PAGE_SIZE_PARAMETER;
 
 import it.unimib.brain_alarm.News.NewsApiResponse;
@@ -17,5 +18,6 @@ public interface NewsApiService {
             //qui strutturo la chiamata
             @Query(TOP_HEADLINES_COUNTRY_PARAMETER) String country,  //parametro da passare
             @Query(TOP_HEADLINES_PAGE_SIZE_PARAMETER) int pageSize, //dimensione
+            @Query(TOP_HEADLINES_PAGE_PARAMETER) int page,
             @Header("Authorization") String apiKey);
 }

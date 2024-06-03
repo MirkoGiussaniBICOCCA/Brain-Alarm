@@ -31,7 +31,7 @@ public class NewsMockRemoteDataSource extends BaseNewsRemoteDataSource {
     }
 
     @Override
-    public void getNews(String country) {
+    public void getNews(String country, int page) {
         NewsApiResponse newsApiResponse = null;
 
         switch (jsonParserType) {
@@ -65,9 +65,7 @@ public class NewsMockRemoteDataSource extends BaseNewsRemoteDataSource {
         if (newsApiResponse != null) {
             newsCallback.onSuccessFromRemote(newsApiResponse, System.currentTimeMillis());
         } else {
-            Log.d(TAG, "PROBLEMA");
             newsCallback.onFailureFromRemote(new Exception(API_KEY_ERROR));
-            Log.d(TAG, "NewsMockRemoteDataSource");
         }
     }
 }

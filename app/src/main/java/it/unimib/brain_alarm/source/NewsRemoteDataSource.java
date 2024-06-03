@@ -28,9 +28,9 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
         this.newsApiService = ServiceLocator.getInstance().getNewsApiService();
     }
     @Override
-    public void getNews(String country) {
+    public void getNews(String country, int page) {
         Call<NewsApiResponse> newsResponseCall = newsApiService.getNews(country,
-                TOP_HEADLINES_PAGE_SIZE_VALUE, apiKey);
+                TOP_HEADLINES_PAGE_SIZE_VALUE, page, apiKey);
 
         //fa chiamata tramite retrofit
         newsResponseCall.enqueue(new Callback<NewsApiResponse>() {
@@ -38,18 +38,15 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
             public void onResponse(@NonNull Call<NewsApiResponse> call,
                                    @NonNull Response<NewsApiResponse> response) {
 
-                Log.d(TAG, "response " + response );
+
                 if (response.body() != null && response.isSuccessful() &&
                         !response.body().getStatus().equals("error")) {
 
                     newsCallback.onSuccessFromRemote(response.body(), System.currentTimeMillis());
-                    Log.d(TAG, "dentro if response " + response.body());
+
 
                 } else {
-                    Log.d(TAG, "problema : " + response.body() );
-                    Log.d(TAG, "problema : " + response.isSuccessful());
-                    //Log.d(TAG, "problema : " + !response.body().getStatus().equals("error"));
-                    Log.d(TAG, "NewsRemoteDataSource" );
+
                     newsCallback.onFailureFromRemote(new Exception(API_KEY_ERROR));
                 }
             }

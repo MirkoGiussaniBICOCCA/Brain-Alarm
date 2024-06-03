@@ -10,5 +10,5 @@ public abstract class BaseNewsRemoteDataSource {
     }
 
     //per ottenere lista news in base alla nazione
-    public abstract void getNews(String country);
+    public abstract void getNews(String country, int page);
 }

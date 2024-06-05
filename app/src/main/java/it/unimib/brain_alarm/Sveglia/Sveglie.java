@@ -12,6 +12,7 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,10 +20,10 @@ import it.unimib.brain_alarm.AggiungiActivity;
 
 
 @Entity
-public class Sveglie { //implements Parcelable {
+public class Sveglie implements Serializable {
 
     private static final String TAG = Sveglie.class.getSimpleName();
-    private String id;
+    private String key;
 
     private String orario;
 
@@ -31,11 +32,18 @@ public class Sveglie { //implements Parcelable {
 
     private String ripetizioni;
 
+    private String ripetizioniNum;
+
+    private String suono;
+    private String vibrazione;
+
+    private String posticipa;
+
     private String modalita;
 
     private Set<String> elementi;
 
-    private String key;
+
 
     public Sveglie(Set<String> elementi) {
             this.elementi = elementi;
@@ -43,7 +51,7 @@ public class Sveglie { //implements Parcelable {
     }
 
 
-    public String getId() {
+    public String getKey() {
 
         for (String e : elementi) {
             e.toString();
@@ -51,13 +59,13 @@ public class Sveglie { //implements Parcelable {
 
             if (!e.toString().isEmpty())
                 if ((e.toString()).charAt(0) == 's')
-                    id = e.toString();
+                    key = e.toString();
         }
-        return id;
+        return key;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setKey(String id) {
+        this.key = key;
     }
 
     public String getOrario() {
@@ -109,6 +117,22 @@ public class Sveglie { //implements Parcelable {
         this.etichetta = etichetta;
     }
 
+    public String getRipetizioniNum() {
+        for (String e : elementi) {
+            e.toString();
+            if (!e.toString().isEmpty())
+                if ((e.toString()).charAt(0) == 'r')
+                    ripetizioniNum = e.toString().substring(1);
+        }
+
+        return ripetizioniNum;
+    }
+
+    public void setRipetizioniNum(String ripetizioniNum) {
+        this.ripetizioniNum = ripetizioniNum;
+    }
+
+
     public String getRipetizioni() {
         String ripetizioni1 = "";
         for (String e : elementi) {
@@ -145,6 +169,62 @@ public class Sveglie { //implements Parcelable {
         this.etichetta = etichetta;
     }
 
+    public String getSuono() {
+
+        for (String e : elementi) {
+            e.toString();
+            //Log.d(TAG, "prima parola " + e.toString());
+
+            if (!e.toString().isEmpty())
+                if (e.toString().equals("Classica") || e.toString().equals("Radar") || e.toString().equals("Arpeggio"))
+                    suono = e.toString();
+        }
+        return suono;
+    }
+
+    public void setSuono(String suono) {
+        this.suono = suono;
+    }
+
+    public String getVibrazione() {
+
+        for (String e : elementi) {
+            e.toString();
+            //Log.d(TAG, "prima parola " + e.toString());
+
+            if (!e.toString().isEmpty())
+                if (e.toString().equals("v0"))
+                    vibrazione = "no vibrazione";
+                else if (e.toString().equals("v1"))
+                    vibrazione = "vibrazione";
+        }
+        return vibrazione;
+    }
+
+    public void setVibrazione(String vibrazione) {
+        this.vibrazione = vibrazione;
+    }
+
+    public String getPosticipa() {
+
+        for (String e : elementi) {
+            e.toString();
+            //Log.d(TAG, "prima parola " + e.toString());
+
+            if (!e.toString().isEmpty())
+                if (e.toString().equals("true"))
+                    posticipa = "true";
+                else if (e.toString().equals("false"))
+                    posticipa = "false";
+        }
+        return posticipa;
+    }
+
+    public void setPosticipae(String posticipa) {
+        this.posticipa = posticipa;
+    }
+
+
     public String getModalita() {
 
         for (String e : elementi) {
@@ -158,7 +238,7 @@ public class Sveglie { //implements Parcelable {
         return modalita;
     }
 
-    public void setModalita(String orario) {
+    public void setModalita(String modalita) {
         this.modalita = modalita;
     }
 
@@ -170,6 +250,10 @@ public class Sveglie { //implements Parcelable {
                 "orario='" + orario +
                 ", etichetta='" + etichetta + '\'' +
                 ", ripetizioni='" + ripetizioni + '\'' +
+                ", ripetizioniNum='" + ripetizioniNum + '\'' +
+                ", suono='" + suono + '\'' +
+                ", vibrazione='" + vibrazione + '\'' +
+                ", posticipa='" + posticipa + '\'' +
                 ", modalita='" + modalita + '\'' +
                 '}';
     }
@@ -179,12 +263,14 @@ public class Sveglie { //implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         it.unimib.brain_alarm.Sveglia.Sveglie sveglia = (it.unimib.brain_alarm.Sveglia.Sveglie) o;
-        return Objects.equals(orario, sveglia.orario) && Objects.equals(etichetta, sveglia.etichetta) && Objects.equals(ripetizioni, sveglia.ripetizioni) && Objects.equals(modalita, sveglia.modalita);
+        return Objects.equals(orario, sveglia.orario) && Objects.equals(etichetta, sveglia.etichetta) && Objects.equals(ripetizioni, sveglia.ripetizioni)
+                && Objects.equals(ripetizioniNum, sveglia.ripetizioniNum) && Objects.equals(suono, sveglia.suono) && Objects.equals(vibrazione, sveglia.vibrazione)
+                && Objects.equals(posticipa, sveglia.posticipa) && Objects.equals(modalita, sveglia.modalita);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orario, etichetta, ripetizioni, modalita);
+        return Objects.hash(orario, etichetta, ripetizioni, ripetizioniNum, suono, vibrazione, posticipa, modalita);
     }
 
     /*
@@ -204,18 +290,26 @@ public class Sveglie { //implements Parcelable {
 
      */
     public void readFromParcel(Parcel source) {
-        this.id = source.readString();
+        this.key = source.readString();
         this.orario = source.readString();
         this.etichetta = source.readString();
         this.ripetizioni = source.readString();
+        this.ripetizioniNum = source.readString();
+        this.suono = source.readString();
+        this.vibrazione = source.readString();
+        this.posticipa = source.readString();
         this.modalita = source.readString();
     }
 
     protected Sveglie(Parcel in) {
-        this.id = in.readString();
+        this.key = in.readString();
         this.orario = in.readString();
         this.etichetta = in.readString();
         this.ripetizioni = in.readString();
+        this.ripetizioniNum = in.readString();
+        this.suono = in.readString();
+        this.vibrazione = in.readString();
+        this.posticipa = in.readString();
         this.modalita = in.readString();
     }
 

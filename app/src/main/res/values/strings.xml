@@ -64,7 +64,6 @@
     <string name="content_description_news_cover_image">Immagine di copertina della news</string>
 
 
-
     <string-array name="country_array">
         <item>@string/francia</item>
         <item>@string/germania</item>

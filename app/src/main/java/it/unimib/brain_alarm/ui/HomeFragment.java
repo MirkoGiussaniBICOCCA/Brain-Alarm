@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Set;
 
 import it.unimib.brain_alarm.AggiungiActivity;
+import it.unimib.brain_alarm.NewsFragmentDirections;
 import it.unimib.brain_alarm.R;
 import it.unimib.brain_alarm.Sveglia.Sveglie;
 import it.unimib.brain_alarm.adapter.SveglieAdapter;
@@ -186,6 +187,12 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onSveglieItemClick(Sveglie sveglie) {
                         Snackbar.make(view, sveglie.getOrario(), Snackbar.LENGTH_SHORT).show();
+
+                        Log.d(TAG, "nav to modifica");
+                        HomeFragmentDirections.ActionHomeFragmentToModificaFragment action = HomeFragmentDirections.actionHomeFragmentToModificaFragment(sveglie);
+                        Navigation.findNavController(view).navigate(action);
+                        Log.d(TAG, "nav to modifica2");
+
                     }
 
                     @Override
@@ -359,7 +366,8 @@ public class HomeFragment extends Fragment {
             if (getSecondiMancanti(countDown) <= 0) {
 
                 aggiornaRecyclerView(view, true, attive);
-                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_svegliaActivity);
+                //TODO sistemare con passaggio sveglia
+                //Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_svegliaActivity);
             }
 
         }

@@ -28,21 +28,9 @@
             android:id="@+id/action_homeFragment_to_aggiungiActivity"
             app:destination="@id/aggiungiActivity" />
         <action
-            android:id="@+id/action_homeFragment_to_svegliaActivity"
-            app:destination="@id/svegliaActivity" />
+            android:id="@+id/action_homeFragment_to_modificaFragment"
+            app:destination="@id/modificaFragment" />
     </fragment>
-    <activity
-        android:id="@+id/aggiungiActivity"
-        android:name="it.unimib.brain_alarm.AggiungiActivity"
-        android:label="activity_aggiungi"
-        tools:layout="@layout/activity_aggiungi">
-    </activity>
-    <activity
-        android:id="@+id/svegliaActivity"
-        android:name="it.unimib.brain_alarm.ui.SvegliaActivity"
-        android:label="SvegliaActivity"
-        tools:layout="@layout/activity_sveglia">
-    </activity>
 
 
     <fragment
@@ -82,7 +70,22 @@
             android:id="@+id/action_fragment_news_details_to_newsFragment"
             app:destination="@id/newsFragment" />
     </fragment>
-
-
+    <activity
+        android:id="@+id/aggiungiActivity"
+        android:name="it.unimib.brain_alarm.AggiungiActivity"
+        android:label="activity_aggiungi"
+        tools:layout="@layout/activity_aggiungi" />
+    <fragment
+        android:id="@+id/modificaFragment"
+        android:name="it.unimib.brain_alarm.ModificaFragment"
+        android:label="fragment_modifica"
+        tools:layout="@layout/fragment_modifica" >
+        <argument
+            android:name="sveglie"
+            app:argType="it.unimib.brain_alarm.Sveglia.Sveglie" />
+        <action
+            android:id="@+id/action_modificaFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 
 </navigation>

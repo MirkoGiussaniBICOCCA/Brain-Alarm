@@ -202,7 +202,7 @@ public class SveglieAdapter extends
 
 
             else {
-                String key = (sveglieList.get(getAdapterPosition())).getId();
+                String key = (sveglieList.get(getAdapterPosition())).getKey();
 
                 Set<String> sveglieSet = sharedPref.getStringSet(key, new HashSet<>());
                 if(!keyDaDisattivare.equals(""))
@@ -230,7 +230,7 @@ public class SveglieAdapter extends
         public void onClick(View v) {
             SharedPreferences sharedPref = context.getSharedPreferences("information_shared", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            String key = (sveglieList.get(getAdapterPosition())).getId();
+            String key = (sveglieList.get(getAdapterPosition())).getKey();
 
             if (v.getId() == R.id.buttonEliminaSveglia) {
                 //Log.d(TAG, "rimuovo " + (sveglieList.get(getAdapterPosition())).getId());
@@ -262,7 +262,7 @@ public class SveglieAdapter extends
 
             else if (v.getId() == R.id.switchAttiva) {
 
-                Log.d(TAG,"switch " + (sveglieList.get(getAdapterPosition())).getId());
+                Log.d(TAG,"switch " + (sveglieList.get(getAdapterPosition())).getKey());
 
                 Set<String> sveglieSet = sharedPref.getStringSet(key, new HashSet<>());
                 Log.d(TAG, "switch sveglia prima " + sveglieSet);
@@ -355,13 +355,8 @@ public class SveglieAdapter extends
             }
 
             else {
-                /*
-                Bundle args = new Bundle();
-                args.putString("navigation_source", "SveglieAdapter");
-
-                 */
                 onItemClickListenerS.onSveglieItemClick(sveglieList.get(getAdapterPosition()));
-                Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_aggiungiActivity); // , args);
+                //Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_modificaFragment); // , args);
 
             }
 

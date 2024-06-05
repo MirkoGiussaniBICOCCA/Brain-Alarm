@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".ModificaFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="16dp"
+
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:id="@+id/layoutTimeP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/background_navbar">
+
+                <TimePicker
+                    android:id="@+id/timePicker"
+                    style="@style/Theme.Material3.Dark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:theme="@style/TimePickerStyle"
+                    android:timePickerMode="spinner"/>
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutImp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_navbar"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/layoutTimeP"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ripetizioni"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="20dp"
+                    tools:ignore="MissingConstraints">
+
+                    <CheckBox
+                        android:id="@+id/lunedi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="L"
+                        android:textColor="@color/white"
+                        android:buttonTint="@color/white"/>
+
+                    <CheckBox
+                        android:id="@+id/martedi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="M"
+                        android:textColor="@color/white"
+                        android:buttonTint="@color/white"/>
+
+                    <CheckBox
+                        android:id="@+id/mercoledi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="M"
+                        android:textColor="@color/white"
+                        android:buttonTint="@color/white"/>
+
+                    <CheckBox
+                        android:id="@+id/giovedi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="G"
+                        android:textColor="@color/white"
+                        android:buttonTint="@color/white"/>
+
+                    <CheckBox
+                        android:id="@+id/venerdi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="V"
+                        android:textColor="@color/white"
+                        android:buttonTint="@color/white"/>
+
+                    <CheckBox
+                        android:id="@+id/sabato"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="S"
+                        android:textColor="@color/white"
+                        android:buttonTint="@color/white"/>
+
+                    <CheckBox
+                        android:id="@+id/domenica"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="D"
+                        android:textColor="@color/white"
+                        android:buttonTint="@color/white"
+                        />
+
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayoutNomeSveglia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="20dp"
+                    app:boxBackgroundColor="#00FFFFFF"
+                    tools:ignore="MissingConstraints">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputNomeSveglia"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/nomeSveglia"
+                        android:textColorHint="@color/white"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutSuono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipVibr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="@string/vibrazione"
+                        app:chipIcon="@drawable/close" />
+
+                    <Spinner
+                        android:id="@+id/spinnerSuono"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:entries="@array/suoni_array"
+                        android:isScrollContainer="false"
+                        android:minHeight="48dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutPosticipa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:orientation="vertical"
+                    tools:ignore="MissingConstraints">
+
+                    <Switch
+                        android:id="@+id/posticipa"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="23.5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/posticipa"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" /><!-- sistemare font-->
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutModalita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                app:layout_constraintTop_toBottomOf="@+id/layoutImp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/classica"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:backgroundTint="@color/azzurro"
+                    android:text="@string/classica"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:cornerRadius="20dp"
+                    app:icon="@drawable/sveglia"
+                    app:iconGravity="top"
+                    app:iconSize="60dp" />
+
+                <Button
+                    android:id="@+id/sfida"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:backgroundTint="@color/arancione"
+                    android:text="@string/sfida"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:cornerRadius="20dp"
+                    app:icon="@drawable/puzzle"
+                    app:iconGravity="top"
+                    app:iconSize="60dp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutSfida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/layoutModalita"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/missioni"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:text="@string/missioni"
+                    android:textColor="@color/white"
+                    android:textSize="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.093"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/barraSfide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_navbar"
+                    android:orientation="vertical"
+                    android:paddingBottom="15dp"
+                    app:layout_constraintTop_toBottomOf="@id/missioni">
+
+                    <LinearLayout
+                        android:id="@+id/sfideAttive"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp">
+
+
+                        <ImageView
+                            android:id="@+id/sfida1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/calcolatrice" />
+
+                        <ImageView
+                            android:id="@+id/sfida2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/memory" />
+
+                        <ImageView
+                            android:id="@+id/sfida3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/scrivere" />
+
+                        <ImageView
+                            android:id="@+id/sfida4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/passi" />
+
+                        <ImageView
+                            android:id="@+id/sfida5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/quadrato" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ripetizioniMissioni"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="1"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp">
+
+
+                        <TextView
+                            android:id="@+id/ripCalcolatrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=""
+                            android:textAlignment="center"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/ripMemory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=""
+                            android:textAlignment="center"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/ripScrivere"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=""
+                            android:textAlignment="center"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/ripPassi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=""
+                            android:textAlignment="center"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/ripSfida"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=""
+                            android:textAlignment="center"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/elencoSfide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/background_navbar"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/barraSfide">
+
+
+                    <TextView
+                        android:id="@+id/calcolatrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:paddingStart="20dp"
+                        android:text="@string/calcolatrice"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.093"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <SeekBar
+                            android:id="@+id/ripetizioniCalcolatrice"
+                            android:layout_width="255dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:max="5"
+                            android:progress="0"
+                            android:progressTint="#FFFF00"
+                            android:thumbTint="#FFAA00" />
+
+                        <TextView
+                            android:id="@+id/progressoCalcolatrice"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/Memory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:paddingStart="20dp"
+                        android:text="@string/memory"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.093"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <SeekBar
+                            android:id="@+id/ripetizioniMemory"
+                            android:layout_width="255dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:max="5"
+                            android:progress="0"
+                            android:progressTint="#FFFF00"
+                            android:thumbTint="#FFAA00" />
+
+                        <TextView
+                            android:id="@+id/progressoMemory"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/scrivere"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:paddingStart="20dp"
+                        android:text="@string/scrivere"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.093"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <SeekBar
+                            android:id="@+id/ripetizioniScrivere"
+                            android:layout_width="255dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:max="5"
+                            android:progress="0"
+                            android:progressTint="#FFFF00"
+                            android:thumbTint="#FFAA00" />
+
+                        <TextView
+                            android:id="@+id/progressoScrivere"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/passi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:paddingStart="20dp"
+                        android:text="@string/passi"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.093"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <SeekBar
+                            android:id="@+id/ripetizioniPassi"
+                            android:layout_width="255dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:max="5"
+                            android:progress="0"
+                            android:progressTint="#FFFF00"
+                            android:thumbTint="#FFAA00" />
+
+                        <TextView
+                            android:id="@+id/progressoPassi"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/salvaSfida"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/azzurro"
+                        android:text="@string/salva"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.787"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/elencoSfide" />
+
+                    <Button
+                        android:id="@+id/bottoneAnnullaSfide"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/azzurro"
+                        android:text="@string/annulla"
+                        app:layout_constraintEnd_toStartOf="@+id/salvaSfida"
+                        app:layout_constraintHorizontal_bias="0.661"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/elencoSfide" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutConferma"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/layoutSfida">
+
+                <Button
+                    android:id="@+id/annulla"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/sfondoTras"
+                    android:text="@string/annulla"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/conferma"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/sfondoTras"
+                    android:text="@string/conferma"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

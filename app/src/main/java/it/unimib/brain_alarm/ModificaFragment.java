@@ -1,14 +1,24 @@
 package it.unimib.brain_alarm;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.view.MenuProvider;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+import androidx.navigation.Navigation;
+
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,30 +31,28 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
+import it.unimib.brain_alarm.News.News;
 import it.unimib.brain_alarm.Sveglia.Sveglie;
+import it.unimib.brain_alarm.ui.HomeFragment;
 import it.unimib.brain_alarm.util.GetDateTime;
 
-public class AggiungiFragment extends Fragment {
+
+public class ModificaFragment extends Fragment {
+
+    private static final String TAG = ModificaFragment.class.getSimpleName();
+
     private TimePicker timeP;
     private TextInputLayout nomeSveglia;
+
+    private TextInputEditText nomeSvegliaDefault;
 
     private CheckBox checkboxL;
     private CheckBox checkboxMa;
@@ -94,13 +102,13 @@ public class AggiungiFragment extends Fragment {
     private boolean isSfida = false;
     private boolean isClassica = false;
 
-    public AggiungiFragment() {
+    public ModificaFragment() {
         // Required empty public constructor
     }
 
-    public static AggiungiFragment newInstance() {
-        AggiungiFragment fragment = new AggiungiFragment();
-        return fragment;
+
+    public static ModificaFragment newInstance() {
+        return new ModificaFragment();
     }
 
     @Override
@@ -112,19 +120,43 @@ public class AggiungiFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_aggiungi, container, false);
-
+        return inflater.inflate(R.layout.fragment_modifica, container, false);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        requireActivity().addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menu.clear();
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                if (menuItem.getItemId() == android.R.id.home) {
+                    Navigation.findNavController(requireView()).navigateUp();
+                }
+                return false;
+            }
+        }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
+
+        Sveglie sveglia = ModificaFragmentArgs.fromBundle(getArguments()).getSveglie();
+
+
+
+
         timeP = view.findViewById(R.id.timePicker);
+        timeP.setHour(Integer.parseInt(sveglia.getOrario().substring(0,2)));
+        timeP.setMinute(Integer.parseInt(sveglia.getOrario().substring(3,5)));
 
 
         nomeSveglia = view.findViewById(R.id.inputLayoutNomeSveglia);
+
+        nomeSvegliaDefault = view.findViewById(R.id.inputNomeSveglia);
+        nomeSvegliaDefault.setText(sveglia.getEtichetta());
 
         checkboxL = view.findViewById(R.id.lunedi);
         checkboxMa = view.findViewById(R.id.martedi);
@@ -134,9 +166,63 @@ public class AggiungiFragment extends Fragment {
         checkboxS = view.findViewById(R.id.sabato);
         checkboxD = view.findViewById(R.id.domenica);
 
+        //TODO sistemarlo non funziona
+        for (int i=0; i<sveglia.getRipetizioniNum().length(); i++) {
+            switch (sveglia.getRipetizioniNum().charAt(i)){
+                case 1:
+                    checkboxL.setChecked(true);
+                    break;
+                case 2:
+                    checkboxMa.setChecked(true);
+                    break;
+                case 3:
+                    checkboxMe.setChecked(true);
+                    break;
+                case 4:
+                    checkboxG.setChecked(true);
+                    break;
+                case 5:
+                    checkboxV.setChecked(true);
+                    break;
+                case 6:
+                    checkboxS.setChecked(true);
+                    break;
+                case 7:
+                    checkboxD.setChecked(true);
+                    break;
+            }
+        }
+
+
         spinnerSuoni = view.findViewById(R.id.spinnerSuono);
+        switch (sveglia.getSuono()) {
+            case "Classica":
+                spinnerSuoni.setSelection(0);
+                break;
+            case "Radar":
+                spinnerSuoni.setSelection(1);
+                break;
+            case "Arpeggio":
+                spinnerSuoni.setSelection(2);
+                break;
+
+        }
+
+
 
         chipVibrazione = view.findViewById(R.id.chipVibr);
+        if(sveglia.getVibrazione().equals("vibrazione")) {
+            isVibrazione = true;
+            chipVibrazione.setChecked(true);
+            chipVibrazione.setChipIcon(getResources().getDrawable(R.drawable.check));
+            chipVibrazione.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.fucsia)));
+        }
+        else if(sveglia.getVibrazione().equals("no vibrazione")) {
+            isVibrazione = false;
+            chipVibrazione.setChecked(true);
+            chipVibrazione.setChipIcon(getResources().getDrawable(R.drawable.close));
+            chipVibrazione.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.sfondoTras)));
+        }
 
         chipVibrazione.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,9 +241,26 @@ public class AggiungiFragment extends Fragment {
         });
 
         switchPosticipa = view.findViewById(R.id.posticipa);
+        if (sveglia.getPosticipa().equals("true"))
+            switchPosticipa.setChecked(true);
 
         final Button buttonClassica = view.findViewById(R.id.classica);
         final Button buttonSfida = view.findViewById(R.id.sfida);
+        layoutSfida = view.findViewById(R.id.layoutSfida);
+
+        if(sveglia.getModalita().equals("tc")) {
+            isClassica = true;
+            isSfida = false;
+            buttonClassica.setBackgroundColor(getResources().getColor(R.color.grigio));
+            buttonSfida.setBackgroundColor(getResources().getColor(R.color.arancione));
+        }
+        else if (sveglia.getModalita().equals("ts")) {
+            isSfida = true;
+            isClassica = false;
+            buttonSfida.setBackgroundColor(getResources().getColor(R.color.grigio));
+            buttonClassica.setBackgroundColor(getResources().getColor(R.color.azzurro));
+            layoutSfida.setVisibility(view.VISIBLE);
+        }
 
         buttonClassica.setOnClickListener(v -> {
             if (!isClassica) {
@@ -170,8 +273,6 @@ public class AggiungiFragment extends Fragment {
                 buttonClassica.setBackgroundColor(getResources().getColor(R.color.azzurro));
             }
         } );
-
-        layoutSfida = view.findViewById(R.id.layoutSfida);
 
 
 
@@ -190,6 +291,8 @@ public class AggiungiFragment extends Fragment {
             }
         } );
 
+
+        //TODO impostare sfide selezionate poi sistemare salvataggio modifiche a sveglia
 
         seekBar=view.findViewById(R.id.ripetizioniCalcolatrice);
         value=view.findViewById(R.id.progressoCalcolatrice);
@@ -336,14 +439,14 @@ public class AggiungiFragment extends Fragment {
                     if (progCalcolatrice>0 || progMemory>0 || progScrivere>0 || progPassi>0) {
                         isSfida = true;
                         layoutSfida.setVisibility(view.GONE);
-                        Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_mainActivity);
-                        saveInformation();
+                        Navigation.findNavController(v).navigate(R.id.action_modificaFragment_to_homeFragment);
+                        //saveInformation();
                     }
                     else
                         Snackbar.make(requireActivity().findViewById(android.R.id.content), getString(R.string.mxSfida), Snackbar.LENGTH_LONG).show();
                 }
                 if (isClassica) {
-                    Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_mainActivity);
+                    Navigation.findNavController(v).navigate(R.id.action_modificaFragment_to_homeFragment);
                     saveInformation();
                 }
 
@@ -355,13 +458,12 @@ public class AggiungiFragment extends Fragment {
 
         final Button buttonAnnulla = view.findViewById(R.id.annulla);
         buttonAnnulla.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_mainActivity);
+            Navigation.findNavController(v).navigate(R.id.action_modificaFragment_to_homeFragment);
         } );
 
 
 
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void saveInformation() {

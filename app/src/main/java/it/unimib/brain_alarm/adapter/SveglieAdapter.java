@@ -262,10 +262,7 @@ public class SveglieAdapter extends
 
             else if (v.getId() == R.id.switchAttiva) {
 
-                Log.d(TAG,"switch " + (sveglieList.get(getAdapterPosition())).getKey());
-
                 Set<String> sveglieSet = sharedPref.getStringSet(key, new HashSet<>());
-                Log.d(TAG, "switch sveglia prima " + sveglieSet);
 
                 Set<String> newSet = new HashSet<>(sveglieSet);
 

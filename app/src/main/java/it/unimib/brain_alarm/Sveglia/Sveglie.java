@@ -41,6 +41,8 @@ public class Sveglie implements Serializable {
 
     private String modalita;
 
+    private String missioni;
+
     private Set<String> elementi;
 
 
@@ -240,6 +242,20 @@ public class Sveglie implements Serializable {
 
     public void setModalita(String modalita) {
         this.modalita = modalita;
+    }
+
+    public String getMissioni() {
+
+        for (String e : elementi) {
+            if (!e.toString().isEmpty())
+                if ((e.toString()).charAt(0) == 'm')
+                    missioni = e.toString().substring(1);
+        }
+        return missioni;
+    }
+
+    public void setMissioni(String missioni) {
+        this.missioni = missioni;
     }
 
 

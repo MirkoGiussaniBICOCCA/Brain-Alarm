@@ -432,7 +432,7 @@ public class AggiungiFragment extends Fragment {
             sveglia.add("ts");
 
 
-        sveglia.add(String.valueOf(progCalcolatrice) + String.valueOf(progMemory) + String.valueOf(progScrivere) + String.valueOf(progPassi));
+        sveglia.add("m" + String.valueOf(progCalcolatrice) + String.valueOf(progMemory) + String.valueOf(progScrivere) + String.valueOf(progPassi));
 
         sveglia.add("attiva");
 

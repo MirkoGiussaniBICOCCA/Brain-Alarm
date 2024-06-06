@@ -146,8 +146,6 @@ public class ModificaFragment extends Fragment {
         Sveglie sveglia = ModificaFragmentArgs.fromBundle(getArguments()).getSveglie();
 
 
-
-
         timeP = view.findViewById(R.id.timePicker);
         timeP.setHour(Integer.parseInt(sveglia.getOrario().substring(0,2)));
         timeP.setMinute(Integer.parseInt(sveglia.getOrario().substring(3,5)));
@@ -166,28 +164,27 @@ public class ModificaFragment extends Fragment {
         checkboxS = view.findViewById(R.id.sabato);
         checkboxD = view.findViewById(R.id.domenica);
 
-        //TODO sistemarlo non funziona
         for (int i=0; i<sveglia.getRipetizioniNum().length(); i++) {
             switch (sveglia.getRipetizioniNum().charAt(i)){
-                case 1:
+                case '1':
                     checkboxL.setChecked(true);
                     break;
-                case 2:
+                case '2':
                     checkboxMa.setChecked(true);
                     break;
-                case 3:
+                case '3':
                     checkboxMe.setChecked(true);
                     break;
-                case 4:
+                case '4':
                     checkboxG.setChecked(true);
                     break;
-                case 5:
+                case '5':
                     checkboxV.setChecked(true);
                     break;
-                case 6:
+                case '6':
                     checkboxS.setChecked(true);
                     break;
-                case 7:
+                case '7':
                     checkboxD.setChecked(true);
                     break;
             }
@@ -292,12 +289,30 @@ public class ModificaFragment extends Fragment {
         } );
 
 
-        //TODO impostare sfide selezionate poi sistemare salvataggio modifiche a sveglia
 
         seekBar=view.findViewById(R.id.ripetizioniCalcolatrice);
         value=view.findViewById(R.id.progressoCalcolatrice);
         imgCalcolaltrice=view.findViewById((R.id.sfida1));
         textCalc=view.findViewById((R.id.ripCalcolatrice));
+
+        seekBarM=view.findViewById(R.id.ripetizioniMemory);
+        valueM=view.findViewById(R.id.progressoMemory);
+        imgMemory=view.findViewById((R.id.sfida2));
+        textMem=view.findViewById((R.id.ripMemory));
+
+        seekBarS=view.findViewById(R.id.ripetizioniScrivere);
+        valueS=view.findViewById(R.id.progressoScrivere);
+        imgScrivere=view.findViewById((R.id.sfida3));
+        textScr=view.findViewById((R.id.ripScrivere));
+
+        seekBarP=view.findViewById(R.id.ripetizioniPassi);
+        valueP=view.findViewById(R.id.progressoPassi);
+        imgPassi=view.findViewById((R.id.sfida4));
+        textPassi=view.findViewById((R.id.ripPassi));
+
+
+        setSeekBarDefaultValue(sveglia.getMissioni());
+
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -321,10 +336,7 @@ public class ModificaFragment extends Fragment {
             public void onStopTrackingTouch(SeekBar seekBar) {   }
         });
 
-        seekBarM=view.findViewById(R.id.ripetizioniMemory);
-        valueM=view.findViewById(R.id.progressoMemory);
-        imgMemory=view.findViewById((R.id.sfida2));
-        textMem=view.findViewById((R.id.ripMemory));
+
 
         seekBarM.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -348,10 +360,7 @@ public class ModificaFragment extends Fragment {
             public void onStopTrackingTouch(SeekBar seekBarM) {   }
         });
 
-        seekBarS=view.findViewById(R.id.ripetizioniScrivere);
-        valueS=view.findViewById(R.id.progressoScrivere);
-        imgScrivere=view.findViewById((R.id.sfida3));
-        textScr=view.findViewById((R.id.ripScrivere));
+
 
         seekBarS.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -376,12 +385,6 @@ public class ModificaFragment extends Fragment {
             public void onStopTrackingTouch(SeekBar seekBarS) {   }
         });
 
-        seekBarP=view.findViewById(R.id.ripetizioniPassi);
-        valueP=view.findViewById(R.id.progressoPassi);
-        imgPassi=view.findViewById((R.id.sfida4));
-        textPassi=view.findViewById((R.id.ripPassi));
-
-
         seekBarP.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBarP, int progressoPassi, boolean fromUser) {
@@ -403,6 +406,7 @@ public class ModificaFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBarP) {   }
         });
+
 
 
         final Button buttonSalvaSfide = view.findViewById(R.id.salvaSfida);
@@ -440,14 +444,14 @@ public class ModificaFragment extends Fragment {
                         isSfida = true;
                         layoutSfida.setVisibility(view.GONE);
                         Navigation.findNavController(v).navigate(R.id.action_modificaFragment_to_homeFragment);
-                        //saveInformation();
+                        modificaInformation(sveglia.getKey());
                     }
                     else
                         Snackbar.make(requireActivity().findViewById(android.R.id.content), getString(R.string.mxSfida), Snackbar.LENGTH_LONG).show();
                 }
                 if (isClassica) {
                     Navigation.findNavController(v).navigate(R.id.action_modificaFragment_to_homeFragment);
-                    saveInformation();
+                    modificaInformation(sveglia.getKey());
                 }
 
             }
@@ -466,7 +470,9 @@ public class ModificaFragment extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void saveInformation() {
+    private void modificaInformation(String key) {
+
+
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
 
         Set<String> sveglia = new HashSet<>();
@@ -534,27 +540,52 @@ public class ModificaFragment extends Fragment {
             sveglia.add("ts");
 
 
-        sveglia.add(String.valueOf(progCalcolatrice) + String.valueOf(progMemory) + String.valueOf(progScrivere) + String.valueOf(progPassi));
+        sveglia.add("m" + String.valueOf(progCalcolatrice) + String.valueOf(progMemory) + String.valueOf(progScrivere) + String.valueOf(progPassi));
 
         sveglia.add("attiva");
 
         SharedPreferences.Editor editor = sharedPref.edit();
-        String uniqueKey = "sveglia_" + System.currentTimeMillis();
-        sveglia.add(uniqueKey);
 
-        editor.putStringSet(uniqueKey, sveglia);
-
-        // Recupera e aggiorna l'elenco delle chiavi
-        Set<String> keySet = sharedPref.getStringSet("sveglia_keys", new HashSet<>());
-        keySet.add(uniqueKey);
-
-        Set<String> sveglieAttive = sharedPref.getStringSet("sveglieAttive", new HashSet<>());
-        sveglieAttive.add(uniqueKey);
-
-        editor.putStringSet("sveglia_keys", keySet);
-        editor.putStringSet("sveglieAttive", sveglieAttive);
+        editor.putStringSet(key, sveglia);
 
         editor.apply();
+    }
+
+    public void setSeekBarDefaultValue(String missioni ) {
+
+        seekBar.setProgress(missioni.charAt(0) - '0');
+        seekBarM.setProgress(missioni.charAt(1) - '0');
+        seekBarS.setProgress(missioni.charAt(2) - '0');
+        seekBarP.setProgress(missioni.charAt(3) - '0');
+
+        value.setText(missioni.charAt(0) + "/" + "5");
+        if (missioni.charAt(0)!= '0') {
+            imgCalcolaltrice.setImageDrawable(getResources().getDrawable(R.drawable.calcolatrice2));
+            textCalc.setText("x" + missioni.charAt(0));
+            progCalcolatrice = missioni.charAt(0) - '0';
+        }
+
+        valueM.setText(missioni.charAt(1) + "/" + "5");
+        if (missioni.charAt(1)!= '0') {
+            imgMemory.setImageDrawable(getResources().getDrawable(R.drawable.memory2));
+            textMem.setText("x" + missioni.charAt(1));
+            progMemory=  missioni.charAt(1) - '0';
+        }
+
+        valueS.setText(missioni.charAt(2) + "/" + "5");
+        if (missioni.charAt(2)!= '0') {
+            imgScrivere.setImageDrawable(getResources().getDrawable(R.drawable.scrivere2));
+            textScr.setText("x" + missioni.charAt(2));
+            progScrivere = missioni.charAt(2) - '0';
+        }
+
+        valueP.setText(missioni.charAt(3) + "/" + "5");
+        if (missioni.charAt(0)!= '3') {
+            imgPassi.setImageDrawable(getResources().getDrawable(R.drawable.passi2));
+            textPassi.setText("x" + missioni.charAt(3));
+            progPassi = missioni.charAt(3) - '0';
+        }
+
     }
 
 }

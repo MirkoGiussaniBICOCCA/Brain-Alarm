@@ -12,13 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CalcolatriceFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class CalcolatriceFragment extends Fragment {
 
+    Integer ripCalcolatrice;
 
 
     public CalcolatriceFragment() {
@@ -47,7 +44,7 @@ public class CalcolatriceFragment extends Fragment {
 
         super.onViewCreated(v, savedInstanceState);
 
-        String ripCalcolatrice = CalcolatriceFragmentArgs.fromBundle(getArguments()).getRipCalcolatrice();
+        ripCalcolatrice = CalcolatriceFragmentArgs.fromBundle(getArguments()).getRipCalcolatrice();
 
         Navigation.findNavController(v).navigate(R.id.action_calcolatriceFragment_to_svegliaFragment);
     }

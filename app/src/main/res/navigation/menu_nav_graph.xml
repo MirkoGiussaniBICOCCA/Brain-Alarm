@@ -118,7 +118,7 @@
         tools:layout="@layout/fragment_calcolatrice" >
         <argument
             android:name="ripCalcolatrice"
-            app:argType="java.lang.String" />
+            app:argType="integer" />
         <action
             android:id="@+id/action_calcolatriceFragment_to_svegliaFragment"
             app:destination="@id/svegliaFragment" />
@@ -130,7 +130,7 @@
         tools:layout="@layout/fragment_memory" >
         <argument
             android:name="ripMemory"
-            app:argType="java.lang.String" />
+            app:argType="integer" />
         <action
             android:id="@+id/action_memoryFragment_to_svegliaFragment"
             app:destination="@id/svegliaFragment" />
@@ -142,7 +142,7 @@
         tools:layout="@layout/fragment_scrivere" >
         <argument
             android:name="ripScrivere"
-            app:argType="java.lang.String" />
+            app:argType="integer" />
         <action
             android:id="@+id/action_scrivereFragment_to_svegliaFragment"
             app:destination="@id/svegliaFragment" />

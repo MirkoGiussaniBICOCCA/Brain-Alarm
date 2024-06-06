@@ -11,12 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MemoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MemoryFragment extends Fragment {
+
+    int ripMemory;
 
     public MemoryFragment() {
         // Required empty public constructor
@@ -37,14 +34,14 @@ public class MemoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calcolatrice, container, false);
+        return inflater.inflate(R.layout.fragment_memory, container, false);
     }
 
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(v, savedInstanceState);
 
-        String ripMemory = MemoryFragmentArgs.fromBundle(getArguments()).getRipMemory();
+        ripMemory = MemoryFragmentArgs.fromBundle(getArguments()).getRipMemory();
 
         Navigation.findNavController(v).navigate(R.id.action_memoryFragment_to_svegliaFragment);
     }

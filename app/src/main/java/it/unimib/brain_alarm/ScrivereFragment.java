@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 public class ScrivereFragment extends Fragment {
 
 
+    int ripScrivere;
+
     public ScrivereFragment() {
         // Required empty public constructor
     }
@@ -34,14 +36,14 @@ public class ScrivereFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calcolatrice, container, false);
+        return inflater.inflate(R.layout.fragment_scrivere, container, false);
     }
 
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(v, savedInstanceState);
 
-        String ripScrivere = ScrivereFragmentArgs.fromBundle(getArguments()).getRipScrivere();
+        ripScrivere = ScrivereFragmentArgs.fromBundle(getArguments()).getRipScrivere();
 
         Navigation.findNavController(v).navigate(R.id.action_scrivereFragment_to_svegliaFragment);
     }

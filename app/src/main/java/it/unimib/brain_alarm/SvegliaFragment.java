@@ -17,13 +17,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import it.unimib.brain_alarm.News.News;
 
 public class SvegliaFragment extends Fragment {
 
@@ -34,10 +31,10 @@ public class SvegliaFragment extends Fragment {
 
     LinearLayout barraSfide;
 
-    int ripCalcolatrice;
-    int ripMemory;
-    int ripScrivere;
-    int ripPassi;
+    int ripCalcolatrice = 0;
+    int ripMemory = 0;
+    Integer ripScrivere = 0;
+    Integer ripPassi = 0;
 
     ImageView imgCalcolaltrice;
     TextView textCalc;
@@ -86,6 +83,7 @@ public class SvegliaFragment extends Fragment {
 
         startAlarm();
 
+
         String key = SvegliaFragmentArgs.fromBundle(getArguments()).getSvegliaKey();
 
         String missioni = "";
@@ -117,13 +115,7 @@ public class SvegliaFragment extends Fragment {
 
             stopAlarm();
 
-            if(ripCalcolatrice>0)
-                Navigation.findNavController(v).navigate(R.id.action_svegliaFragment_to_calcolatriceFragment);
-            if(ripMemory>0)
-                Navigation.findNavController(v).navigate(R.id.action_svegliaFragment_to_memoryFragment);
-            if(ripScrivere>0)
-                Navigation.findNavController(v).navigate(R.id.action_svegliaFragment_to_scrivereFragment);
-
+            Navigation.findNavController(v).navigate(R.id.action_svegliaFragment_to_homeFragment);
 
         });
 
@@ -140,34 +132,43 @@ public class SvegliaFragment extends Fragment {
         textPassi=view.findViewById((R.id.ripPassi));
 
 
-        if (missioni.charAt(0)!='0')
+        if (missioni.charAt(0)!='0') {
             imgCalcolaltrice.setImageDrawable(getResources().getDrawable(R.drawable.calcolatrice2));
             textCalc.setText("x" + missioni.charAt(0));
-            ripCalcolatrice = missioni.charAt(0);
+            ripCalcolatrice =  missioni.charAt(0) - '0'; }
 
-        if (missioni.charAt(1)!='0')
+        if (missioni.charAt(1)!='0') {
             imgMemory.setImageDrawable(getResources().getDrawable(R.drawable.memory2));
             textMem.setText("x" + missioni.charAt(1));
-            ripMemory = missioni.charAt(1);
+            ripMemory = Character.getNumericValue(missioni.charAt(1)); }
 
-        if (missioni.charAt(2)!='0')
+
+        if (missioni.charAt(2)!='0') {
             imgScrivere.setImageDrawable(getResources().getDrawable(R.drawable.scrivere2));
             textScr.setText("x" + missioni.charAt(2));
-            ripScrivere = missioni.charAt(2);
+            ripScrivere = missioni.charAt(2) - '0'; }
 
 
-        if (missioni.charAt(3)!='0')
+        if (missioni.charAt(3)!='0') {
             imgPassi.setImageDrawable(getResources().getDrawable(R.drawable.passi2));
             textPassi.setText("x" + missioni.charAt(3));
-            ripPassi = missioni.charAt(3);
+            ripPassi = missioni.charAt(3) - '0'; }
 
 
 
         buttonGioca.setOnClickListener(v -> {
 
             stopAlarm();
+            if(ripCalcolatrice>0) {
+                SvegliaFragmentDirections.ActionSvegliaFragmentToCalcolatriceFragment action = SvegliaFragmentDirections.actionSvegliaFragmentToCalcolatriceFragment(ripCalcolatrice);
+                Navigation.findNavController(view).navigate(action);}
+            if(ripMemory>0) {
+                SvegliaFragmentDirections.ActionSvegliaFragmentToMemoryFragment action = SvegliaFragmentDirections.actionSvegliaFragmentToMemoryFragment(ripMemory);
+                Navigation.findNavController(view).navigate(action);}
+            if(ripScrivere>0) {
+                SvegliaFragmentDirections.ActionSvegliaFragmentToScrivereFragment action = SvegliaFragmentDirections.actionSvegliaFragmentToScrivereFragment(ripScrivere);
+                Navigation.findNavController(view).navigate(action);}
 
-            Navigation.findNavController(v).navigate(R.id.action_svegliaFragment_to_homeFragment);
         });
 
     }
@@ -182,9 +183,16 @@ public class SvegliaFragment extends Fragment {
 
     private void stopAlarm() {
 
+        Log.d(TAG, "stop suono" + mediaPlayer + " ... " + mediaPlayer.isPlaying());
+
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
+
+            Log.d(TAG, "stop suono" + mediaPlayer + " ... " + mediaPlayer.isPlaying());
+
             mediaPlayer.release();
         }
+
+
     }
 }

@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_homeFragment_to_modificaFragment"
             app:destination="@id/modificaFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_svegliaFragment"
+            app:destination="@id/svegliaFragment" />
     </fragment>
 
 
@@ -86,6 +89,63 @@
         <action
             android:id="@+id/action_modificaFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/svegliaFragment"
+        android:name="it.unimib.brain_alarm.SvegliaFragment"
+        android:label="SvegliaFragment"
+        tools:layout="@layout/fragment_sveglia" >
+        <argument
+            android:name="svegliaKey"
+            app:argType="java.lang.String" />
+        <action
+            android:id="@+id/action_svegliaFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_svegliaFragment_to_calcolatriceFragment"
+            app:destination="@id/calcolatriceFragment" />
+        <action
+            android:id="@+id/action_svegliaFragment_to_memoryFragment"
+            app:destination="@id/memoryFragment" />
+        <action
+            android:id="@+id/action_svegliaFragment_to_scrivereFragment"
+            app:destination="@id/scrivereFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calcolatriceFragment"
+        android:name="it.unimib.brain_alarm.CalcolatriceFragment"
+        android:label="fragment_calcolatrice"
+        tools:layout="@layout/fragment_calcolatrice" >
+        <argument
+            android:name="ripCalcolatrice"
+            app:argType="java.lang.String" />
+        <action
+            android:id="@+id/action_calcolatriceFragment_to_svegliaFragment"
+            app:destination="@id/svegliaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/memoryFragment"
+        android:name="it.unimib.brain_alarm.MemoryFragment"
+        android:label="fragment_memory"
+        tools:layout="@layout/fragment_memory" >
+        <argument
+            android:name="ripMemory"
+            app:argType="java.lang.String" />
+        <action
+            android:id="@+id/action_memoryFragment_to_svegliaFragment"
+            app:destination="@id/svegliaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scrivereFragment"
+        android:name="it.unimib.brain_alarm.ScrivereFragment"
+        android:label="fragment_scrivere"
+        tools:layout="@layout/fragment_scrivere" >
+        <argument
+            android:name="ripScrivere"
+            app:argType="java.lang.String" />
+        <action
+            android:id="@+id/action_scrivereFragment_to_svegliaFragment"
+            app:destination="@id/svegliaFragment" />
     </fragment>
 
 </navigation>

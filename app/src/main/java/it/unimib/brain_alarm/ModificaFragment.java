@@ -542,6 +542,8 @@ public class ModificaFragment extends Fragment {
 
         sveglia.add("m" + String.valueOf(progCalcolatrice) + String.valueOf(progMemory) + String.valueOf(progScrivere) + String.valueOf(progPassi));
 
+        sveglia.add(key);
+
         sveglia.add("attiva");
 
         SharedPreferences.Editor editor = sharedPref.edit();

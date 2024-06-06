@@ -95,7 +95,6 @@ public class NewsDetailFragment extends Fragment {
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
-
         News news = NewsDetailFragmentArgs.fromBundle(getArguments()).getNews();
 
 

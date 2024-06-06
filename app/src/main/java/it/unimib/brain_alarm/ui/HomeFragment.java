@@ -55,7 +55,6 @@ public class HomeFragment extends Fragment {
     private Handler handler = new Handler();
     private Runnable runnable;
 
-
     TextView textCountDown;
     LinearLayout layoutCountDown;
 
@@ -176,11 +175,7 @@ public class HomeFragment extends Fragment {
                 new LinearLayoutManager(requireContext(),
                         LinearLayoutManager.VERTICAL, false);
 
-
-        //Log.d(TAG, "prova");
         List<Sveglie> sveglieList = getSveglie();
-
-
 
         SveglieAdapter sveglieAdapter = new SveglieAdapter(getContext(), requireActivity().getApplication(), sveglieList, disattiva, keyDaDisattivare,
                 new SveglieAdapter.OnItemClickListenerS() {
@@ -188,10 +183,8 @@ public class HomeFragment extends Fragment {
                     public void onSveglieItemClick(Sveglie sveglie) {
                         Snackbar.make(view, sveglie.getOrario(), Snackbar.LENGTH_SHORT).show();
 
-                        Log.d(TAG, "nav to modifica");
                         HomeFragmentDirections.ActionHomeFragmentToModificaFragment action = HomeFragmentDirections.actionHomeFragmentToModificaFragment(sveglie);
                         Navigation.findNavController(view).navigate(action);
-                        Log.d(TAG, "nav to modifica2");
 
                     }
 
@@ -217,22 +210,20 @@ public class HomeFragment extends Fragment {
         // Recupera l'elenco delle chiavi e rimuove ogni set associato
         Set<String> keySet = sharedPref.getStringSet("sveglia_keys", new HashSet<>());
 
-        Log.d(TAG, "keySet " + keySet);
+
 
         List<Set<String>> setList = new ArrayList<>();
         List<Sveglie> listSveglie = new ArrayList<>();
 
         for (String key : keySet) {
-            Log.d(TAG, "elenco key " + key);
+
             Set<String> sveglieSet = sharedPref.getStringSet(key, new HashSet<>());
-            Log.d(TAG, "sveglieSet " + sveglieSet);
+
             setList.add(sveglieSet);
 
             Sveglie sveglia = new Sveglie(sveglieSet);
             listSveglie.add(sveglia);
             }
-        Log.d(TAG, "keySet " + keySet);
-        Log.d(TAG, "listSveglie " + listSveglie);
 
         return listSveglie;
     }
@@ -365,9 +356,11 @@ public class HomeFragment extends Fragment {
 
             if (getSecondiMancanti(countDown) <= 0) {
 
+                //passo la chiave a svegliaFragment
+                HomeFragmentDirections.ActionHomeFragmentToSvegliaFragment action = HomeFragmentDirections.actionHomeFragmentToSvegliaFragment(attive);
+                Navigation.findNavController(view).navigate(action);
+
                 aggiornaRecyclerView(view, true, attive);
-                //TODO sistemare con passaggio sveglia
-                //Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_svegliaActivity);
             }
 
         }

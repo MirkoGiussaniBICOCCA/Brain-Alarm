@@ -104,12 +104,6 @@
         <action
             android:id="@+id/action_svegliaFragment_to_calcolatriceFragment"
             app:destination="@id/calcolatriceFragment" />
-        <action
-            android:id="@+id/action_svegliaFragment_to_memoryFragment"
-            app:destination="@id/memoryFragment" />
-        <action
-            android:id="@+id/action_svegliaFragment_to_scrivereFragment"
-            app:destination="@id/scrivereFragment" />
     </fragment>
     <fragment
         android:id="@+id/calcolatriceFragment"
@@ -117,11 +111,11 @@
         android:label="fragment_calcolatrice"
         tools:layout="@layout/fragment_calcolatrice" >
         <argument
-            android:name="ripCalcolatrice"
-            app:argType="integer" />
+            android:name="ripMissioni"
+            app:argType="java.lang.String"/>
         <action
-            android:id="@+id/action_calcolatriceFragment_to_svegliaFragment"
-            app:destination="@id/svegliaFragment" />
+            android:id="@+id/action_calcolatriceFragment_to_memoryFragment"
+            app:destination="@id/memoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/memoryFragment"
@@ -129,11 +123,11 @@
         android:label="fragment_memory"
         tools:layout="@layout/fragment_memory" >
         <argument
-            android:name="ripMemory"
-            app:argType="integer" />
+            android:name="ripMissioni"
+            app:argType="java.lang.String" />
         <action
-            android:id="@+id/action_memoryFragment_to_svegliaFragment"
-            app:destination="@id/svegliaFragment" />
+            android:id="@+id/action_memoryFragment_to_scrivereFragment"
+            app:destination="@id/scrivereFragment" />
     </fragment>
     <fragment
         android:id="@+id/scrivereFragment"
@@ -141,11 +135,11 @@
         android:label="fragment_scrivere"
         tools:layout="@layout/fragment_scrivere" >
         <argument
-            android:name="ripScrivere"
-            app:argType="integer" />
+            android:name="ripMissioni"
+            app:argType="java.lang.String" />
         <action
-            android:id="@+id/action_scrivereFragment_to_svegliaFragment"
-            app:destination="@id/svegliaFragment" />
+            android:id="@+id/action_scrivereFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
 </navigation>

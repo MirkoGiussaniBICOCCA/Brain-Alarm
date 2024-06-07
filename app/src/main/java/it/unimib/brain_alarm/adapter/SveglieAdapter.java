@@ -173,6 +173,8 @@ public class SveglieAdapter extends
             if (disattiva){
                 if(!keyDaDisattivare.equals("")) {
 
+                    Log.d(TAG, "suono stop e disattivata in adapter");
+
                     Set<String> sveglieSet = sharedPref.getStringSet(keyDaDisattivare, new HashSet<>());
 
                     Set<String> newSet = new HashSet<>(sveglieSet);

@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 public class MemoryFragment extends Fragment {
 
-    int ripMemory;
 
     public MemoryFragment() {
         // Required empty public constructor
@@ -41,8 +40,8 @@ public class MemoryFragment extends Fragment {
 
         super.onViewCreated(v, savedInstanceState);
 
-        ripMemory = MemoryFragmentArgs.fromBundle(getArguments()).getRipMemory();
+        String ripMissioni = MemoryFragmentArgs.fromBundle(getArguments()).getRipMissioni();
 
-        Navigation.findNavController(v).navigate(R.id.action_memoryFragment_to_svegliaFragment);
+        Navigation.findNavController(v).navigate(R.id.action_memoryFragment_to_scrivereFragment);
     }
 }

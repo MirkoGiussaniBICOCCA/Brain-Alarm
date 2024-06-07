@@ -1,5 +1,6 @@
 package it.unimib.brain_alarm.ui;
 
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -54,6 +55,8 @@ public class HomeFragment extends Fragment {
 
     private Handler handler = new Handler();
     private Runnable runnable;
+
+    private MediaPlayer mediaPlayer;
 
     TextView textCountDown;
     LinearLayout layoutCountDown;
@@ -354,13 +357,17 @@ public class HomeFragment extends Fragment {
             }
 
 
+            mediaPlayer = MediaPlayer.create(getContext(), R.raw.suono2);
+
             if (getSecondiMancanti(countDown) <= 0) {
+
+                aggiornaRecyclerView(view, true, attive);
 
                 //passo la chiave a svegliaFragment
                 HomeFragmentDirections.ActionHomeFragmentToSvegliaFragment action = HomeFragmentDirections.actionHomeFragmentToSvegliaFragment(attive);
                 Navigation.findNavController(view).navigate(action);
 
-                aggiornaRecyclerView(view, true, attive);
+
             }
 
         }
@@ -410,8 +417,6 @@ public class HomeFragment extends Fragment {
 
         return days+hours+minutes+seconds;
     }
-
-
 
 
 

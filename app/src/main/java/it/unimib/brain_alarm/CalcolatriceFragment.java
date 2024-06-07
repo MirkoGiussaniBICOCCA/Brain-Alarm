@@ -11,12 +11,12 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 public class CalcolatriceFragment extends Fragment {
 
-    Integer ripCalcolatrice;
-
+    TextView ripcalc;
 
     public CalcolatriceFragment() {
         // Required empty public constructor
@@ -40,13 +40,16 @@ public class CalcolatriceFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_calcolatrice, container, false);
     }
 
-    public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
+   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        super.onViewCreated(v, savedInstanceState);
+        super.onViewCreated(view, savedInstanceState);
 
-        ripCalcolatrice = CalcolatriceFragmentArgs.fromBundle(getArguments()).getRipCalcolatrice();
+        String ripMissioni = CalcolatriceFragmentArgs.fromBundle(getArguments()).getRipMissioni();
 
-        Navigation.findNavController(v).navigate(R.id.action_calcolatriceFragment_to_svegliaFragment);
+        ripcalc = view.findViewById(R.id.textRipetizioni);
+        ripcalc.setText(ripMissioni);
+
+        Navigation.findNavController(view).navigate(R.id.action_calcolatriceFragment_to_memoryFragment);
     }
 
 }

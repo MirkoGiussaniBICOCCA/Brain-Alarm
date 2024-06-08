@@ -16,6 +16,8 @@ public class ScrivereFragment extends Fragment {
 
 
 
+
+
     public ScrivereFragment() {
         // Required empty public constructor
     }

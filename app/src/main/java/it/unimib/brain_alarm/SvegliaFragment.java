@@ -29,8 +29,6 @@ public class SvegliaFragment extends Fragment {
 
     private MediaPlayer mediaPlayer;
 
-    String missioni = "";
-
     LinearLayout barraSfide;
     ImageView imgCalcolaltrice;
     TextView textCalc;
@@ -88,6 +86,8 @@ public class SvegliaFragment extends Fragment {
 
         // Recupera il Set<String> associato alla chiave specificata
         Set<String> svegliaSet = sharedPref.getStringSet(key, new HashSet<>());
+
+        String missioni="0000";
 
         // Cerca la stringa che indica le ripetizioni
         for (String val : svegliaSet) {
@@ -147,13 +147,13 @@ public class SvegliaFragment extends Fragment {
             textPassi.setText("x" + missioni.charAt(3)); }
 
 
-
+        String finalMissioni = missioni;
         buttonGioca.setOnClickListener(v -> {
 
             stopAlarm();
 
 
-            SvegliaFragmentDirections.ActionSvegliaFragmentToCalcolatriceFragment action = SvegliaFragmentDirections.actionSvegliaFragmentToCalcolatriceFragment(missioni);
+            SvegliaFragmentDirections.ActionSvegliaFragmentToCalcolatriceFragment action = SvegliaFragmentDirections.actionSvegliaFragmentToCalcolatriceFragment(finalMissioni);
             Navigation.findNavController(view).navigate(action);
 
         });

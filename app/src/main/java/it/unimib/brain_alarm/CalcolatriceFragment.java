@@ -46,10 +46,15 @@ public class CalcolatriceFragment extends Fragment {
 
         String ripMissioni = CalcolatriceFragmentArgs.fromBundle(getArguments()).getRipMissioni();
 
-        ripcalc = view.findViewById(R.id.textRipetizioni);
-        ripcalc.setText(ripMissioni);
 
-        Navigation.findNavController(view).navigate(R.id.action_calcolatriceFragment_to_memoryFragment);
+
+        if(ripMissioni.charAt(0)!='0') {
+            ripcalc = view.findViewById(R.id.textRipetizioni);
+            ripcalc.setText(ripMissioni);
+        }
+        else {
+           CalcolatriceFragmentDirections.ActionCalcolatriceFragmentToMemoryFragment action = CalcolatriceFragmentDirections.actionCalcolatriceFragmentToMemoryFragment(ripMissioni);
+           Navigation.findNavController(view).navigate(action);  }
     }
 
 }

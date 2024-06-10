@@ -280,8 +280,8 @@ public class HomeFragment extends Fragment {
             else {
                 textCountDown.setText(countDown.charAt(0) + " giorni e ");
             }
-            textCountDownOra.setText(countDown.toString().substring(1, 5) );
-            textCountDownMin.setText(countDown.toString().substring(5, 8) );
+            textCountDownOra.setText(countDown.toString().substring(1, 4) );
+            textCountDownMin.setText(countDown.toString().substring(5, 7) );
             textCountDownSec.setText(countDown.toString().substring(8,10));
 
         }

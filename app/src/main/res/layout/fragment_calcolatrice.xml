@@ -1,16 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".CalcolatriceFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_margin="100dp"
-        android:id="@+id/textRipetizioni"
+        android:id="@+id/textQuestion"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/Gioca"
+        android:textSize="28sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"/>
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/editTextAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="3dp"
+        android:gravity="center"
+        android:inputType="number"
+        android:textSize="18sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Submit"
+        android:background="@drawable/background_navbar"
+        android:textColor="@android:color/white"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="50dp"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
+</LinearLayout>

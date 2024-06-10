@@ -22,7 +22,7 @@ import java.util.Random;
 
 public class ScrivereFragment extends Fragment {
 
-    int ripMemory;
+    int ripScrivere;
     private ImageView imageView;
     private EditText editText;
     private Button submitButton;
@@ -60,9 +60,9 @@ public class ScrivereFragment extends Fragment {
 
         String ripMissioni = ScrivereFragmentArgs.fromBundle(getArguments()).getRipMissioni();
 
-        ripMemory = ripMissioni.charAt(1) - '0';
+        ripScrivere = ripMissioni.charAt(2) - '0';
 
-        if(ripMemory > 0) {
+        if(ripScrivere > 0) {
             imageView = v.findViewById(R.id.imageView);
             editText = v.findViewById(R.id.editText);
             submitButton = v.findViewById(R.id.submitButton);

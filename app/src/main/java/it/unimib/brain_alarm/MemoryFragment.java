@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
 import android.os.Handler;
@@ -53,6 +54,8 @@ public class MemoryFragment extends Fragment {
 
     int playerPoints = 0, cpuPoint = 0;
 
+    int ripMemory;
+
 
 
     public MemoryFragment() {
@@ -83,11 +86,8 @@ public class MemoryFragment extends Fragment {
 
         String ripMissioni = MemoryFragmentArgs.fromBundle(getArguments()).getRipMissioni();
 
-        Log.d(TAG, "dentro memory " + ripMissioni);
 
-
-
-        int ripMemory = ripMissioni.charAt(1) - '0';
+        ripMemory = ripMissioni.charAt(1) - '0';
 
         if(ripMemory > 0) {
 
@@ -139,6 +139,11 @@ public class MemoryFragment extends Fragment {
         //mescola la lista delle immagini
         Collections.shuffle((Arrays.asList(cardArray)));
 
+        setCardListeners();
+    }
+
+
+    private void setCardListeners(){
         b11.setOnClickListener( v1 -> {
             int theCard = Integer.parseInt((String) v1.getTag());
             doStuff(b11, theCard);
@@ -249,18 +254,7 @@ public class MemoryFragment extends Fragment {
             cardNumber = 1;
             clickedSecond = card;
 
-            b11.setEnabled(false);
-            b12.setEnabled(false);
-            b13.setEnabled(false);
-            b14.setEnabled(false);
-            b21.setEnabled(false);
-            b22.setEnabled(false);
-            b23.setEnabled(false);
-            b24.setEnabled(false);
-            b31.setEnabled(false);
-            b32.setEnabled(false);
-            b33.setEnabled(false);
-            b34.setEnabled(false);
+            disableAllButtons();
 
             Handler handler = new Handler();
             handler.postDelayed(new Runnable () {
@@ -274,60 +268,40 @@ public class MemoryFragment extends Fragment {
 
     }
 
-    private void calculate() {
-        // se le immagini sono uguali restano girate
-        if(firstCard == secondCard) {
-            if (clickedFirst == 0) {
-                b11.setVisibility(View.INVISIBLE);
-            } else if (clickedFirst == 1) {
-                b12.setVisibility(View.INVISIBLE);
-            } else if (clickedFirst == 2) {
-                b13.setVisibility(View.INVISIBLE);
-            } else if (clickedFirst == 3) {
-                b14.setVisibility(View.INVISIBLE);
-            } else if (clickedFirst == 4) {
-                b21.setVisibility(View.INVISIBLE);
-            } else if (clickedFirst == 5) {
-                b22.setVisibility(View.INVISIBLE);
-            } else if (clickedFirst == 6) {
-                b23.setVisibility(View.INVISIBLE);
-            } else if (clickedFirst == 7) {
-                b24.setVisibility(View.INVISIBLE);
-            } else if (clickedFirst == 8) {
-                b31.setVisibility(View.INVISIBLE);
-            } else if (clickedFirst == 9) {
-                b32.setVisibility(View.INVISIBLE);
-            } else if (clickedFirst == 10) {
-                b33.setVisibility(View.INVISIBLE);
-            } else if (clickedFirst == 11) {
-                b34.setVisibility(View.INVISIBLE);
-            }
+    private void disableAllButtons(){
+        b11.setEnabled(false);
+        b12.setEnabled(false);
+        b13.setEnabled(false);
+        b14.setEnabled(false);
+        b21.setEnabled(false);
+        b22.setEnabled(false);
+        b23.setEnabled(false);
+        b24.setEnabled(false);
+        b31.setEnabled(false);
+        b32.setEnabled(false);
+        b33.setEnabled(false);
+        b34.setEnabled(false);
+    }
 
-            if (clickedSecond == 0) {
-                b11.setVisibility(View.INVISIBLE);
-            } else if (clickedSecond == 1) {
-                b12.setVisibility(View.INVISIBLE);
-            } else if (clickedSecond == 2) {
-                b13.setVisibility(View.INVISIBLE);
-            } else if (clickedSecond == 3) {
-                b14.setVisibility(View.INVISIBLE);
-            } else if (clickedSecond == 4) {
-                b21.setVisibility(View.INVISIBLE);
-            } else if (clickedSecond == 5) {
-                b22.setVisibility(View.INVISIBLE);
-            } else if (clickedSecond == 6) {
-                b23.setVisibility(View.INVISIBLE);
-            } else if (clickedSecond == 7) {
-                b24.setVisibility(View.INVISIBLE);
-            } else if (clickedSecond == 8) {
-                b31.setVisibility(View.INVISIBLE);
-            } else if (clickedSecond == 9) {
-                b32.setVisibility(View.INVISIBLE);
-            } else if (clickedSecond == 10) {
-                b33.setVisibility(View.INVISIBLE);
-            } else if (clickedSecond == 11) {
-                b34.setVisibility(View.INVISIBLE);
-            }
+    private void resetAllButtons() {
+        b11.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
+        b12.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
+        b13.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
+        b14.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
+        b21.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
+        b22.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
+        b23.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
+        b24.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
+        b31.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
+        b32.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
+        b33.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
+        b34.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
+    }
+
+    private void calculate() {
+        if (firstCard == secondCard) {
+            setInvisible(clickedFirst);
+            setInvisible(clickedSecond);
 
             if (turn == 1) {
                 playerPoints++;
@@ -337,31 +311,65 @@ public class MemoryFragment extends Fragment {
                 text2.setText("P2: " + cpuPoint);
             }
         } else {
-            b11.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
-            b12.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
-            b13.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
-            b14.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
-            b21.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
-            b22.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
-            b23.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
-            b24.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
-            b31.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
-            b32.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
-            b33.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
-            b34.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
+            resetAllButtons();
         }
 
-
-        if(turn == 1) {
+        if (turn == 1) {
             turn = 2;
             text1.setTextColor(getResources().getColor(R.color.grigio));
             text2.setTextColor(getResources().getColor(R.color.black));
-        } else if (turn == 2){
+        } else if (turn == 2) {
             turn = 1;
             text1.setTextColor(getResources().getColor(R.color.grigio));
             text2.setTextColor(getResources().getColor(R.color.black));
         }
 
+        enableAllButtons();
+        checked();
+    }
+
+    private void setInvisible(int clickedCard) {
+        switch (clickedCard) {
+            case 0:
+                b11.setVisibility(View.INVISIBLE);
+                break;
+            case 1:
+                b12.setVisibility(View.INVISIBLE);
+                break;
+            case 2:
+                b13.setVisibility(View.INVISIBLE);
+                break;
+            case 3:
+                b14.setVisibility(View.INVISIBLE);
+                break;
+            case 4:
+                b21.setVisibility(View.INVISIBLE);
+                break;
+            case 5:
+                b22.setVisibility(View.INVISIBLE);
+                break;
+            case 6:
+                b23.setVisibility(View.INVISIBLE);
+                break;
+            case 7:
+                b24.setVisibility(View.INVISIBLE);
+                break;
+            case 8:
+                b31.setVisibility(View.INVISIBLE);
+                break;
+            case 9:
+                b32.setVisibility(View.INVISIBLE);
+                break;
+            case 10:
+                b33.setVisibility(View.INVISIBLE);
+                break;
+            case 11:
+                b34.setVisibility(View.INVISIBLE);
+                break;
+        }
+    }
+
+    private void enableAllButtons() {
         b11.setEnabled(true);
         b12.setEnabled(true);
         b13.setEnabled(true);
@@ -374,30 +382,67 @@ public class MemoryFragment extends Fragment {
         b32.setEnabled(true);
         b33.setEnabled(true);
         b34.setEnabled(true);
-
-        //controlla fine gioco
-        checked();
-
     }
 
     private void checked() {
         if (b11.getVisibility() == View.INVISIBLE && b12.getVisibility() == View.INVISIBLE && b13.getVisibility() == View.INVISIBLE &&  b14.getVisibility() == View.INVISIBLE) {
-
+            //qui se ho girato tutte le carte finisce il gioco
+            ripMemory--;
+            if (ripMemory > 0) {
+                resetGame();
+            } else {
+                // Fine gioco, vai al prossimo fragment
+                String ripMissioni = MemoryFragmentArgs.fromBundle(getArguments()).getRipMissioni();
+                MemoryFragmentDirections.ActionMemoryFragmentToScrivereFragment action = MemoryFragmentDirections.actionMemoryFragmentToScrivereFragment(ripMissioni);
+                Navigation.findNavController(getView()).navigate(action);
+            }
         }
     }
 
-    private void frontOfCardResources() {
-        image101 = R.drawable.calcolatrice2;
-        image102 = R.drawable.puzzle;
-        image103 = R.drawable.scrivere2;
-        image104 = R.drawable.passi2;
-        image105 = R.drawable.meteo;
-        image106 = R.drawable.newspaper;
-        image201 = R.drawable.calcolatrice2;
-        image202 = R.drawable.puzzle;
-        image203 = R.drawable.scrivere2;
-        image204 = R.drawable.passi2;
-        image205 = R.drawable.meteo;
-        image206 = R.drawable.newspaper;
+    private void resetGame() {
+        playerPoints = 0;
+        cpuPoint = 0;
+        cardNumber = 1;
+        turn = 1;
+
+        text1.setText("P1: " + playerPoints);
+        text2.setText("P2: " + cpuPoint);
+        text1.setTextColor(getResources().getColor(R.color.black));
+        text2.setTextColor(getResources().getColor(R.color.grigio));
+
+        b11.setVisibility(View.VISIBLE);
+        b12.setVisibility(View.VISIBLE);
+        b13.setVisibility(View.VISIBLE);
+        b14.setVisibility(View.VISIBLE);
+        b21.setVisibility(View.VISIBLE);
+        b22.setVisibility(View.VISIBLE);
+        b23.setVisibility(View.VISIBLE);
+        b24.setVisibility(View.VISIBLE);
+        b31.setVisibility(View.VISIBLE);
+        b32.setVisibility(View.VISIBLE);
+        b33.setVisibility(View.VISIBLE);
+        b34.setVisibility(View.VISIBLE);
+
+        resetAllButtons();
+
+        Collections.shuffle(Arrays.asList(cardArray));
+        setCardListeners();
     }
+
+    private void frontOfCardResources() {
+        image101 = R.drawable.italia;
+        image102 = R.drawable.francia;
+        image103 = R.drawable.germania;
+        image104 = R.drawable.uk;
+        image105 = R.drawable.usa;
+        image106 = R.drawable.bandiera;
+        image201 = R.drawable.italia;
+        image202 = R.drawable.francia;
+        image203 = R.drawable.germania;
+        image204 = R.drawable.uk;
+        image205 = R.drawable.usa;
+        image206 = R.drawable.bandiera;
+    }
+
+
 }

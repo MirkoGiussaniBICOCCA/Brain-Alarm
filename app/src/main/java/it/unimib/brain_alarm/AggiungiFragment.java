@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -67,6 +68,7 @@ public class AggiungiFragment extends Fragment {
     private int progCalcolatrice = 0;
     private int progMemory = 0;
     private int progScrivere = 0;
+    private int progTris = 0;
     private int progPassi = 0;
 
 
@@ -85,6 +87,11 @@ public class AggiungiFragment extends Fragment {
     TextView valueS;
     ImageView imgScrivere;
     TextView textScr;
+
+    SeekBar seekBarT;
+    TextView valueT;
+    ImageView imgTris;
+    TextView textTris;
 
     SeekBar seekBarP;
     TextView valueP;
@@ -196,7 +203,7 @@ public class AggiungiFragment extends Fragment {
         imgCalcolaltrice=view.findViewById((R.id.sfida1));
         textCalc=view.findViewById((R.id.ripCalcolatrice));
 
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progressoCalcolatrice, boolean fromUser) {
                 //Log.d(TAG, "N calcolatrice " + progressoCalcolatrice);
@@ -223,7 +230,7 @@ public class AggiungiFragment extends Fragment {
         imgMemory=view.findViewById((R.id.sfida2));
         textMem=view.findViewById((R.id.ripMemory));
 
-        seekBarM.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBarM.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBarM, int progressoMemory, boolean fromUser) {
                 //Log.d(TAG, "N memory " + progressoMemory);
@@ -250,7 +257,7 @@ public class AggiungiFragment extends Fragment {
         imgScrivere=view.findViewById((R.id.sfida3));
         textScr=view.findViewById((R.id.ripScrivere));
 
-        seekBarS.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBarS.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBarS, int progressoScrivere, boolean fromUser) {
                 //Log.d(TAG, "N scrivere " + progressoScrivere);
@@ -273,13 +280,40 @@ public class AggiungiFragment extends Fragment {
             public void onStopTrackingTouch(SeekBar seekBarS) {   }
         });
 
+        seekBarT=view.findViewById(R.id.ripetizioniTris);
+        valueT=view.findViewById(R.id.progressoTris);
+        imgTris=view.findViewById((R.id.sfida4));
+        textTris=view.findViewById((R.id.ripTris));
+
+        seekBarT.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBarT, int progressoTris, boolean fromUser) {
+                valueT.setText(progressoTris + "/" + "5");
+                if (progressoTris>0) {
+                    imgTris.setImageDrawable(getResources().getDrawable(R.drawable.passi2));
+                    textTris.setText("x" + progressoTris);
+                    progTris = progressoTris;
+                }
+                else {
+                    imgTris.setImageDrawable(getResources().getDrawable(R.drawable.passi));
+                    textTris.setText(" ");
+                    progTris = 0;
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBarP) {   }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBarP) {   }
+        });
+
         seekBarP=view.findViewById(R.id.ripetizioniPassi);
         valueP=view.findViewById(R.id.progressoPassi);
-        imgPassi=view.findViewById((R.id.sfida4));
+        imgPassi=view.findViewById((R.id.sfida5));
         textPassi=view.findViewById((R.id.ripPassi));
 
 
-        seekBarP.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBarP.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBarP, int progressoPassi, boolean fromUser) {
                 //Log.d(TAG, "N passi " + progressoPassi);
@@ -304,7 +338,7 @@ public class AggiungiFragment extends Fragment {
 
         final Button buttonSalvaSfide = view.findViewById(R.id.salvaSfida);
         buttonSalvaSfide.setOnClickListener(v -> {
-            if (progCalcolatrice>0 || progMemory>0 || progScrivere>0 || progPassi>0) {
+            if (progCalcolatrice>0 || progMemory>0 || progScrivere>0 || progTris>0 || progPassi>0) {
                 isSfida = true;
                 layoutSfida.setVisibility(view.GONE);
             }
@@ -333,7 +367,7 @@ public class AggiungiFragment extends Fragment {
             if (isSfida || isClassica) {
 
                 if (isSfida) {
-                    if (progCalcolatrice>0 || progMemory>0 || progScrivere>0 || progPassi>0) {
+                    if (progCalcolatrice>0 || progMemory>0 || progScrivere>0 || progTris>0 || progPassi>0) {
                         isSfida = true;
                         layoutSfida.setVisibility(view.GONE);
                         Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_mainActivity);
@@ -432,7 +466,7 @@ public class AggiungiFragment extends Fragment {
             sveglia.add("ts");
 
 
-        sveglia.add("m" + String.valueOf(progCalcolatrice) + String.valueOf(progMemory) + String.valueOf(progScrivere) + String.valueOf(progPassi));
+        sveglia.add("m" + String.valueOf(progCalcolatrice) + String.valueOf(progMemory) + String.valueOf(progScrivere) + String.valueOf(progTris)+  String.valueOf(progPassi));
 
         sveglia.add("attiva");
 

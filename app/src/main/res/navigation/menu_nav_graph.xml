@@ -138,7 +138,19 @@
             android:name="ripMissioni"
             app:argType="java.lang.String" />
         <action
-            android:id="@+id/action_scrivereFragment_to_homeFragment"
+            android:id="@+id/action_scrivereFragment_to_trisFragment"
+            app:destination="@id/trisFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trisFragment"
+        android:name="it.unimib.brain_alarm.TrisFragment"
+        android:label="fragment_tris"
+        tools:layout="@layout/fragment_tris" >
+        <argument
+            android:name="ripMissioni"
+            app:argType="java.lang.String" />
+        <action
+            android:id="@+id/action_trisFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 

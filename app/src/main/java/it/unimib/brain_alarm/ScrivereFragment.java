@@ -79,24 +79,26 @@ public class ScrivereFragment extends Fragment {
             imagesMap.put(R.drawable.passi2, "Immagine 2");
             imagesMap.put(R.drawable.calcolatrice2, "Immagine 3");
 
-            showRandomImage();
+            showRandomImage(ripMissioni);
 
             submitButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    checkAnswer();
+                    checkAnswer(ripMissioni);
                 }
             });
         }
         else {
-            Navigation.findNavController(v).navigate(R.id.action_scrivereFragment_to_homeFragment);
+            ScrivereFragmentDirections.ActionScrivereFragmentToTrisFragment action = ScrivereFragmentDirections.actionScrivereFragmentToTrisFragment(ripMissioni);
+            Navigation.findNavController(getView()).navigate(action);
         }
 
     }
 
-    private void showRandomImage() {
+    private void showRandomImage(String ripMissioni) {
         if (imageShownCount >= ripScrivere) {
-            Navigation.findNavController(getView()).navigate(R.id.action_scrivereFragment_to_homeFragment);
+            ScrivereFragmentDirections.ActionScrivereFragmentToTrisFragment action = ScrivereFragmentDirections.actionScrivereFragmentToTrisFragment(ripMissioni);
+            Navigation.findNavController(getView()).navigate(action);
             return;
         }
 
@@ -107,7 +109,7 @@ public class ScrivereFragment extends Fragment {
         resultTextView.setText("");
     }
 
-    private void checkAnswer() {
+    private void checkAnswer(String ripMissioni) {
         String userAnswer = editText.getText().toString().trim();
         String correctAnswer = imagesMap.get(currentImageResource);
 
@@ -123,7 +125,7 @@ public class ScrivereFragment extends Fragment {
         imageView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                showRandomImage();
+                showRandomImage(ripMissioni);
             }
         }, 2000);
     }

@@ -16,7 +16,7 @@
     <style name="TimePickerStyle" parent="Theme.AppCompat.Dialog.Alert">
         <item name="title">false</item>
         <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/giallo</item>
+        <item name="android:textColorSecondary">@color/white</item>
         <item name="android:textSize">18sp</item>
         <item name="android:background">@color/sfondoTras</item>
     </style>

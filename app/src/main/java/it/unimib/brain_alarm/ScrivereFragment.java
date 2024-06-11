@@ -1,5 +1,7 @@
 package it.unimib.brain_alarm;
 
+import static androidx.fragment.app.FragmentManager.TAG;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +23,10 @@ import java.util.Map;
 import java.util.Random;
 
 
+
 public class ScrivereFragment extends Fragment {
+
+    private int imageShownCount = 0;
 
     int ripScrivere;
     private ImageView imageView;
@@ -89,6 +95,11 @@ public class ScrivereFragment extends Fragment {
     }
 
     private void showRandomImage() {
+        if (imageShownCount >= ripScrivere) {
+            Navigation.findNavController(getView()).navigate(R.id.action_scrivereFragment_to_homeFragment);
+            return;
+        }
+
         Object[] keys = imagesMap.keySet().toArray();
         currentImageResource = (int) keys[new Random().nextInt(keys.length)];
         imageView.setImageResource(currentImageResource);
@@ -105,6 +116,8 @@ public class ScrivereFragment extends Fragment {
         } else {
             resultTextView.setText("Sbagliato. Era: " + correctAnswer);
         }
+
+        imageShownCount++;
 
         // Mostra una nuova immagine dopo 2 secondi
         imageView.postDelayed(new Runnable() {

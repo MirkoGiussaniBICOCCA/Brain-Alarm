@@ -84,7 +84,8 @@ public class CalcolatriceFragment extends Fragment {
                                 Snackbar.make(view, "Ripetizione completata! Ancora " + remainingRepetitions + " ripetizioni.", Snackbar.LENGTH_SHORT).show();
                             } else {
                                 Snackbar.make(view, "Hai completato tutte le ripetizioni!", Snackbar.LENGTH_SHORT).show();
-                                getActivity().finish();
+                                CalcolatriceFragmentDirections.ActionCalcolatriceFragmentToMemoryFragment action = CalcolatriceFragmentDirections.actionCalcolatriceFragmentToMemoryFragment(ripMissioni);
+                                Navigation.findNavController(view).navigate(action);
                             }
                         } else {
                             Snackbar.make(view, "Risposta sbagliata, riprova", Snackbar.LENGTH_SHORT).show();

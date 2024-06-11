@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ public class TrisFragment extends Fragment {
     private char[][] board = new char[3][3];
     private boolean playerTurn = true; // true if it's player's turn, false if it's computer's turn
     private Random random = new Random();
+
+    private GridLayout gridLayout;
 
     public TrisFragment() {
         // Required empty public constructor
@@ -103,7 +106,11 @@ public class TrisFragment extends Fragment {
             col = random.nextInt(3);
         } while (board[row][col] != '\0');
 
-        GridLayout gridLayout = v.findViewById(R.id.gridLayout);
+        if (gridLayout == null) {
+            Log.e("MainActivity", "GridLayout is null in computerMove");
+            return;
+        }
+
         Button button = (Button) gridLayout.getChildAt(row * 3 + col);
         button.setText("O");
         board[row][col] = 'O';

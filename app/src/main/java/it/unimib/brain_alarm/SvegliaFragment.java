@@ -39,6 +39,9 @@ public class SvegliaFragment extends Fragment {
     ImageView imgScrivere;
     TextView textScr;
 
+    ImageView imgTris;
+    TextView textTris;
+
     ImageView imgPassi;
     TextView textPassi;
 
@@ -124,7 +127,9 @@ public class SvegliaFragment extends Fragment {
         textMem=view.findViewById((R.id.ripMemory));
         imgScrivere=view.findViewById((R.id.sfida3));
         textScr=view.findViewById((R.id.ripScrivere));
-        imgPassi=view.findViewById((R.id.sfida4));
+        imgTris=view.findViewById((R.id.sfida4));
+        textTris=view.findViewById((R.id.ripTris));
+        imgPassi=view.findViewById((R.id.sfida5));
         textPassi=view.findViewById((R.id.ripPassi));
 
 
@@ -141,10 +146,14 @@ public class SvegliaFragment extends Fragment {
             imgScrivere.setImageDrawable(getResources().getDrawable(R.drawable.scrivere2));
             textScr.setText("x" + missioni.charAt(2)); }
 
-
         if (missioni.charAt(3)!='0') {
+            imgTris.setImageDrawable(getResources().getDrawable(R.drawable.tris2));
+            textTris.setText("x" + missioni.charAt(3)); }
+
+
+        if (missioni.charAt(4)!='0') {
             imgPassi.setImageDrawable(getResources().getDrawable(R.drawable.passi2));
-            textPassi.setText("x" + missioni.charAt(3)); }
+            textPassi.setText("x" + missioni.charAt(4)); }
 
 
         String finalMissioni = missioni;

@@ -290,12 +290,12 @@ public class AggiungiFragment extends Fragment {
             public void onProgressChanged(SeekBar seekBarT, int progressoTris, boolean fromUser) {
                 valueT.setText(progressoTris + "/" + "5");
                 if (progressoTris>0) {
-                    imgTris.setImageDrawable(getResources().getDrawable(R.drawable.passi2));
+                    imgTris.setImageDrawable(getResources().getDrawable(R.drawable.tris2));
                     textTris.setText("x" + progressoTris);
                     progTris = progressoTris;
                 }
                 else {
-                    imgTris.setImageDrawable(getResources().getDrawable(R.drawable.passi));
+                    imgTris.setImageDrawable(getResources().getDrawable(R.drawable.tris));
                     textTris.setText(" ");
                     progTris = 0;
                 }

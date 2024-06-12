@@ -75,9 +75,16 @@ public class ScrivereFragment extends Fragment {
             resultTextView = v.findViewById(R.id.resultTextView);
 
             imagesMap = new HashMap<>();
-            imagesMap.put(R.drawable.scrivere2, "Immagine 1");
-            imagesMap.put(R.drawable.passi2, "Immagine 2");
-            imagesMap.put(R.drawable.calcolatrice2, "Immagine 3");
+            imagesMap.put(R.drawable.treduecinquefb, "325fb");
+            imagesMap.put(R.drawable.dadi, "dadi");
+            imagesMap.put(R.drawable.dmw8n, "dmw8n");
+            imagesMap.put(R.drawable.gatto, "gatto");
+            imagesMap.put(R.drawable.macchina, "macchina");
+            imagesMap.put(R.drawable.nn4wx, "nn4wx");
+            imagesMap.put(R.drawable.pdw38, "pdw38");
+            imagesMap.put(R.drawable.pinguino, "pinguino");
+            imagesMap.put(R.drawable.super_mario, "super mario");
+            imagesMap.put(R.drawable.w46ep, "w46ep");
 
             showRandomImage(ripMissioni);
 

@@ -62,7 +62,7 @@ public class TrisFragment extends Fragment {
         super.onViewCreated(v, savedInstanceState);
 
 
-        String key = CalcolatriceFragmentArgs.fromBundle(getArguments()).getKey();
+        String key = TrisFragmentArgs.fromBundle(getArguments()).getKey();
 
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
         // Recupera il Set<String> associato alla chiave specificata

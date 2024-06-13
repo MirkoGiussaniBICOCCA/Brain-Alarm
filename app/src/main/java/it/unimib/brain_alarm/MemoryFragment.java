@@ -86,7 +86,7 @@ public class MemoryFragment extends Fragment {
         super.onViewCreated(v, savedInstanceState);
 
 
-        String key = SvegliaFragmentArgs.fromBundle(getArguments()).getSvegliaKey();
+        String key = MemoryFragmentArgs.fromBundle(getArguments()).getKey();
 
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
         // Recupera il Set<String> associato alla chiave specificata

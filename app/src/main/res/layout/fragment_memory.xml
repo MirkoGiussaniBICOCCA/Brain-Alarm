@@ -87,6 +87,7 @@
             android:layout_height="100dp"
             android:layout_weight="1"
             android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/riga1"
             android:weightSum="4">
 
 
@@ -129,6 +130,7 @@
             android:layout_height="100dp"
             android:layout_weight="1"
             android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/riga2"
             android:weightSum="4">
 
 
@@ -163,6 +165,58 @@
                 android:layout_weight="1"
                 android:scaleType="centerInside"
                 android:src="@drawable/domanda" />
+
+            <LinearLayout
+                android:id="@+id/ripetizioni"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="20dp"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/riga3">
+
+                <ImageView
+                    android:id="@+id/pallino1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/pallino"
+                    android:visibility="gone"/>
+                <ImageView
+                    android:id="@+id/pallino2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/pallino"
+                    android:visibility="gone"/>
+                <ImageView
+                    android:id="@+id/pallino3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/pallino"
+                    android:visibility="gone"/>
+                <ImageView
+                    android:id="@+id/pallino4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/pallino"
+                    android:visibility="gone"/>
+                <ImageView
+                    android:id="@+id/pallino5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/pallino"
+                    android:visibility="gone"/>
+            </LinearLayout>
         </LinearLayout>
 
 

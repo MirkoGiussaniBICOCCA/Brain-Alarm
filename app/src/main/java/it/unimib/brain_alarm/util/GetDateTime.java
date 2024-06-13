@@ -110,6 +110,56 @@ public class GetDateTime {
         return getDataPiuVicina(dateRipetizioni);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static final String getNextDate(String settimana, String orario) {
+
+        String dateRipetizioni = "";
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        LocalTime orarioSveglia = LocalTime.parse(orario, formatter);
+
+        //data e orario attuali
+        LocalTime oraAttuale = LocalTime.parse(LocalDateTime.now().format(formatter));
+        LocalDate oggi = LocalDate.now(); //giorno ordierno
+
+
+        //se ho ripetizioni
+        if (!settimana.equals("r0000000")) {
+            DayOfWeek dayOfWeek = oggi.getDayOfWeek();
+            //Log.d(TAG, "DAY " + dayOfWeek);
+            dateRipetizioni = "";
+            for (int i = 0; i < (settimana.length()); i++) {
+                switch (settimana.charAt(i)) {
+                    case '1':
+                        dateRipetizioni += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.MONDAY));
+                        break;
+                    case '2':
+                        dateRipetizioni += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.TUESDAY));
+                    case '3':
+                        dateRipetizioni += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.WEDNESDAY));
+                        break;
+                    case '4':
+                        dateRipetizioni += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.THURSDAY));
+                        break;
+                    case '5':
+                        dateRipetizioni += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.FRIDAY));
+                        break;
+                    case '6':
+                        dateRipetizioni += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.SATURDAY));
+                        break;
+                    case '7':
+                        dateRipetizioni += "d" + String.valueOf(getNextDay(oggi, DayOfWeek.SUNDAY));
+                        break;
+                }
+            }
+
+        }
+
+
+        return getDataPiuVicina(dateRipetizioni);
+    }
+
 
     //prende in input un elenco di date e restituisce la più vicina
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -159,5 +209,7 @@ public class GetDateTime {
         // Aggiungi i giorni calcolati alla data iniziale per ottenere il prossimo giorno desiderato
         return oggi.plusDays(daysUntilNextTarget);
     }
+
+
 
 }

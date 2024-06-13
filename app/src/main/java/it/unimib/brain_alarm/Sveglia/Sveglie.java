@@ -289,22 +289,7 @@ public class Sveglie implements Serializable {
         return Objects.hash(orario, etichetta, ripetizioni, ripetizioniNum, suono, vibrazione, posticipa, modalita);
     }
 
-    /*
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.id);
-        dest.writeString(this.orario);
-        dest.writeString(this.etichetta);
-
-    }
-
-
-     */
     public void readFromParcel(Parcel source) {
         this.key = source.readString();
         this.orario = source.readString();

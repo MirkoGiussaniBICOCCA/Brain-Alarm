@@ -361,6 +361,8 @@ public class HomeFragment extends Fragment {
 
                 aggiornaRecyclerView(view, true, attive);
 
+                Log.d(TAG, "agg adapter");
+
                 //passo la chiave a svegliaFragment
                 HomeFragmentDirections.ActionHomeFragmentToSvegliaFragment action = HomeFragmentDirections.actionHomeFragmentToSvegliaFragment(attive);
                 Navigation.findNavController(view).navigate(action);

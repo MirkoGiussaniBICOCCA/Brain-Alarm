@@ -90,6 +90,7 @@ public class SveglieAdapter extends
 
 
     // Replace the contents of a view (invoked by the layout manager)
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
 
@@ -132,6 +133,7 @@ public class SveglieAdapter extends
             switchAttiva.setOnClickListener(this);
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         public void bind(Sveglie sveglie) {
 
             textViewOrario.setText(sveglie.getOrario().substring(0,5));
@@ -180,7 +182,7 @@ public class SveglieAdapter extends
                     Set<String> newSet = new HashSet<>(sveglieSet);
 
 
-                    if (newSet.contains("attiva")) {
+                    if (newSet.contains("r0000000") && newSet.contains("attiva")) {
 
                         newSet.remove("attiva");
                         newSet.add("non attiva");
@@ -199,6 +201,16 @@ public class SveglieAdapter extends
                         switchAttiva.setChecked(false);
 
                     }
+                    else { //la sveglia ha ripetizioni devo aggiornare la data
+                        Log.d(TAG, "dentro disattivazione con ripetizioni");
+                        //TODO sistemare
+                        String dataSveglia = (sveglieList.get(getAdapterPosition()).getData()).substring(0);
+                        newSet.remove("d" + dataSveglia);
+
+                        //TODO da ancora la data di oggi
+                        newSet.add(GetDateTime.getNextDate("r"+sveglieList.get(getAdapterPosition()).getRipetizioniNum(), sveglieList.get(getAdapterPosition()).getOrario()));
+                        Log.d(TAG, "dentro disattivazione con ripetizioni" + GetDateTime.getNextDate("r"+sveglieList.get(getAdapterPosition()).getRipetizioniNum(), sveglieList.get(getAdapterPosition()).getOrario()));
+                    }
                 }
             }
 
@@ -216,11 +228,11 @@ public class SveglieAdapter extends
 
                 if (newSet.contains("attiva")) {
                     switchAttiva.setChecked(true);
-                    Log.d(TAG, "checked2 ");
+                    Log.d(TAG, "checked attiva ");
 
                 } else if (newSet.contains("non attiva")) {
                     switchAttiva.setChecked(false);
-                    Log.d(TAG, "checked3 ");
+                    Log.d(TAG, "checked non attiva ");
 
                 }
             }
@@ -323,10 +335,11 @@ public class SveglieAdapter extends
 
                         }
                         //HO RIPETIZIONI quindi devo calcolare la data più vicina
+                        //TODO controllare
                         else {
-                            Log.d(TAG ,"adapter ho ripetizoni devo calcolare data");
+                            //Log.d(TAG ,"adapter ho ripetizoni devo calcolare data");
                             newSet.remove("d" + dataSveglia);
-                            Log.d(TAG, "Adapter settimana " + sveglieList.get(getAdapterPosition()).getRipetizioni() + " e orario " + (sveglieList.get(getAdapterPosition()).getOrario()));
+                            //Log.d(TAG, "Adapter settimana " + sveglieList.get(getAdapterPosition()).getRipetizioni() + " e orario " + (sveglieList.get(getAdapterPosition()).getOrario()));
                             newSet.add(GetDateTime.getDateRipetizioni("r0000000", sveglieList.get(getAdapterPosition()).getOrario()));
                         }
                     }

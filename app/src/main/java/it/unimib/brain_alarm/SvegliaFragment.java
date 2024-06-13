@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,6 +137,7 @@ public class SvegliaFragment extends Fragment {
             stopAlarm();
             stopVibration();
 
+            Log.d(TAG,"Click interrompi");
             Navigation.findNavController(v).navigate(R.id.action_svegliaFragment_to_homeFragment);
 
         });

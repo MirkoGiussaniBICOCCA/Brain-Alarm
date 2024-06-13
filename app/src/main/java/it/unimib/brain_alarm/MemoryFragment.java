@@ -37,9 +37,6 @@ public class MemoryFragment extends Fragment {
     private MediaPlayer mediaPlayer;
     private Vibrator vibrator;
 
-    TextView text1;
-    TextView text2;
-
     ImageButton b11;
     ImageButton b12;
     ImageButton b13;
@@ -137,9 +134,6 @@ public class MemoryFragment extends Fragment {
         if(ripMemory > 0) {
 
             for (int i = 0; i < ripMemory; i++) {
-
-                text1 = v.findViewById(R.id.text1);
-                text2 = v.findViewById(R.id.text2);
 
                 b11 = v.findViewById(R.id.m11);
                 b12 = v.findViewById(R.id.m12);
@@ -352,10 +346,8 @@ public class MemoryFragment extends Fragment {
 
             if (turn == 1) {
                 playerPoints++;
-                text1.setText("P1: " + playerPoints);
             } else if (turn == 2) {
                 cpuPoint++;
-                text2.setText("P2: " + cpuPoint);
             }
         } else {
             resetAllButtons();
@@ -363,12 +355,8 @@ public class MemoryFragment extends Fragment {
 
         if (turn == 1) {
             turn = 2;
-            text1.setTextColor(getResources().getColor(R.color.grigio));
-            text2.setTextColor(getResources().getColor(R.color.black));
         } else if (turn == 2) {
             turn = 1;
-            text1.setTextColor(getResources().getColor(R.color.grigio));
-            text2.setTextColor(getResources().getColor(R.color.black));
         }
 
         enableAllButtons();
@@ -453,10 +441,7 @@ public class MemoryFragment extends Fragment {
         cardNumber = 1;
         turn = 1;
 
-        text1.setText("P1: " + playerPoints);
-        text2.setText("P2: " + cpuPoint);
-        text1.setTextColor(getResources().getColor(R.color.black));
-        text2.setTextColor(getResources().getColor(R.color.grigio));
+
 
         b11.setVisibility(View.VISIBLE);
         b12.setVisibility(View.VISIBLE);

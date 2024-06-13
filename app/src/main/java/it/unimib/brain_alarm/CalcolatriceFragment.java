@@ -3,13 +3,17 @@ package it.unimib.brain_alarm;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +32,7 @@ public class CalcolatriceFragment extends Fragment {
 
 
     private MediaPlayer mediaPlayer;
+    private Vibrator vibrator;
 
     TextView textQuestion;
     EditText editTextAnswer;
@@ -59,6 +64,7 @@ public class CalcolatriceFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_calcolatrice, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -87,6 +93,13 @@ public class CalcolatriceFragment extends Fragment {
                 }
                 else if (val.equals("Digitale")){
                     mediaPlayer = MediaPlayer.create(getContext(), R.raw.digitale5);
+                }
+                else if (val.equals("v1")){
+                    startVibration(getContext());
+                    Snackbar.make(view, "Vibrazione", Snackbar.LENGTH_SHORT).show();
+                }
+                else if (val.equals("v0")){
+                    Snackbar.make(view, "Vibrazione", Snackbar.LENGTH_SHORT).show();
                 }
         }
 
@@ -118,6 +131,7 @@ public class CalcolatriceFragment extends Fragment {
                             } else {
                                 Snackbar.make(view, "Hai completato tutte le ripetizioni!", Snackbar.LENGTH_SHORT).show();
                                 stopAlarm();
+                                stopVibration();
                                 CalcolatriceFragmentDirections.ActionCalcolatriceFragmentToMemoryFragment action = CalcolatriceFragmentDirections.actionCalcolatriceFragmentToMemoryFragment(key);
                                 Navigation.findNavController(view).navigate(action);
                             }
@@ -134,6 +148,7 @@ public class CalcolatriceFragment extends Fragment {
 
         } else {
             stopAlarm();
+            stopVibration();
             CalcolatriceFragmentDirections.ActionCalcolatriceFragmentToMemoryFragment action = CalcolatriceFragmentDirections.actionCalcolatriceFragmentToMemoryFragment(key);
             Navigation.findNavController(view).navigate(action);
         }
@@ -178,8 +193,21 @@ public class CalcolatriceFragment extends Fragment {
 
             mediaPlayer.release();
         }
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void startVibration(Context context) {
+        vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator != null && vibrator.hasVibrator()) {
+            long[] pattern = {0, 1000, 1000}; // wait 0ms, vibrate 1000ms, sleep 1000ms
+            vibrator.vibrate(VibrationEffect.createWaveform(pattern, 0)); // 0 repeats indefinitely
+        }
+    }
 
+    private void stopVibration() {
+        if (vibrator != null) {
+            vibrator.cancel();
+        }
     }
 
 }

@@ -6,20 +6,26 @@ import static android.content.ContentValues.TAG;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.os.Handler;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,6 +35,7 @@ import java.util.Set;
 public class MemoryFragment extends Fragment {
 
     private MediaPlayer mediaPlayer;
+    private Vibrator vibrator;
 
     TextView text1;
     TextView text2;
@@ -81,6 +88,7 @@ public class MemoryFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_memory, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(v, savedInstanceState);
@@ -111,6 +119,13 @@ public class MemoryFragment extends Fragment {
                 }
                 else if (val.equals("Digitale")){
                     mediaPlayer = MediaPlayer.create(getContext(), R.raw.digitale5);
+                }
+                else if (val.equals("v1")){
+                    startVibration(getContext());
+                    Snackbar.make(v, "Vibrazione", Snackbar.LENGTH_SHORT).show();
+                }
+                else if (val.equals("v0")){
+                    Snackbar.make(v, "Vibrazione", Snackbar.LENGTH_SHORT).show();
                 }
         }
 
@@ -144,6 +159,7 @@ public class MemoryFragment extends Fragment {
         }
         else {
             stopAlarm();
+            stopVibration();
             MemoryFragmentDirections.ActionMemoryFragmentToScrivereFragment action = MemoryFragmentDirections.actionMemoryFragmentToScrivereFragment(key);
             Navigation.findNavController(v).navigate(action);
         }
@@ -423,6 +439,7 @@ public class MemoryFragment extends Fragment {
                 resetGame(key);
             } else {
                 stopAlarm();
+                stopVibration();
                 // Fine gioco, vai al prossimo fragment
                 MemoryFragmentDirections.ActionMemoryFragmentToScrivereFragment action = MemoryFragmentDirections.actionMemoryFragmentToScrivereFragment(key);
                 Navigation.findNavController(getView()).navigate(action);
@@ -494,8 +511,21 @@ public class MemoryFragment extends Fragment {
 
             mediaPlayer.release();
         }
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void startVibration(Context context) {
+        vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator != null && vibrator.hasVibrator()) {
+            long[] pattern = {0, 1000, 1000}; // wait 0ms, vibrate 1000ms, sleep 1000ms
+            vibrator.vibrate(VibrationEffect.createWaveform(pattern, 0)); // 0 repeats indefinitely
+        }
+    }
 
+    private void stopVibration() {
+        if (vibrator != null) {
+            vibrator.cancel();
+        }
     }
 
 }

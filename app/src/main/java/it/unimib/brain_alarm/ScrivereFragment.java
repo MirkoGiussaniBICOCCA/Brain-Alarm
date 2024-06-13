@@ -3,13 +3,17 @@ package it.unimib.brain_alarm;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,6 +34,8 @@ import java.util.Set;
 public class ScrivereFragment extends Fragment {
 
     private MediaPlayer mediaPlayer;
+    private Vibrator vibrator;
+
 
     private int imageShownCount = 0;
 
@@ -63,6 +71,7 @@ public class ScrivereFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_scrivere, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(v, savedInstanceState);
@@ -91,6 +100,13 @@ public class ScrivereFragment extends Fragment {
                 }
                 else if (val.equals("Digitale")){
                     mediaPlayer = MediaPlayer.create(getContext(), R.raw.digitale5);
+                }
+                else if (val.equals("v1")){
+                    startVibration(getContext());
+                    Snackbar.make(v, "Vibrazione", Snackbar.LENGTH_SHORT).show();
+                }
+                else if (val.equals("v0")){
+                    Snackbar.make(v, "Vibrazione", Snackbar.LENGTH_SHORT).show();
                 }
         }
 
@@ -128,6 +144,7 @@ public class ScrivereFragment extends Fragment {
         }
         else {
             stopAlarm();
+            stopVibration();
             ScrivereFragmentDirections.ActionScrivereFragmentToTrisFragment action = ScrivereFragmentDirections.actionScrivereFragmentToTrisFragment(key);
             Navigation.findNavController(getView()).navigate(action);
         }
@@ -137,6 +154,7 @@ public class ScrivereFragment extends Fragment {
     private void showRandomImage(String key) {
         if (imageShownCount >= ripScrivere) {
             stopAlarm();
+            stopVibration();
             ScrivereFragmentDirections.ActionScrivereFragmentToTrisFragment action = ScrivereFragmentDirections.actionScrivereFragmentToTrisFragment(key);
             Navigation.findNavController(getView()).navigate(action);
             return;
@@ -188,8 +206,21 @@ public class ScrivereFragment extends Fragment {
 
             mediaPlayer.release();
         }
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void startVibration(Context context) {
+        vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator != null && vibrator.hasVibrator()) {
+            long[] pattern = {0, 1000, 1000}; // wait 0ms, vibrate 1000ms, sleep 1000ms
+            vibrator.vibrate(VibrationEffect.createWaveform(pattern, 0)); // 0 repeats indefinitely
+        }
+    }
 
+    private void stopVibration() {
+        if (vibrator != null) {
+            vibrator.cancel();
+        }
     }
 
 }

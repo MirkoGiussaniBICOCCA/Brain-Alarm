@@ -75,6 +75,7 @@ public class ModificaFragment extends Fragment {
     private int progCalcolatrice = 0;
     private int progMemory = 0;
     private int progScrivere = 0;
+    private int progTris = 0;
     private int progPassi = 0;
 
 
@@ -93,6 +94,11 @@ public class ModificaFragment extends Fragment {
     TextView valueS;
     ImageView imgScrivere;
     TextView textScr;
+
+    SeekBar seekBarT;
+    TextView valueT;
+    ImageView imgTris;
+    TextView textTris;
 
     SeekBar seekBarP;
     TextView valueP;
@@ -192,15 +198,22 @@ public class ModificaFragment extends Fragment {
 
 
         spinnerSuoni = view.findViewById(R.id.spinnerSuono);
+        Log.d(TAG, "mod " + sveglia.getSuono());
         switch (sveglia.getSuono()) {
             case "Classica":
                 spinnerSuoni.setSelection(0);
                 break;
-            case "Radar":
+            case "Pianoforte":
                 spinnerSuoni.setSelection(1);
                 break;
-            case "Arpeggio":
+            case "Radar":
                 spinnerSuoni.setSelection(2);
+                break;
+            case "Dolce":
+                spinnerSuoni.setSelection(3);
+                break;
+            case "Digitale":
+                spinnerSuoni.setSelection(4);
                 break;
 
         }
@@ -305,9 +318,14 @@ public class ModificaFragment extends Fragment {
         imgScrivere=view.findViewById((R.id.sfida3));
         textScr=view.findViewById((R.id.ripScrivere));
 
+        seekBarT=view.findViewById(R.id.ripetizioniTris);
+        valueT=view.findViewById(R.id.progressoTris);
+        imgTris=view.findViewById((R.id.sfida4));
+        textTris=view.findViewById((R.id.ripTris));
+
         seekBarP=view.findViewById(R.id.ripetizioniPassi);
         valueP=view.findViewById(R.id.progressoPassi);
-        imgPassi=view.findViewById((R.id.sfida4));
+        imgPassi=view.findViewById((R.id.sfida5));
         textPassi=view.findViewById((R.id.ripPassi));
 
 
@@ -383,6 +401,28 @@ public class ModificaFragment extends Fragment {
             public void onStartTrackingTouch(SeekBar seekBarS) {   }
             @Override
             public void onStopTrackingTouch(SeekBar seekBarS) {   }
+        });
+
+        seekBarT.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBarT, int progressoTris, boolean fromUser) {
+                //Log.d(TAG, "N passi " + progressoTris);
+                valueT.setText(progressoTris + "/" + "5");
+                if (progressoTris>0) {
+                    imgTris.setImageDrawable(getResources().getDrawable(R.drawable.tris2));
+                    textTris.setText("x" + progressoTris);
+                    progTris = progressoTris;
+                }
+                else {
+                    imgTris.setImageDrawable(getResources().getDrawable(R.drawable.tris));
+                    textTris.setText(" ");
+                    progTris = 0;
+                }
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBarP) {   }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBarP) {   }
         });
 
         seekBarP.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -540,7 +580,7 @@ public class ModificaFragment extends Fragment {
             sveglia.add("ts");
 
 
-        sveglia.add("m" + String.valueOf(progCalcolatrice) + String.valueOf(progMemory) + String.valueOf(progScrivere) + String.valueOf(progPassi));
+        sveglia.add("m" + String.valueOf(progCalcolatrice) + String.valueOf(progMemory) + String.valueOf(progScrivere) + String.valueOf(progTris) + String.valueOf(progPassi));
 
         sveglia.add(key);
 
@@ -558,7 +598,8 @@ public class ModificaFragment extends Fragment {
         seekBar.setProgress(missioni.charAt(0) - '0');
         seekBarM.setProgress(missioni.charAt(1) - '0');
         seekBarS.setProgress(missioni.charAt(2) - '0');
-        seekBarP.setProgress(missioni.charAt(3) - '0');
+        seekBarT.setProgress(missioni.charAt(3) - '0');
+        seekBarP.setProgress(missioni.charAt(4) - '0');
 
         value.setText(missioni.charAt(0) + "/" + "5");
         if (missioni.charAt(0)!= '0') {
@@ -581,11 +622,18 @@ public class ModificaFragment extends Fragment {
             progScrivere = missioni.charAt(2) - '0';
         }
 
-        valueP.setText(missioni.charAt(3) + "/" + "5");
-        if (missioni.charAt(0)!= '3') {
+        valueT.setText(missioni.charAt(3) + "/" + "5");
+        if (missioni.charAt(3)!= '0') {
+            imgTris.setImageDrawable(getResources().getDrawable(R.drawable.tris2));
+            textTris.setText("x" + missioni.charAt(3));
+            progTris = missioni.charAt(3) - '0';
+        }
+
+        valueP.setText(missioni.charAt(4) + "/" + "5");
+        if (missioni.charAt(4)!= '0') {
             imgPassi.setImageDrawable(getResources().getDrawable(R.drawable.passi2));
-            textPassi.setText("x" + missioni.charAt(3));
-            progPassi = missioni.charAt(3) - '0';
+            textPassi.setText("x" + missioni.charAt(4));
+            progPassi = missioni.charAt(4) - '0';
         }
 
     }

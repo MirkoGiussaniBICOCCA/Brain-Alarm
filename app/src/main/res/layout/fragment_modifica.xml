@@ -249,7 +249,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@+id/layoutModalita"
                 android:orientation="vertical">
 
@@ -310,14 +310,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:src="@drawable/passi" />
+                            android:src="@drawable/tris" />
 
                         <ImageView
                             android:id="@+id/sfida5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:src="@drawable/quadrato" />
+                            android:src="@drawable/passi" />
 
 
                     </LinearLayout>
@@ -360,7 +360,7 @@
                             android:textColor="@color/white" />
 
                         <TextView
-                            android:id="@+id/ripPassi"
+                            android:id="@+id/ripTris"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -369,7 +369,7 @@
                             android:textColor="@color/white" />
 
                         <TextView
-                            android:id="@+id/ripSfida"
+                            android:id="@+id/ripPassi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -512,6 +512,48 @@
 
                         <TextView
                             android:id="@+id/progressoScrivere"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/tris"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:paddingStart="20dp"
+                        android:text="@string/tris"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.093"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <SeekBar
+                            android:id="@+id/ripetizioniTris"
+                            android:layout_width="255dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:max="5"
+                            android:progress="0"
+                            android:progressTint="#FFFF00"
+                            android:thumbTint="#FFAA00" />
+
+                        <TextView
+                            android:id="@+id/progressoTris"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
                             android:text="0"

@@ -178,7 +178,7 @@ public class Sveglie implements Serializable {
             //Log.d(TAG, "prima parola " + e.toString());
 
             if (!e.toString().isEmpty())
-                if (e.toString().equals("Classica") || e.toString().equals("Radar") || e.toString().equals("Arpeggio"))
+                if (e.toString().equals("Classica") || e.toString().equals("Pianoforte") || e.toString().equals("Radar") || e.toString().equals("Dolce") || e.toString().equals("Digitale") )
                     suono = e.toString();
         }
         return suono;

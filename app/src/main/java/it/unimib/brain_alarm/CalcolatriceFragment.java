@@ -1,5 +1,7 @@
 package it.unimib.brain_alarm;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -17,9 +19,9 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.HashSet;
 import java.util.Random;
-
-import it.unimib.brain_alarm.News.Result;
+import java.util.Set;
 
 
 public class CalcolatriceFragment extends Fragment {
@@ -61,11 +63,36 @@ public class CalcolatriceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mediaPlayer = MediaPlayer.create(getContext(), R.raw.suono2);
+        String key = CalcolatriceFragmentArgs.fromBundle(getArguments()).getKey();
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+        // Recupera il Set<String> associato alla chiave specificata
+        Set<String> svegliaSet = sharedPref.getStringSet(key, new HashSet<>());
+        String missioni="00000";
+        for (String val : svegliaSet) {
+            if (!val.toString().isEmpty())
+                if ((val.toString()).charAt(0) == 'm')
+                    missioni = val.toString().substring(1);
+                else if (val.equals("Classica")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.classica1);
+                }
+                else if (val.equals("Pianoforte")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.pianoforte2);
+                }
+                else if (val.equals("Radar")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.radar3);
+                }
+                else if (val.equals("Dolce")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.dolce4);
+                }
+                else if (val.equals("Digitale")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.digitale5);
+                }
+        }
+
         startAlarm();
 
-        String ripMissioni = CalcolatriceFragmentArgs.fromBundle(getArguments()).getRipMissioni();
-        remainingRepetitions = ripMissioni.charAt(0) - '0';
+        remainingRepetitions = missioni.charAt(0) - '0';
 
         if (remainingRepetitions != 0) {
 
@@ -91,7 +118,7 @@ public class CalcolatriceFragment extends Fragment {
                             } else {
                                 Snackbar.make(view, "Hai completato tutte le ripetizioni!", Snackbar.LENGTH_SHORT).show();
                                 stopAlarm();
-                                CalcolatriceFragmentDirections.ActionCalcolatriceFragmentToMemoryFragment action = CalcolatriceFragmentDirections.actionCalcolatriceFragmentToMemoryFragment(ripMissioni);
+                                CalcolatriceFragmentDirections.ActionCalcolatriceFragmentToMemoryFragment action = CalcolatriceFragmentDirections.actionCalcolatriceFragmentToMemoryFragment(key);
                                 Navigation.findNavController(view).navigate(action);
                             }
                         } else {
@@ -107,7 +134,7 @@ public class CalcolatriceFragment extends Fragment {
 
         } else {
             stopAlarm();
-            CalcolatriceFragmentDirections.ActionCalcolatriceFragmentToMemoryFragment action = CalcolatriceFragmentDirections.actionCalcolatriceFragmentToMemoryFragment(ripMissioni);
+            CalcolatriceFragmentDirections.ActionCalcolatriceFragmentToMemoryFragment action = CalcolatriceFragmentDirections.actionCalcolatriceFragmentToMemoryFragment(key);
             Navigation.findNavController(view).navigate(action);
         }
     }

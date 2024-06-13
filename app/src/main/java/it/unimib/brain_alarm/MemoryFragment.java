@@ -3,16 +3,14 @@ package it.unimib.brain_alarm;
 
 import static android.content.ContentValues.TAG;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
 import android.os.Handler;
@@ -23,10 +21,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MemoryFragment extends Fragment {
 
@@ -87,13 +85,39 @@ public class MemoryFragment extends Fragment {
 
         super.onViewCreated(v, savedInstanceState);
 
-        mediaPlayer = MediaPlayer.create(getContext(), R.raw.suono2);
+
+        String key = SvegliaFragmentArgs.fromBundle(getArguments()).getSvegliaKey();
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+        // Recupera il Set<String> associato alla chiave specificata
+        Set<String> svegliaSet = sharedPref.getStringSet(key, new HashSet<>());
+        String missioni="00000";
+        // Cerca la stringa che indica le ripetizioni
+        for (String val : svegliaSet) {
+            if (!val.toString().isEmpty())
+                if ((val.toString()).charAt(0) == 'm')
+                    missioni = val.toString().substring(1);
+                else if (val.equals("Classica")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.classica1);
+                }
+                else if (val.equals("Pianoforte")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.pianoforte2);
+                }
+                else if (val.equals("Radar")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.radar3);
+                }
+                else if (val.equals("Dolce")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.dolce4);
+                }
+                else if (val.equals("Digitale")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.digitale5);
+                }
+        }
+
         startAlarm();
 
-        String ripMissioni = MemoryFragmentArgs.fromBundle(getArguments()).getRipMissioni();
 
-
-        ripMemory = ripMissioni.charAt(1) - '0';
+        ripMemory = missioni.charAt(1) - '0';
 
         if(ripMemory > 0) {
 
@@ -115,19 +139,19 @@ public class MemoryFragment extends Fragment {
                 b33 = v.findViewById(R.id.m33);
                 b34 = v.findViewById(R.id.m34);
 
-                play();
+                play(key);
             }
         }
         else {
             stopAlarm();
-            MemoryFragmentDirections.ActionMemoryFragmentToScrivereFragment action = MemoryFragmentDirections.actionMemoryFragmentToScrivereFragment(ripMissioni);
+            MemoryFragmentDirections.ActionMemoryFragmentToScrivereFragment action = MemoryFragmentDirections.actionMemoryFragmentToScrivereFragment(key);
             Navigation.findNavController(v).navigate(action);
         }
 
 
     }
 
-    private void play(){
+    private void play(String key){
         b11.setTag("0");
         b12.setTag("1");
         b13.setTag("2");
@@ -146,62 +170,62 @@ public class MemoryFragment extends Fragment {
         //mescola la lista delle immagini
         Collections.shuffle((Arrays.asList(cardArray)));
 
-        setCardListeners();
+        setCardListeners(key);
     }
 
 
-    private void setCardListeners(){
+    private void setCardListeners(String key){
         b11.setOnClickListener( v1 -> {
             int theCard = Integer.parseInt((String) v1.getTag());
-            doStuff(b11, theCard);
+            doStuff(b11, theCard, key);
         });
         b12.setOnClickListener( v1 -> {
             int theCard = Integer.parseInt((String) v1.getTag());
-            doStuff(b12, theCard);
+            doStuff(b12, theCard, key);
         });
         b13.setOnClickListener( v1 -> {
             int theCard = Integer.parseInt((String) v1.getTag());
-            doStuff(b13, theCard);
+            doStuff(b13, theCard, key);
         });
         b14.setOnClickListener( v1 -> {
             int theCard = Integer.parseInt((String) v1.getTag());
-            doStuff(b14, theCard);
+            doStuff(b14, theCard, key);
         });
         b21.setOnClickListener( v1 -> {
             int theCard = Integer.parseInt((String) v1.getTag());
-            doStuff(b21, theCard);
+            doStuff(b21, theCard, key);
         });
         b22.setOnClickListener( v1 -> {
             int theCard = Integer.parseInt((String) v1.getTag());
-            doStuff(b22, theCard);
+            doStuff(b22, theCard, key);
         });
         b23.setOnClickListener( v1 -> {
             int theCard = Integer.parseInt((String) v1.getTag());
-            doStuff(b23, theCard);
+            doStuff(b23, theCard, key);
         });
         b24.setOnClickListener( v1 -> {
             int theCard = Integer.parseInt((String) v1.getTag());
-            doStuff(b24, theCard);
+            doStuff(b24, theCard, key);
         });
         b31.setOnClickListener( v1 -> {
             int theCard = Integer.parseInt((String) v1.getTag());
-            doStuff(b31, theCard);
+            doStuff(b31, theCard, key);
         });
         b32.setOnClickListener( v1 -> {
             int theCard = Integer.parseInt((String) v1.getTag());
-            doStuff(b32, theCard);
+            doStuff(b32, theCard, key);
         });
         b33.setOnClickListener( v1 -> {
             int theCard = Integer.parseInt((String) v1.getTag());
-            doStuff(b33, theCard);
+            doStuff(b33, theCard, key);
         });
         b34.setOnClickListener( v1 -> {
             int theCard = Integer.parseInt((String) v1.getTag());
-            doStuff(b34, theCard);
+            doStuff(b34, theCard, key);
         });
     }
 
-    private void doStuff(ImageButton b, int card) {
+    private void doStuff(ImageButton b, int card, String key) {
 
         Log.d(TAG, "dentro doStuff card " + card + " e card dentro array " + cardArray[card]);
         switch (cardArray[card]) {
@@ -268,7 +292,7 @@ public class MemoryFragment extends Fragment {
                 @Override
                 public void run() {
                         //cont4rolla se le immagini sono uguali
-                    calculate();
+                    calculate(key);
                 } } , 1000);
 
         }
@@ -305,7 +329,7 @@ public class MemoryFragment extends Fragment {
         b34.setImageDrawable(getResources().getDrawable(R.drawable.domanda));
     }
 
-    private void calculate() {
+    private void calculate(String key) {
         if (firstCard == secondCard) {
             setInvisible(clickedFirst);
             setInvisible(clickedSecond);
@@ -332,7 +356,7 @@ public class MemoryFragment extends Fragment {
         }
 
         enableAllButtons();
-        checked();
+        checked(key);
     }
 
     private void setInvisible(int clickedCard) {
@@ -391,23 +415,22 @@ public class MemoryFragment extends Fragment {
         b34.setEnabled(true);
     }
 
-    private void checked() {
+    private void checked(String key) {
         if (b11.getVisibility() == View.INVISIBLE && b12.getVisibility() == View.INVISIBLE && b13.getVisibility() == View.INVISIBLE &&  b14.getVisibility() == View.INVISIBLE) {
             //qui se ho girato tutte le carte finisce il gioco
             ripMemory--;
             if (ripMemory > 0) {
-                resetGame();
+                resetGame(key);
             } else {
                 stopAlarm();
                 // Fine gioco, vai al prossimo fragment
-                String ripMissioni = MemoryFragmentArgs.fromBundle(getArguments()).getRipMissioni();
-                MemoryFragmentDirections.ActionMemoryFragmentToScrivereFragment action = MemoryFragmentDirections.actionMemoryFragmentToScrivereFragment(ripMissioni);
+                MemoryFragmentDirections.ActionMemoryFragmentToScrivereFragment action = MemoryFragmentDirections.actionMemoryFragmentToScrivereFragment(key);
                 Navigation.findNavController(getView()).navigate(action);
             }
         }
     }
 
-    private void resetGame() {
+    private void resetGame(String key) {
         playerPoints = 0;
         cpuPoint = 0;
         cardNumber = 1;
@@ -434,7 +457,7 @@ public class MemoryFragment extends Fragment {
         resetAllButtons();
 
         Collections.shuffle(Arrays.asList(cardArray));
-        setCardListeners();
+        setCardListeners(key);
     }
 
     private void frontOfCardResources() {

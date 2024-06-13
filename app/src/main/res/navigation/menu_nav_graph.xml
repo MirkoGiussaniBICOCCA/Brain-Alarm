@@ -111,7 +111,7 @@
         android:label="fragment_calcolatrice"
         tools:layout="@layout/fragment_calcolatrice" >
         <argument
-            android:name="ripMissioni"
+            android:name="key"
             app:argType="java.lang.String"/>
         <action
             android:id="@+id/action_calcolatriceFragment_to_memoryFragment"
@@ -123,7 +123,7 @@
         android:label="fragment_memory"
         tools:layout="@layout/fragment_memory" >
         <argument
-            android:name="ripMissioni"
+            android:name="key"
             app:argType="java.lang.String" />
         <action
             android:id="@+id/action_memoryFragment_to_scrivereFragment"
@@ -135,7 +135,7 @@
         android:label="fragment_scrivere"
         tools:layout="@layout/fragment_scrivere" >
         <argument
-            android:name="ripMissioni"
+            android:name="key"
             app:argType="java.lang.String" />
         <action
             android:id="@+id/action_scrivereFragment_to_trisFragment"
@@ -147,7 +147,7 @@
         android:label="fragment_tris"
         tools:layout="@layout/fragment_tris" >
         <argument
-            android:name="ripMissioni"
+            android:name="key"
             app:argType="java.lang.String" />
         <action
             android:id="@+id/action_trisFragment_to_homeFragment"

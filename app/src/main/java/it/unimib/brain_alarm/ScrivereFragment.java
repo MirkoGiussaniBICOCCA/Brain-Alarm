@@ -1,7 +1,7 @@
 package it.unimib.brain_alarm;
 
-import static androidx.fragment.app.FragmentManager.TAG;
-
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +19,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
-
+import java.util.Set;
 
 
 public class ScrivereFragment extends Fragment {
@@ -67,12 +67,36 @@ public class ScrivereFragment extends Fragment {
 
         super.onViewCreated(v, savedInstanceState);
 
-        mediaPlayer = MediaPlayer.create(getContext(), R.raw.suono2);
+        String key = CalcolatriceFragmentArgs.fromBundle(getArguments()).getKey();
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+        // Recupera il Set<String> associato alla chiave specificata
+        Set<String> svegliaSet = sharedPref.getStringSet(key, new HashSet<>());
+        String missioni="00000";
+        for (String val : svegliaSet) {
+            if (!val.toString().isEmpty())
+                if ((val.toString()).charAt(0) == 'm')
+                    missioni = val.toString().substring(1);
+                else if (val.equals("Classica")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.classica1);
+                }
+                else if (val.equals("Pianoforte")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.pianoforte2);
+                }
+                else if (val.equals("Radar")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.radar3);
+                }
+                else if (val.equals("Dolce")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.dolce4);
+                }
+                else if (val.equals("Digitale")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.digitale5);
+                }
+        }
+
         startAlarm();
 
-        String ripMissioni = ScrivereFragmentArgs.fromBundle(getArguments()).getRipMissioni();
-
-        ripScrivere = ripMissioni.charAt(2) - '0';
+        ripScrivere = missioni.charAt(2) - '0';
 
         if(ripScrivere > 0) {
             imageView = v.findViewById(R.id.imageView);
@@ -92,27 +116,28 @@ public class ScrivereFragment extends Fragment {
             imagesMap.put(R.drawable.super_mario, "super mario");
             imagesMap.put(R.drawable.w46ep, "w46ep");
 
-            showRandomImage(ripMissioni);
+            showRandomImage(key);
 
+            String finalMissioni = missioni;
             submitButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    checkAnswer(ripMissioni);
+                    checkAnswer(finalMissioni);
                 }
             });
         }
         else {
             stopAlarm();
-            ScrivereFragmentDirections.ActionScrivereFragmentToTrisFragment action = ScrivereFragmentDirections.actionScrivereFragmentToTrisFragment(ripMissioni);
+            ScrivereFragmentDirections.ActionScrivereFragmentToTrisFragment action = ScrivereFragmentDirections.actionScrivereFragmentToTrisFragment(key);
             Navigation.findNavController(getView()).navigate(action);
         }
 
     }
 
-    private void showRandomImage(String ripMissioni) {
+    private void showRandomImage(String key) {
         if (imageShownCount >= ripScrivere) {
             stopAlarm();
-            ScrivereFragmentDirections.ActionScrivereFragmentToTrisFragment action = ScrivereFragmentDirections.actionScrivereFragmentToTrisFragment(ripMissioni);
+            ScrivereFragmentDirections.ActionScrivereFragmentToTrisFragment action = ScrivereFragmentDirections.actionScrivereFragmentToTrisFragment(key);
             Navigation.findNavController(getView()).navigate(action);
             return;
         }
@@ -124,7 +149,7 @@ public class ScrivereFragment extends Fragment {
         resultTextView.setText("");
     }
 
-    private void checkAnswer(String ripMissioni) {
+    private void checkAnswer(String key) {
         String userAnswer = editText.getText().toString().trim();
         String correctAnswer = imagesMap.get(currentImageResource);
 
@@ -140,7 +165,7 @@ public class ScrivereFragment extends Fragment {
         imageView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                showRandomImage(ripMissioni);
+                showRandomImage(key);
             }
         }, 2000);
     }

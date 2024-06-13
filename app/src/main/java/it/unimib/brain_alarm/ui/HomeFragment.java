@@ -38,8 +38,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import it.unimib.brain_alarm.AggiungiActivity;
-import it.unimib.brain_alarm.NewsFragmentDirections;
 import it.unimib.brain_alarm.R;
 import it.unimib.brain_alarm.Sveglia.Sveglie;
 import it.unimib.brain_alarm.adapter.SveglieAdapter;
@@ -357,7 +355,7 @@ public class HomeFragment extends Fragment {
             }
 
 
-            mediaPlayer = MediaPlayer.create(getContext(), R.raw.suono2);
+            mediaPlayer = MediaPlayer.create(getContext(), R.raw.radar3);
 
             if (getSecondiMancanti(countDown) <= 0) {
 

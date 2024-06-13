@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,35 +75,42 @@ public class SvegliaFragment extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
-        mediaPlayer = MediaPlayer.create(getContext(), R.raw.suono2);
-
-        startAlarm();
-
 
         String key = SvegliaFragmentArgs.fromBundle(getArguments()).getSvegliaKey();
 
-
-
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
-
         // Recupera il Set<String> associato alla chiave specificata
         Set<String> svegliaSet = sharedPref.getStringSet(key, new HashSet<>());
-
-        String missioni="0000";
-
+        String missioni="00000";
         // Cerca la stringa che indica le ripetizioni
         for (String val : svegliaSet) {
             if (!val.toString().isEmpty())
                 if ((val.toString()).charAt(0) == 'm')
                     missioni = val.toString().substring(1);
+                else if (val.equals("Classica")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.classica1);
+                }
+                else if (val.equals("Pianoforte")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.pianoforte2);
+                }
+                else if (val.equals("Radar")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.radar3);
+                }
+                else if (val.equals("Dolce")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.dolce4);
+                }
+                else if (val.equals("Digitale")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.digitale5);
+                }
         }
 
+        startAlarm();
 
         final Button buttonInterrompi = view.findViewById(R.id.buttonInterrompi);
         final Button buttonGioca = view.findViewById(R.id.buttonGioca);
         barraSfide = view.findViewById(R.id.barraSfide);
 
-        if (!missioni.equals("0000")) {
+        if (!missioni.equals("00000")) {
             buttonInterrompi.setVisibility(view.GONE);
             buttonGioca.setVisibility(View.VISIBLE);
             barraSfide.setVisibility(view.VISIBLE);
@@ -159,7 +165,7 @@ public class SvegliaFragment extends Fragment {
         String finalMissioni = missioni;
         buttonGioca.setOnClickListener(v -> {
             stopAlarm();
-            SvegliaFragmentDirections.ActionSvegliaFragmentToCalcolatriceFragment action = SvegliaFragmentDirections.actionSvegliaFragmentToCalcolatriceFragment(finalMissioni);
+            SvegliaFragmentDirections.ActionSvegliaFragmentToCalcolatriceFragment action = SvegliaFragmentDirections.actionSvegliaFragmentToCalcolatriceFragment(key);
             Navigation.findNavController(view).navigate(action);
 
         });

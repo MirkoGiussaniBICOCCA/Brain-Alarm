@@ -1,5 +1,7 @@
 package it.unimib.brain_alarm;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -16,7 +18,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class TrisFragment extends Fragment {
 
@@ -57,11 +62,35 @@ public class TrisFragment extends Fragment {
         super.onViewCreated(v, savedInstanceState);
 
 
-        mediaPlayer = MediaPlayer.create(getContext(), R.raw.suono2);
-        startAlarm();
+        String key = CalcolatriceFragmentArgs.fromBundle(getArguments()).getKey();
 
-        String ripMissioni = ScrivereFragmentArgs.fromBundle(getArguments()).getRipMissioni();
-        ripTris = ripMissioni.charAt(3) - '0';
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
+        // Recupera il Set<String> associato alla chiave specificata
+        Set<String> svegliaSet = sharedPref.getStringSet(key, new HashSet<>());
+        String missioni="00000";
+        for (String val : svegliaSet) {
+            if (!val.toString().isEmpty())
+                if ((val.toString()).charAt(0) == 'm')
+                    missioni = val.toString().substring(1);
+                else if (val.equals("Classica")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.classica1);
+                }
+                else if (val.equals("Pianoforte")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.pianoforte2);
+                }
+                else if (val.equals("Radar")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.radar3);
+                }
+                else if (val.equals("Dolce")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.dolce4);
+                }
+                else if (val.equals("Digitale")){
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.digitale5);
+                }
+        }
+
+        startAlarm();
+        ripTris = missioni.charAt(3) - '0';
 
         if (ripTris > 0) {
             gridLayout = v.findViewById(R.id.gridLayout);

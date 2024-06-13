@@ -1,5 +1,6 @@
 package it.unimib.brain_alarm;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,8 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.Random;
 
 public class TrisFragment extends Fragment {
+
+    private MediaPlayer mediaPlayer;
 
     int ripTris;
     int currentGameCount = 0;
@@ -53,6 +56,10 @@ public class TrisFragment extends Fragment {
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
 
+
+        mediaPlayer = MediaPlayer.create(getContext(), R.raw.suono2);
+        startAlarm();
+
         String ripMissioni = ScrivereFragmentArgs.fromBundle(getArguments()).getRipMissioni();
         ripTris = ripMissioni.charAt(3) - '0';
 
@@ -87,6 +94,7 @@ public class TrisFragment extends Fragment {
                 });
             }
         } else {
+            stopAlarm();
             Navigation.findNavController(v).navigate(R.id.action_trisFragment_to_homeFragment);
         }
     }
@@ -124,6 +132,7 @@ public class TrisFragment extends Fragment {
         if (currentGameCount < ripTris) {
             resetBoard();
         } else {
+            stopAlarm();
             Navigation.findNavController(v).navigate(R.id.action_trisFragment_to_homeFragment);
         }
     }
@@ -200,4 +209,27 @@ public class TrisFragment extends Fragment {
         }
         return false;
     }
+
+    private void startAlarm() {
+
+        //Log.d(TAG, "start suono");
+        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
+        }
+    }
+
+    private void stopAlarm() {
+
+        //Log.d(TAG, "stop suono" + mediaPlayer + " ... " + mediaPlayer.isPlaying());
+
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+
+            mediaPlayer.release();
+        }
+
+
+    }
+
 }

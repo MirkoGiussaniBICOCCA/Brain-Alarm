@@ -6,6 +6,7 @@ import static android.content.ContentValues.TAG;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,8 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class MemoryFragment extends Fragment {
+
+    private MediaPlayer mediaPlayer;
 
     TextView text1;
     TextView text2;
@@ -84,6 +87,9 @@ public class MemoryFragment extends Fragment {
 
         super.onViewCreated(v, savedInstanceState);
 
+        mediaPlayer = MediaPlayer.create(getContext(), R.raw.suono2);
+        startAlarm();
+
         String ripMissioni = MemoryFragmentArgs.fromBundle(getArguments()).getRipMissioni();
 
 
@@ -113,6 +119,7 @@ public class MemoryFragment extends Fragment {
             }
         }
         else {
+            stopAlarm();
             MemoryFragmentDirections.ActionMemoryFragmentToScrivereFragment action = MemoryFragmentDirections.actionMemoryFragmentToScrivereFragment(ripMissioni);
             Navigation.findNavController(v).navigate(action);
         }
@@ -391,6 +398,7 @@ public class MemoryFragment extends Fragment {
             if (ripMemory > 0) {
                 resetGame();
             } else {
+                stopAlarm();
                 // Fine gioco, vai al prossimo fragment
                 String ripMissioni = MemoryFragmentArgs.fromBundle(getArguments()).getRipMissioni();
                 MemoryFragmentDirections.ActionMemoryFragmentToScrivereFragment action = MemoryFragmentDirections.actionMemoryFragmentToScrivereFragment(ripMissioni);
@@ -444,5 +452,27 @@ public class MemoryFragment extends Fragment {
         image206 = R.drawable.bandiera;
     }
 
+
+    private void startAlarm() {
+
+        //Log.d(TAG, "start suono");
+        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
+        }
+    }
+
+    private void stopAlarm() {
+
+        //Log.d(TAG, "stop suono" + mediaPlayer + " ... " + mediaPlayer.isPlaying());
+
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+
+            mediaPlayer.release();
+        }
+
+
+    }
 
 }

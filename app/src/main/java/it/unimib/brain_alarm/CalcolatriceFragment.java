@@ -24,6 +24,9 @@ import it.unimib.brain_alarm.News.Result;
 
 public class CalcolatriceFragment extends Fragment {
 
+
+    private MediaPlayer mediaPlayer;
+
     TextView textQuestion;
     EditText editTextAnswer;
     Button buttonSubmit;
@@ -58,6 +61,9 @@ public class CalcolatriceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mediaPlayer = MediaPlayer.create(getContext(), R.raw.suono2);
+        startAlarm();
+
         String ripMissioni = CalcolatriceFragmentArgs.fromBundle(getArguments()).getRipMissioni();
         remainingRepetitions = ripMissioni.charAt(0) - '0';
 
@@ -84,6 +90,7 @@ public class CalcolatriceFragment extends Fragment {
                                 Snackbar.make(view, "Ripetizione completata! Ancora " + remainingRepetitions + " ripetizioni.", Snackbar.LENGTH_SHORT).show();
                             } else {
                                 Snackbar.make(view, "Hai completato tutte le ripetizioni!", Snackbar.LENGTH_SHORT).show();
+                                stopAlarm();
                                 CalcolatriceFragmentDirections.ActionCalcolatriceFragmentToMemoryFragment action = CalcolatriceFragmentDirections.actionCalcolatriceFragmentToMemoryFragment(ripMissioni);
                                 Navigation.findNavController(view).navigate(action);
                             }
@@ -99,6 +106,7 @@ public class CalcolatriceFragment extends Fragment {
 
 
         } else {
+            stopAlarm();
             CalcolatriceFragmentDirections.ActionCalcolatriceFragmentToMemoryFragment action = CalcolatriceFragmentDirections.actionCalcolatriceFragmentToMemoryFragment(ripMissioni);
             Navigation.findNavController(view).navigate(action);
         }
@@ -122,4 +130,29 @@ public class CalcolatriceFragment extends Fragment {
             }
         }
     }
+
+
+
+    private void startAlarm() {
+
+        //Log.d(TAG, "start suono");
+        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
+        }
+    }
+
+    private void stopAlarm() {
+
+        //Log.d(TAG, "stop suono" + mediaPlayer + " ... " + mediaPlayer.isPlaying());
+
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+
+            mediaPlayer.release();
+        }
+
+
+    }
+
 }

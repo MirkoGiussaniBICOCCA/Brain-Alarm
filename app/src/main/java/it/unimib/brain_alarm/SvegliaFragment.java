@@ -158,10 +158,7 @@ public class SvegliaFragment extends Fragment {
 
         String finalMissioni = missioni;
         buttonGioca.setOnClickListener(v -> {
-
             stopAlarm();
-
-
             SvegliaFragmentDirections.ActionSvegliaFragmentToCalcolatriceFragment action = SvegliaFragmentDirections.actionSvegliaFragmentToCalcolatriceFragment(finalMissioni);
             Navigation.findNavController(view).navigate(action);
 

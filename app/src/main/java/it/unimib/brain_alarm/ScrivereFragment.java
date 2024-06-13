@@ -2,6 +2,7 @@ package it.unimib.brain_alarm;
 
 import static androidx.fragment.app.FragmentManager.TAG;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,8 @@ import java.util.Random;
 
 
 public class ScrivereFragment extends Fragment {
+
+    private MediaPlayer mediaPlayer;
 
     private int imageShownCount = 0;
 
@@ -64,6 +67,9 @@ public class ScrivereFragment extends Fragment {
 
         super.onViewCreated(v, savedInstanceState);
 
+        mediaPlayer = MediaPlayer.create(getContext(), R.raw.suono2);
+        startAlarm();
+
         String ripMissioni = ScrivereFragmentArgs.fromBundle(getArguments()).getRipMissioni();
 
         ripScrivere = ripMissioni.charAt(2) - '0';
@@ -96,6 +102,7 @@ public class ScrivereFragment extends Fragment {
             });
         }
         else {
+            stopAlarm();
             ScrivereFragmentDirections.ActionScrivereFragmentToTrisFragment action = ScrivereFragmentDirections.actionScrivereFragmentToTrisFragment(ripMissioni);
             Navigation.findNavController(getView()).navigate(action);
         }
@@ -104,6 +111,7 @@ public class ScrivereFragment extends Fragment {
 
     private void showRandomImage(String ripMissioni) {
         if (imageShownCount >= ripScrivere) {
+            stopAlarm();
             ScrivereFragmentDirections.ActionScrivereFragmentToTrisFragment action = ScrivereFragmentDirections.actionScrivereFragmentToTrisFragment(ripMissioni);
             Navigation.findNavController(getView()).navigate(action);
             return;
@@ -135,6 +143,28 @@ public class ScrivereFragment extends Fragment {
                 showRandomImage(ripMissioni);
             }
         }, 2000);
+    }
+
+    private void startAlarm() {
+
+        //Log.d(TAG, "start suono");
+        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
+        }
+    }
+
+    private void stopAlarm() {
+
+        //Log.d(TAG, "stop suono" + mediaPlayer + " ... " + mediaPlayer.isPlaying());
+
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+
+            mediaPlayer.release();
+        }
+
+
     }
 
 }

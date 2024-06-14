@@ -202,7 +202,7 @@ public class SveglieAdapter extends
                         switchAttiva.setChecked(false);
 
                     }
-                    else { //la sveglia ha ripetizioni devo aggiornare la data
+                    else if (!newSet.contains("r0000000") && newSet.contains("attiva")) { //la sveglia ha ripetizioni devo aggiornare la data
                         Log.d(TAG, "dentro disattivazione con ripetizioni" + newSet);
                         //TODO sistemare
                         String dataSveglia = (sveglieList.get(getAdapterPosition()).getData()).substring(0);

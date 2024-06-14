@@ -173,6 +173,7 @@ public class SveglieAdapter extends
             SharedPreferences.Editor editor = sharedPref.edit();
 
             if (disattiva){
+                Log.d(TAG, "dentro da disattivare o cambiare data");
                 if(!keyDaDisattivare.equals("")) {
 
                     Log.d(TAG, "suono stop e disattivata in adapter");
@@ -202,14 +203,22 @@ public class SveglieAdapter extends
 
                     }
                     else { //la sveglia ha ripetizioni devo aggiornare la data
-                        Log.d(TAG, "dentro disattivazione con ripetizioni");
+                        Log.d(TAG, "dentro disattivazione con ripetizioni" + newSet);
                         //TODO sistemare
                         String dataSveglia = (sveglieList.get(getAdapterPosition()).getData()).substring(0);
                         newSet.remove("d" + dataSveglia);
+                        Log.d(TAG, "1dentro disattivazione con ripetizioni" + newSet);
 
-                        //TODO da ancora la data di oggi
-                        newSet.add(GetDateTime.getNextDate("r"+sveglieList.get(getAdapterPosition()).getRipetizioniNum(), sveglieList.get(getAdapterPosition()).getOrario()));
-                        Log.d(TAG, "dentro disattivazione con ripetizioni" + GetDateTime.getNextDate("r"+sveglieList.get(getAdapterPosition()).getRipetizioniNum(), sveglieList.get(getAdapterPosition()).getOrario()));
+                        //TODO scrivere metodo che non dia la data di oggi ma solo successiva
+                        newSet.add(GetDateTime.giornoPiuVicino(sveglieList.get(getAdapterPosition()).getRipetizioni()));
+                        Log.d(TAG, "dentro disattivazione con ripetizioni" + GetDateTime.giornoPiuVicino(sveglieList.get(getAdapterPosition()).getRipetizioni()));
+                        Log.d(TAG, "2dentro disattivazione con ripetizioni" + newSet);
+
+
+                        editor.putStringSet(keyDaDisattivare, newSet);
+
+                        editor.apply();
+
                     }
                 }
             }

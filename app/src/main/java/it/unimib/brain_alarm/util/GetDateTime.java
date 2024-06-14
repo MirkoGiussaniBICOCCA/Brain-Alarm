@@ -215,6 +215,7 @@ public class GetDateTime {
 
         // Scansiona tutti i nomi dei giorni
         for (String nomeGiorno : nomiGiorni) {
+
             // Cerca il nome del giorno nel mapping (ignorando il case)
             String nomeGiornoLowerCase = nomeGiorno.toLowerCase();
             if (nomeGiornoToDayOfWeek.containsKey(nomeGiornoLowerCase)) {
@@ -232,10 +233,12 @@ public class GetDateTime {
                 if (differenzaGiorni < differenzaMinima) {
                     differenzaMinima = differenzaGiorni;
                     giornoPiuVicino = giorno;
+                    Log.d(TAG, "giornoPiuVicini che dice null è " + giornoPiuVicino);
                 }
             }
         }
 
+        Log.d(TAG, "returna " + giornoPiuVicino.getDisplayName(TextStyle.FULL, Locale.ITALIAN));
         // Restituisci il nome completo del giorno più vicino
         return prossimoGiornoSettimana(giornoPiuVicino.getDisplayName(TextStyle.FULL, Locale.ITALIAN));
     }

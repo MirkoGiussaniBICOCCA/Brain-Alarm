@@ -360,47 +360,6 @@ public class HomeFragment extends Fragment {
             mediaPlayer = MediaPlayer.create(getContext(), R.raw.radar3);
 
             if (getSecondiMancanti(countDown) <= 0) {
-                Log.d(TAG, "agg adapter prima " + attive);
-
-                aggiornaRecyclerView(view, true, attive);
-
-                Log.d(TAG, "agg adapter dopo " + attive);
-
-                // Ottieni il NavController
-                NavController navController = Navigation.findNavController(view);
-
-                // Controlla la destinazione corrente
-                NavDestination currentDestination = navController.getCurrentDestination();
-
-                if (currentDestination != null && currentDestination.getId() == R.id.svegliaFragment) {
-                    Log.d(TAG, "Attualmente in SvegliaFragment, tornando a HomeFragment");
-
-                    navController.popBackStack(R.id.homeFragment, false);
-
-                    // Aggiungi un listener per assicurarti che la navigazione avvenga dopo il ritorno a HomeFragment
-                    navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-                        @Override
-                        public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                            if (destination.getId() == R.id.homeFragment) {
-                                Log.d(TAG, "Tornato a HomeFragment, navigando a SvegliaFragment");
-                                HomeFragmentDirections.ActionHomeFragmentToSvegliaFragment action = HomeFragmentDirections.actionHomeFragmentToSvegliaFragment(attive);
-                                navController.navigate(action);
-
-                                // Rimuovi il listener dopo la navigazione
-                                navController.removeOnDestinationChangedListener(this);
-                            }
-                        }
-                    });
-                } else {
-                    // Se non sei in SvegliaFragment, naviga direttamente a SvegliaFragment
-                    Log.d(TAG, "Navigando direttamente a SvegliaFragment");
-                    HomeFragmentDirections.ActionHomeFragmentToSvegliaFragment action = HomeFragmentDirections.actionHomeFragmentToSvegliaFragment(attive);
-                    navController.navigate(action);
-                }
-            }
-
-            /*
-            if (getSecondiMancanti(countDown) <= 0) {
 
                 Log.d(TAG, "agg adapter prima " + attive);
 
@@ -413,7 +372,7 @@ public class HomeFragment extends Fragment {
                 Navigation.findNavController(view).navigate(action);
             }
 
-             */
+
 
         }
 

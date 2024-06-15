@@ -11,7 +11,9 @@ import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -368,8 +370,35 @@ public class HomeFragment extends Fragment {
                 Log.d(TAG, "agg adapter dopo " + attive);
 
                 //passo la chiave a svegliaFragment
+                /*
                 HomeFragmentDirections.ActionHomeFragmentToSvegliaFragment action = HomeFragmentDirections.actionHomeFragmentToSvegliaFragment(attive);
                 Navigation.findNavController(view).navigate(action);
+
+                 */
+
+                NavController navController = NavHostFragment.findNavController(this);
+
+                // Ottieni l'ID della destinazione corrente
+                int currentDestinationId = navController.getCurrentDestination().getId();
+
+                // Verifica se la destinazione corrente è diversa da svegliaFragment
+                if (currentDestinationId != R.id.svegliaFragment) {
+                    // Esegui la navigazione verso svegliaFragment
+                    HomeFragmentDirections.ActionHomeFragmentToSvegliaFragment action = HomeFragmentDirections.actionHomeFragmentToSvegliaFragment(attive);
+                    Navigation.findNavController(view).navigate(action);
+                } else {
+                    // Se ci troviamo già in svegliaFragment, naviga a homeFragment e poi a svegliaFragment
+                    /*
+                    navController.navigate(R.id.action_svegliaFragment_to_homeFragment, null, new NavOptions.Builder()
+                            .setPopUpTo(R.id.homeFragment, true)
+                            .build(), null);
+                    */
+                    Navigation.findNavController(view).navigate(R.id.action_svegliaFragment_to_homeFragment);
+                    // Naviga a svegliaFragment dopo essere tornato a homeFragment
+                    HomeFragmentDirections.ActionHomeFragmentToSvegliaFragment action = HomeFragmentDirections.actionHomeFragmentToSvegliaFragment(attive);
+                    Navigation.findNavController(view).navigate(action);
+                }
+
             }
 
 

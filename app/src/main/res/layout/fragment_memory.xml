@@ -162,8 +162,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:minHeight="50dp"
-                android:src="@drawable/pallino"
-                android:visibility="gone" />
+                android:src="@drawable/pallino" />
 
             <ImageView
                 android:id="@+id/pallino2"
@@ -171,8 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:minHeight="50dp"
-                android:src="@drawable/pallino"
-                android:visibility="gone" />
+                android:src="@drawable/pallino" />
 
             <ImageView
                 android:id="@+id/pallino3"
@@ -180,8 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:minHeight="50dp"
-                android:src="@drawable/pallino"
-                android:visibility="gone" />
+                android:src="@drawable/pallino" />
 
             <ImageView
                 android:id="@+id/pallino4"
@@ -189,8 +186,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:minHeight="50dp"
-                android:src="@drawable/pallino"
-                android:visibility="gone" />
+                android:src="@drawable/pallino"/>
 
             <ImageView
                 android:id="@+id/pallino5"
@@ -198,8 +194,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:minHeight="50dp"
-                android:src="@drawable/pallino"
-                android:visibility="gone" />
+                android:src="@drawable/pallino" />
         </LinearLayout>
 
 

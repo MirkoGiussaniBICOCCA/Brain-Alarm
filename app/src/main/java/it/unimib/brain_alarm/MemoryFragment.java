@@ -146,12 +146,11 @@ public class MemoryFragment extends Fragment {
         pallino5 = v.findViewById(R.id.pallino5);
 
         // Rendi visibili le ImageView in base al valore di ripMemory
-        if (ripMemory >= 1) pallino1.setVisibility(View.VISIBLE);
-        if (ripMemory >= 2) pallino2.setVisibility(View.VISIBLE);
-        if (ripMemory >= 3) pallino3.setVisibility(View.VISIBLE);
-        if (ripMemory >= 4) pallino4.setVisibility(View.VISIBLE);
-        if (ripMemory >= 5) pallino5.setVisibility(View.VISIBLE);
-
+        if (ripMemory >= 1) pallino1.setColorFilter(getResources().getColor(R.color.white));
+        if (ripMemory >= 2) pallino2.setColorFilter(getResources().getColor(R.color.white));
+        if (ripMemory >= 3) pallino3.setColorFilter(getResources().getColor(R.color.white));
+        if (ripMemory >= 4) pallino4.setColorFilter(getResources().getColor(R.color.white));
+        if (ripMemory >= 5) pallino5.setColorFilter(getResources().getColor(R.color.white));
 
         if(ripMemory > 0) {
 
@@ -447,9 +446,11 @@ public class MemoryFragment extends Fragment {
             Log.d(TAG, "ripMemory " + ripMemory);
             ripMemory--;
             // Rendi visibili le ImageView in base al valore di ripMemory
-            if (ripMemory == 1) pallino1.setColorFilter(getResources().getColor(R.color.arancione));
-            if (ripMemory == 2) pallino2.setColorFilter(getResources().getColor(R.color.arancione));
-            if (ripMemory == 3) pallino3.setColorFilter(getResources().getColor(R.color.arancione));
+            if (ripMemory == 1) {pallino1.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked)); Log.d(TAG, "ripMemory set fatto " );}
+            if (ripMemory == 2) pallino2.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked));
+            if (ripMemory == 3) pallino3.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked));
+            if (ripMemory == 4) pallino4.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked));
+            if (ripMemory == 5) pallino5.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked));
 
             if (ripMemory > 0) {
                 resetGame(key);

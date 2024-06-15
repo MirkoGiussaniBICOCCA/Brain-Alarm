@@ -2,14 +2,15 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="azzurro">#331866</color>
-    <color name="azzurro_trasparente">#80331866</color> <!-- 50% trasparente -->
+    <color name="azzurro">#0B1D43</color>
+    <color name="azzurro_trasparente">#800B1D43</color> <!-- 50% trasparente -->
     <color name="verdeStrano">#009688</color>
     <color name="arancione">#FF5722</color>
     <color name="giallo">#EEFF00</color>
     <color name="sfondoTras">#00EEFF00</color>
     <color name="verdeChiaro">#0F9D58</color>
     <color name="verdeScuro">#0F4C2E</color>
-    <color name="fucsia">#9D0F9B</color>
+    <color name="fucsia">#CF1D7F</color>
     <color name="grigio">#A19F9F</color>
+    <color name="grigioScuro">#717070</color>
 </resources>

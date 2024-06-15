@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -60,6 +61,13 @@ public class MemoryFragment extends Fragment {
     int playerPoints = 0, cpuPoint = 0;
 
     int ripMemory;
+
+    ImageView pallino1;
+    ImageView pallino2;
+    ImageView pallino3;
+    ImageView pallino4;
+    ImageView pallino5;
+
 
 
 
@@ -130,6 +138,20 @@ public class MemoryFragment extends Fragment {
 
 
         ripMemory = missioni.charAt(1) - '0';
+
+        pallino1 = v.findViewById(R.id.pallino1);
+        pallino2 = v.findViewById(R.id.pallino2);
+        pallino3 = v.findViewById(R.id.pallino3);
+        pallino4 = v.findViewById(R.id.pallino4);
+        pallino5 = v.findViewById(R.id.pallino5);
+
+        // Rendi visibili le ImageView in base al valore di ripMemory
+        if (ripMemory >= 1) pallino1.setVisibility(View.VISIBLE);
+        if (ripMemory >= 2) pallino2.setVisibility(View.VISIBLE);
+        if (ripMemory >= 3) pallino3.setVisibility(View.VISIBLE);
+        if (ripMemory >= 4) pallino4.setVisibility(View.VISIBLE);
+        if (ripMemory >= 5) pallino5.setVisibility(View.VISIBLE);
+
 
         if(ripMemory > 0) {
 
@@ -422,7 +444,13 @@ public class MemoryFragment extends Fragment {
     private void checked(String key) {
         if (b11.getVisibility() == View.INVISIBLE && b12.getVisibility() == View.INVISIBLE && b13.getVisibility() == View.INVISIBLE &&  b14.getVisibility() == View.INVISIBLE) {
             //qui se ho girato tutte le carte finisce il gioco
+            Log.d(TAG, "ripMemory " + ripMemory);
             ripMemory--;
+            // Rendi visibili le ImageView in base al valore di ripMemory
+            if (ripMemory == 1) pallino1.setColorFilter(getResources().getColor(R.color.arancione));
+            if (ripMemory == 2) pallino2.setColorFilter(getResources().getColor(R.color.arancione));
+            if (ripMemory == 3) pallino3.setColorFilter(getResources().getColor(R.color.arancione));
+
             if (ripMemory > 0) {
                 resetGame(key);
             } else {

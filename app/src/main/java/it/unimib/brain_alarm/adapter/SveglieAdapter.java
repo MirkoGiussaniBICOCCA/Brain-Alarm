@@ -182,42 +182,59 @@ public class SveglieAdapter extends
 
                     Set<String> newSet = new HashSet<>(sveglieSet);
 
-
-                    if (newSet.contains("r0000000") && newSet.contains("attiva")) {
-
-                        newSet.remove("attiva");
-                        newSet.add("non attiva");
-
-                        editor.putStringSet(keyDaDisattivare, newSet);
-
-                        // Rimuove la chiave dalla lista delle attive
-                        Set<String> attive = sharedPref.getStringSet("sveglieAttive", new HashSet<>());
-
-                        attive.remove(keyDaDisattivare);
-
-                        editor.putStringSet("sveglieAttive", attive);
-
-                        editor.apply();
-
-                        switchAttiva.setChecked(false);
-
-                    }
-                    else if (!newSet.contains("r0000000") && newSet.contains("attiva")) { //la sveglia ha ripetizioni devo aggiornare la data
-                        Log.d(TAG, "dentro disattivazione con ripetizioni" + newSet);
-                        //TODO sistemare
-                        String dataSveglia = (sveglieList.get(getAdapterPosition()).getData()).substring(0);
-                        newSet.remove("d" + dataSveglia);
-                        Log.d(TAG, "1dentro disattivazione con ripetizioni" + newSet);
-
-                        //TODO scrivere metodo che non dia la data di oggi ma solo successiva
-                        newSet.add(GetDateTime.giornoPiuVicino(sveglieList.get(getAdapterPosition()).getRipetizioni()));
-                        Log.d(TAG, "dentro disattivazione con ripetizioni" + GetDateTime.giornoPiuVicino(sveglieList.get(getAdapterPosition()).getRipetizioni()));
-                        Log.d(TAG, "2dentro disattivazione con ripetizioni" + newSet);
+                    Log.d(TAG, "inizio sveglieSet " + sveglieSet );
+                    Log.d(TAG, "inizio newSet " + newSet);
 
 
-                        editor.putStringSet(keyDaDisattivare, newSet);
+                    if (newSet.contains("attiva")) {
+                        if (newSet.contains("r0000000")) {
 
-                        editor.apply();
+                            Log.d(TAG, "disattivazione senza ripetizioni");
+
+                            newSet.remove("attiva");
+                            newSet.add("non attiva");
+
+                            editor.putStringSet(keyDaDisattivare, newSet);
+
+                            // Rimuove la chiave dalla lista delle attive
+                            Set<String> attive = sharedPref.getStringSet("sveglieAttive", new HashSet<>());
+
+                            attive.remove(keyDaDisattivare);
+
+                            editor.putStringSet("sveglieAttive", attive);
+
+                            editor.apply();
+
+                            switchAttiva.setChecked(false);
+
+                        } else { //la sveglia ha ripetizioni devo aggiornare la data
+                            Log.d(TAG, "dentro disattivazione con ripetizioni" + newSet);
+                            //faccio passare sveglieSet e trovo la data
+
+                            String dataSveglia = "";
+                            String ripetizioni = "";
+                            for (String e : sveglieSet) {
+                                if (e.startsWith("d")) {
+                                    dataSveglia = e;
+                                    break;
+                                }
+                                else if (e.startsWith("r")) {
+                                    ripetizioni = e.toString().substring(1);;
+                                    break;
+                                }
+                            }
+
+                            newSet.remove(dataSveglia);
+                            Log.d(TAG, "1dentro disattivazione con ripetizioni" + newSet);
+                            newSet.add(GetDateTime.giornoPiuVicino(ripetizioni));
+                            Log.d(TAG, "2dentro disattivazione con ripetizioni" + newSet);
+
+
+                            editor.putStringSet(keyDaDisattivare, newSet);
+
+                            editor.apply();
+
+                        }
 
                     }
                 }

@@ -6,6 +6,8 @@
         android:name="android.hardware.telephony"
         android:required="false" />
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission
         android:name="android.permission.VIBRATE"
         android:required="false" />
@@ -16,6 +18,14 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+
 
     <application
         android:allowBackup="true"
@@ -43,17 +53,30 @@
 
         </activity>
 
-        <activity
-            android:name=".ui.HomeActivity"
-            android:exported="true">
 
 
-        </activity>
 
         <activity
             android:name=".AggiungiActivity"
             android:exported="true">
         </activity>
+
+        <receiver android:name=".AlarmReceiver" />
+        <receiver android:enabled="true" android:exported="false"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
+            android:name=".alarm.AlarmReciver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".alarm.AlarmService" />
+
+        <meta-data
+            android:name="android.app.default_notification_channel_id"
+            android:value="@string/statoImpostato"/>
+
+        <receiver android:name=".AlarmReceiver" />
 
 
 

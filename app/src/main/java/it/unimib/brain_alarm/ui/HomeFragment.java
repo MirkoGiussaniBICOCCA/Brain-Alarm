@@ -1,5 +1,9 @@
 package it.unimib.brain_alarm.ui;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,6 +46,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import it.unimib.brain_alarm.AlarmReceiver;
 import it.unimib.brain_alarm.R;
 import it.unimib.brain_alarm.Sveglia.Sveglie;
 import it.unimib.brain_alarm.adapter.SveglieAdapter;
@@ -361,6 +366,11 @@ public class HomeFragment extends Fragment {
             mediaPlayer = MediaPlayer.create(getContext(), R.raw.radar3);
 
             if (getSecondiMancanti(countDown) == 0) {
+
+                long currentTimeMillis = System.currentTimeMillis();
+                long triggerAtMillis = currentTimeMillis;
+                setAlarm(getContext(), triggerAtMillis);
+
                 Log.d(TAG,"sono in home e scade la sveglia");
 
                 Log.d(TAG, "agg adapter prima " + attive);
@@ -368,13 +378,6 @@ public class HomeFragment extends Fragment {
                 aggiornaRecyclerView(view, true, attive);
 
                 Log.d(TAG, "agg adapter dopo " + attive);
-
-                //passo la chiave a svegliaFragment
-                /*
-                HomeFragmentDirections.ActionHomeFragmentToSvegliaFragment action = HomeFragmentDirections.actionHomeFragmentToSvegliaFragment(attive);
-                Navigation.findNavController(view).navigate(action);
-
-                 */
 
                 NavController navController = NavHostFragment.findNavController(this);
 
@@ -454,6 +457,16 @@ public class HomeFragment extends Fragment {
         int seconds = Integer.parseInt(timeParts[2]);
 
         return days+hours+minutes+seconds;
+    }
+
+    public void setAlarm(Context context, long triggerAtMillis) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        if (alarmManager != null) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent);
+        }
     }
 
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/azzurro"
     tools:context=".ui.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
@@ -32,8 +32,8 @@
         android:background="@drawable/background_navbar"
         android:elevation="2dp"
         app:itemIconSize="30dp"
-        app:itemIconTint="@drawable/menu_selector"
-        app:itemRippleColor="@color/white"
+        app:itemIconTint="@color/white"
+        app:itemRippleColor="@color/fucsia"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

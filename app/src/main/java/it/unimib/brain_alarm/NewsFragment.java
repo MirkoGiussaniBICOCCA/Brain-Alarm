@@ -146,19 +146,19 @@ public class NewsFragment extends Fragment {
 
         switch (sharedPreferencesUtil.readStringData(
                 SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST)) {
-            case "Italia":
+            case "it":
                 buttonStato.setImageDrawable(getResources().getDrawable(R.drawable.italia));
                 break;
-            case "Francia":
+            case "fr":
                 buttonStato.setImageDrawable(getResources().getDrawable(R.drawable.francia));
                 break;
-            case "Germania":
+            case "de":
                 buttonStato.setImageDrawable(getResources().getDrawable(R.drawable.germania));
                 break;
-            case "Uk":
+            case "gb":
                 buttonStato.setImageDrawable(getResources().getDrawable(R.drawable.uk));
                 break;
-            case "Usa":
+            case "us":
                 buttonStato.setImageDrawable(getResources().getDrawable(R.drawable.usa));
                 break;
 

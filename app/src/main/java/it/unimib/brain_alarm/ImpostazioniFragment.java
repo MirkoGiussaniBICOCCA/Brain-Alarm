@@ -80,6 +80,7 @@ public class ImpostazioniFragment extends Fragment {
             layoutModifica.setVisibility(view.VISIBLE);
         });
 
+
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
         nome = sharedPref.getString("nome", null);
         stato = sharedPref.getString("stato", null);
@@ -102,7 +103,10 @@ public class ImpostazioniFragment extends Fragment {
 
                 //visualizzare nuovo nome
                 nomeImpostazioni.setText("Nome: " + sharedPref.getString("nome", null));
-                statoImpostazioni.setText("Stato: " + sharedPref.getString("stato", null));
+
+                SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(getActivity().getApplication());
+                statoImpostazioni.setText("Stato: " + sharedPreferencesUtil.readStringData(
+                        SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST));
 
                 layoutModifica.setVisibility(view.GONE);
             } else

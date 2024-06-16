@@ -37,6 +37,7 @@
     <string name="NussunaSvegliaAttiva">Nessuna sveglia attiva </string>
     <string name="Gioca">Gioca</string>
     <string name="Interrompi">Interrompi</string>
+    <string name="Posticipa">Posticipa</string>
 
     <string name="mxModalità">Devi scegliere la modalità della sveglia (classica o sfida)!</string>
     <string name="mxStato">Stato salvato</string>

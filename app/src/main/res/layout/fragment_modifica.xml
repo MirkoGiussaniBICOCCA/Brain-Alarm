@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="30dp"
+                android:layout_margin="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:background="@drawable/background_navbar">
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_navbar"
-                android:layout_margin="10dp"
+                android:layout_margin="20dp"
                 app:layout_constraintTop_toBottomOf="@+id/layoutTimeP"
                 android:orientation="vertical">
 
@@ -195,7 +195,9 @@
                         android:layout_marginTop="10dp"
                         android:text="@string/posticipa"
                         android:textColor="@color/white"
-                        android:textSize="20sp" /><!-- sistemare font-->
+                        android:textSize="20sp"
+                        android:thumbTint="@color/fucsia"
+                        android:trackTint="@color/fucsia"/><!-- sistemare font-->
 
                 </LinearLayout>
             </LinearLayout>

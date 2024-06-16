@@ -3,7 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="azzurro">#0B1D43</color>
-    <color name="azzurro_trasparente">#800B1D43</color> <!-- 50% trasparente -->
+    <color name="azzurroChiaro">#24375A</color>
     <color name="verdeStrano">#009688</color>
     <color name="arancione">#FF5722</color>
     <color name="giallo">#EEFF00</color>

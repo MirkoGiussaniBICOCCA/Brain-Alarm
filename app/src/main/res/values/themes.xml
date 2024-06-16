@@ -8,7 +8,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/fucsia</item>
         <item name="colorPrimaryDark">@color/azzurro</item>
-        <item name="colorAccent">@color/arancione</item>
+        <item name="colorAccent">@color/white</item>
     </style>
 
     <style name="Theme.BrainAlarm" parent="Base.Theme.BrainAlarm" />

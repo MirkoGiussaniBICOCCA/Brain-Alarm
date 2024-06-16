@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/azzurroChiaro"
     tools:context=".AggiungiFragment">
 
     <ScrollView
@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="30dp"
+                android:layout_margin="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintGuide_percent="0.5"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="30dp"
+                android:layout_margin="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:background="@drawable/background_navbar">
@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_navbar"
-                android:layout_margin="30dp"
+                android:layout_margin="20dp"
                 app:layout_constraintTop_toBottomOf="@+id/layoutTimeP"
                 android:orientation="vertical">
 
@@ -70,8 +70,8 @@
                     android:id="@+id/ripetizioni"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginTop="20dp"
                     tools:ignore="MissingConstraints">
 
@@ -82,7 +82,7 @@
                         android:layout_weight="1"
                         android:text="L"
                         android:textColor="@color/white"
-                        android:buttonTint="@color/white"/>
+                        android:buttonTint="@color/white" />
 
                     <CheckBox
                         android:id="@+id/martedi"
@@ -203,9 +203,12 @@
                         android:layout_height="50dp"
                         android:layout_marginStart="23.5dp"
                         android:layout_marginTop="10dp"
+                        android:checked="false"
                         android:text="@string/posticipa"
                         android:textColor="@color/white"
-                        android:textSize="20sp" /><!-- sistemare font-->
+                        android:textSize="20sp"
+                        android:thumbTint="@color/fucsia"
+                        android:trackTint="@color/fucsia" /><!-- sistemare font-->
 
                 </LinearLayout>
             </LinearLayout>
@@ -215,7 +218,7 @@
                 android:id="@+id/layoutModalita"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="30dp"
+                android:layout_margin="20dp"
                 app:layout_constraintTop_toBottomOf="@+id/layoutImp"
                 android:orientation="horizontal">
 
@@ -435,8 +438,8 @@
                         android:layout_marginBottom="20dp"
                         android:max="5"
                         android:progress="0"
-                        android:progressTint="#FFFF00"
-                        android:thumbTint="#FFAA00" />
+                        android:progressTint="@color/white"
+                        android:thumbTint="@color/fucsia" />
 
                     <TextView
                         android:id="@+id/progressoCalcolatrice"
@@ -477,8 +480,8 @@
                         android:layout_marginBottom="20dp"
                         android:max="5"
                         android:progress="0"
-                        android:progressTint="#FFFF00"
-                        android:thumbTint="#FFAA00" />
+                        android:progressTint="@color/white"
+                        android:thumbTint="@color/fucsia" />
 
                     <TextView
                         android:id="@+id/progressoMemory"
@@ -519,8 +522,8 @@
                         android:layout_marginBottom="20dp"
                         android:max="5"
                         android:progress="0"
-                        android:progressTint="#FFFF00"
-                        android:thumbTint="#FFAA00" />
+                        android:progressTint="@color/white"
+                        android:thumbTint="@color/fucsia" />
 
                     <TextView
                         android:id="@+id/progressoScrivere"
@@ -560,8 +563,8 @@
                         android:layout_marginBottom="20dp"
                         android:max="5"
                         android:progress="0"
-                        android:progressTint="#FFFF00"
-                        android:thumbTint="#FFAA00" />
+                        android:progressTint="@color/white"
+                        android:thumbTint="@color/fucsia" />
 
                     <TextView
                         android:id="@+id/progressoTris"
@@ -601,8 +604,8 @@
                         android:layout_marginBottom="20dp"
                         android:max="5"
                         android:progress="0"
-                        android:progressTint="#FFFF00"
-                        android:thumbTint="#FFAA00" />
+                        android:progressTint="@color/white"
+                        android:thumbTint="@color/fucsia" />
 
                     <TextView
                         android:id="@+id/progressoPassi"

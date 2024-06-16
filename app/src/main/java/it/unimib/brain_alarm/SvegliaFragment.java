@@ -28,6 +28,8 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.HashSet;
 import java.util.Set;
 
+import it.unimib.brain_alarm.util.GetDateTime;
+
 public class SvegliaFragment extends Fragment {
 
     private static final String TAG = SvegliaFragment.class.getSimpleName();
@@ -52,7 +54,7 @@ public class SvegliaFragment extends Fragment {
     ImageView imgPassi;
     TextView textPassi;
 
-
+    Button buttonPosticipa;
 
     public SvegliaFragment() {
         // Required empty public constructor
@@ -91,6 +93,10 @@ public class SvegliaFragment extends Fragment {
         // Recupera il Set<String> associato alla chiave specificata
         Set<String> svegliaSet = sharedPref.getStringSet(key, new HashSet<>());
         String missioni="00000";
+        String orario="";
+        boolean posticipa = false;
+
+
         // Cerca la stringa che indica le ripetizioni
         for (String val : svegliaSet) {
             if (!val.toString().isEmpty())
@@ -117,6 +123,12 @@ public class SvegliaFragment extends Fragment {
                 }
                 else if (val.equals("v0")){
                     Snackbar.make(view, "Vibrazione", Snackbar.LENGTH_SHORT).show();
+                }
+                else if (val.charAt(0) == 'o'){
+                    orario=val;
+                }
+                else if (val.equals("true")){
+                    posticipa=true;
                 }
         }
 
@@ -186,6 +198,38 @@ public class SvegliaFragment extends Fragment {
             stopVibration();
             SvegliaFragmentDirections.ActionSvegliaFragmentToCalcolatriceFragment action = SvegliaFragmentDirections.actionSvegliaFragmentToCalcolatriceFragment(key);
             Navigation.findNavController(view).navigate(action);
+
+        });
+
+
+        final Button buttonPosticipa = view.findViewById(R.id.buttonPosticipa);
+        if (posticipa)
+            buttonPosticipa.setVisibility(view.VISIBLE);
+
+        String finalOrario = orario;
+        buttonPosticipa.setOnClickListener(v -> {
+            //TODO cambaire orario sveglia
+            SharedPreferences.Editor editor = sharedPref.edit();
+
+            Set<String> newSet = new HashSet<>(svegliaSet);
+
+            newSet.remove(finalOrario);
+
+
+            //CONTROLLARE return
+            newSet.add(GetDateTime.getOrarioPosticipato(finalOrario));
+
+            editor.putStringSet(key, newSet);
+
+
+            editor.apply();
+
+
+
+            stopAlarm();
+            stopVibration();
+
+            Navigation.findNavController(v).navigate(R.id.action_svegliaFragment_to_homeFragment);
 
         });
 

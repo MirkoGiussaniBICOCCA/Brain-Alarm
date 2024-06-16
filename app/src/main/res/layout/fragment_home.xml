@@ -19,8 +19,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="30dp"
             >
 
@@ -97,11 +97,12 @@
                 android:layout_width="149dp"
                 android:layout_height="56dp"
                 android:layout_marginTop="12dp"
-                android:background="@drawable/background_countdown"
+                android:backgroundTint="@color/azzurro"
                 android:text="aggiungi"
                 app:icon="@drawable/add"
                 app:iconPadding="15dp"
                 app:iconSize="30dp"
+                app:iconTint="@color/fucsia"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layoutSveglieAttive" />
@@ -111,10 +112,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:background="@drawable/background_countdown"
-                android:text="eliminaTutteLeSveglie"
+                android:backgroundTint="@color/azzurro"
+                android:text="@string/elimina"
                 app:icon="@drawable/cestino"
-                app:iconTint="@color/white"
+                app:iconTint="@color/fucsia"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bottoneAggiungiSveglia" />
@@ -137,7 +138,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="5dp"
-                    android:text="@string/Sì" />
+                    android:text="@string/Sì"
+                    android:backgroundTint="@color/fucsia"/>
 
                 <Button
                     android:id="@+id/buttonNoEliminazione"
@@ -145,7 +147,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:layout_weight="1"
-                    android:text="@string/No" />
+                    android:text="@string/No"
+                    android:backgroundTint="@color/azzurro"/>
             </LinearLayout>
 
             <LinearLayout

@@ -288,4 +288,30 @@ public class GetDateTime {
         }
 
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        public static String getOrarioPosticipato(String orario) {
+
+            // Estrai solo la parte dell'orario dalla stringa
+            String orarioStr = orario.substring(1);
+
+            // Definisci un formattatore per la conversione delle stringhe di orario
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+            // Converte la stringa dell'orario in un oggetto LocalTime
+            LocalTime orarioTime = LocalTime.parse(orarioStr, formatter);
+
+            // Aumenta l'orario di 5 minuti
+            LocalTime nuovoOrarioTime = orarioTime.plusMinutes(5);
+
+            // Converte l'orario modificato di nuovo in una stringa nel formato desiderato
+            String nuovoOrarioStr = nuovoOrarioTime.format(formatter);
+
+            // Preponi la lettera 'o' alla nuova stringa dell'orario
+            String nuovaStringa = "o" + nuovoOrarioStr;
+
+            return orarioStr;
+        }
+
+
+
     }

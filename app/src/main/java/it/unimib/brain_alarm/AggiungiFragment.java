@@ -25,6 +25,7 @@ import android.widget.TimePicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -41,6 +42,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import it.unimib.brain_alarm.Sveglia.Sveglie;
+import it.unimib.brain_alarm.ui.MainActivity;
 import it.unimib.brain_alarm.util.GetDateTime;
 
 public class AggiungiFragment extends Fragment {
@@ -422,8 +424,15 @@ public class AggiungiFragment extends Fragment {
         String settimana = new String();
         settimana = "r";
 
-        if (checkboxL.isChecked()) {settimana += "1";}
-        else settimana += "0";
+        if (checkboxL.isChecked()) {
+            settimana += "1";
+            // Cambia il colore quando è selezionato
+            checkboxL.setBackgroundColor(getResources().getColor(R.color.fucsia));
+        } else {
+            // Ripristina il colore di default quando non è selezionato
+            checkboxL.setButtonTintList(ContextCompat.getColorStateList(getActivity(), R.color.white));
+            settimana += "0";
+        }
 
         if (checkboxMa.isChecked()) {settimana += "2";}
         else settimana += "0";

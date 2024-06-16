@@ -362,6 +362,7 @@ public class HomeFragment extends Fragment {
             mediaPlayer = MediaPlayer.create(getContext(), R.raw.radar3);
 
             if (getSecondiMancanti(countDown) <= 0) {
+                Log.d(TAG,"sono in home e scade la sveglia");
 
                 Log.d(TAG, "agg adapter prima " + attive);
 

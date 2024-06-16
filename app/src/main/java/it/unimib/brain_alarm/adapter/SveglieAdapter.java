@@ -173,10 +173,9 @@ public class SveglieAdapter extends
             SharedPreferences.Editor editor = sharedPref.edit();
 
             if (disattiva){
-                Log.d(TAG, "dentro da disattivare o cambiare data");
+                Log.d(TAG, "disattivare o cambiare data");
                 if(!keyDaDisattivare.equals("")) {
-
-                    Log.d(TAG, "suono stop e disattivata in adapter");
+                    Log.d(TAG,  "chiave " + keyDaDisattivare);
 
                     Set<String> sveglieSet = sharedPref.getStringSet(keyDaDisattivare, new HashSet<>());
 
@@ -190,6 +189,7 @@ public class SveglieAdapter extends
                         if (newSet.contains("r0000000")) {
 
                             Log.d(TAG, "disattivazione senza ripetizioni");
+
 
                             newSet.remove("attiva");
                             newSet.add("non attiva");
@@ -208,22 +208,21 @@ public class SveglieAdapter extends
                             switchAttiva.setChecked(false);
 
                         } else { //la sveglia ha ripetizioni devo aggiornare la data
-                            Log.d(TAG, "dentro disattivazione con ripetizioni" + newSet);
+                            Log.d(TAG, "disattivazione con ripetizioni" + newSet);
                             //faccio passare sveglieSet e trovo la data
 
                             String dataSveglia = "";
                             String ripetizioni = "";
                             for (String e : sveglieSet) {
+                                Log.d(TAG, "elemento " + e);
                                 if (e.startsWith("d")) {
                                     dataSveglia = e;
-                                    break;
                                 }
                                 else if (e.startsWith("r")) {
-                                    ripetizioni = e.toString().substring(1);;
-                                    break;
+                                    ripetizioni = e.toString().substring(1);
                                 }
                             }
-
+                            Log.d(TAG, "ripetizioni " + ripetizioni + "dataSveglia " + dataSveglia);
                             newSet.remove(dataSveglia);
                             Log.d(TAG, "1dentro disattivazione con ripetizioni" + newSet);
                             newSet.add(GetDateTime.giornoPiuVicino(ripetizioni));

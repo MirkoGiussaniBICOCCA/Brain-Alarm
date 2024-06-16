@@ -96,14 +96,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:src="@drawable/passi" />
+                        android:src="@drawable/tris" />
 
                     <ImageView
                         android:id="@+id/sfida5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:src="@drawable/quadrato" />
+                        android:src="@drawable/passi" />
 
 
                 </LinearLayout>

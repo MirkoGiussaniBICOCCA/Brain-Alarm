@@ -98,6 +98,7 @@ public class MemoryFragment extends Fragment {
 
         super.onViewCreated(v, savedInstanceState);
 
+        Log.d(TAG, "entro in memory");
 
         String key = MemoryFragmentArgs.fromBundle(getArguments()).getKey();
 

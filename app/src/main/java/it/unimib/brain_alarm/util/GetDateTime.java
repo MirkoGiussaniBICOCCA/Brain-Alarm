@@ -188,23 +188,31 @@ public class GetDateTime {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String giornoPiuVicino(String giorniSettimana) {
+        Log.d(TAG, "giorniSettimana " +  giorniSettimana);
 
-
+        // Definisci una mappa per convertire i nomi dei giorni in oggetti DayOfWeek
         Map<String, DayOfWeek> nomeGiornoToDayOfWeek = new HashMap<>();
+        nomeGiornoToDayOfWeek.put("monday", DayOfWeek.MONDAY);
+        nomeGiornoToDayOfWeek.put("tuesday", DayOfWeek.TUESDAY);
+        nomeGiornoToDayOfWeek.put("wednesday", DayOfWeek.WEDNESDAY);
+        nomeGiornoToDayOfWeek.put("thursday", DayOfWeek.THURSDAY);
+        nomeGiornoToDayOfWeek.put("friday", DayOfWeek.FRIDAY);
+        nomeGiornoToDayOfWeek.put("saturday", DayOfWeek.SATURDAY);
+        nomeGiornoToDayOfWeek.put("sunday", DayOfWeek.SUNDAY);
 
+        String ripetizioni = "";
 
-            nomeGiornoToDayOfWeek.put("lunedì", DayOfWeek.MONDAY);
-            nomeGiornoToDayOfWeek.put("martedì", DayOfWeek.TUESDAY);
-            nomeGiornoToDayOfWeek.put("mercoledì", DayOfWeek.WEDNESDAY);
-            nomeGiornoToDayOfWeek.put("giovedì", DayOfWeek.THURSDAY);
-            nomeGiornoToDayOfWeek.put("venerdì", DayOfWeek.FRIDAY);
-            nomeGiornoToDayOfWeek.put("sabato", DayOfWeek.SATURDAY);
-            nomeGiornoToDayOfWeek.put("domenica", DayOfWeek.SUNDAY);
-
-
+        if (giorniSettimana.charAt(0) == '1') {ripetizioni += " MONDAY";}
+        if (giorniSettimana.charAt(1) == '2') {ripetizioni += " TUESDAY";}
+        if (giorniSettimana.charAt(2) == '3') {ripetizioni += " WEDNESDAY";}
+        if (giorniSettimana.charAt(3) == '4') {ripetizioni += " THURSDAY";}
+        if (giorniSettimana.charAt(4) == '5') {ripetizioni += " FRIDAY";}
+        if (giorniSettimana.charAt(5) == '6') {ripetizioni += " SATURDAY";}
+        if (giorniSettimana.charAt(6) == '7') {ripetizioni += " SUNDAY";}
 
         // Divide la stringa dei giorni settimana in un array di nomi di giorni
-        String[] nomiGiorni = giorniSettimana.split("\\s+");
+        String[] nomiGiorni = ripetizioni.split("\\s+");
+        Log.d(TAG, "nomi giorni = " + nomiGiorni);
 
         // Ottieni la data odierna
         LocalDate oggi = LocalDate.now();
@@ -216,16 +224,23 @@ public class GetDateTime {
         // Scansiona tutti i nomi dei giorni
         for (String nomeGiorno : nomiGiorni) {
 
+            Log.d(TAG, "giorno analizzato "  + nomeGiorno);
+
             // Cerca il nome del giorno nel mapping (ignorando il case)
             String nomeGiornoLowerCase = nomeGiorno.toLowerCase();
+            Log.d(TAG, "giorno analizzato LowerCase "  + nomeGiornoLowerCase);
+
             if (nomeGiornoToDayOfWeek.containsKey(nomeGiornoLowerCase)) {
                 DayOfWeek giorno = nomeGiornoToDayOfWeek.get(nomeGiornoLowerCase);
 
                 // Calcola la differenza in giorni tra oggi e il prossimo giorno desiderato
                 int differenzaGiorni = giorno.compareTo(oggi.getDayOfWeek());
 
+                Log.d(TAG, "differenza tra oggi e prossimo giorno desiderato "  + differenzaGiorni);
+
                 // Se la differenza in giorni è negativa, aggiungi 7 per ottenere la differenza positiva
-                if (differenzaGiorni < 0) {
+                if (differenzaGiorni <= 0) {
+                    Log.d(TAG, "trovata differenza negativa");
                     differenzaGiorni += 7;
                 }
 
@@ -233,7 +248,7 @@ public class GetDateTime {
                 if (differenzaGiorni < differenzaMinima) {
                     differenzaMinima = differenzaGiorni;
                     giornoPiuVicino = giorno;
-                    Log.d(TAG, "giornoPiuVicini che dice null è " + giornoPiuVicino);
+                    Log.d(TAG, "giornoPiuVicini trovato è " + giornoPiuVicino);
                 }
             }
         }

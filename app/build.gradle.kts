@@ -11,6 +11,13 @@ android {
     compileSdk = 34
 
     defaultConfig {
+        ndk {
+            abiFilters.add("armeabi-v7a")
+            abiFilters.add("arm64-v8a")
+            abiFilters.add("x86")
+            abiFilters.add("x86_64")
+        }
+
         applicationId = "it.unimib.brain_alarm"
         minSdk = 24
         targetSdk = 33

@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -38,10 +39,20 @@ public class CalcolatriceFragment extends Fragment {
     EditText editTextAnswer;
     Button buttonSubmit;
 
+
+    ImageView pallino1;
+    ImageView pallino2;
+    ImageView pallino3;
+    ImageView pallino4;
+    ImageView pallino5;
+
+
     int currentQuestion = 0;
     int rightAnswer = 0;
     final int TOTAL_QUESTIONS = 3;
-    int remainingRepetitions;
+
+    int ripCalc;
+    int count;
 
     public CalcolatriceFragment() {
         // Required empty public constructor
@@ -105,9 +116,24 @@ public class CalcolatriceFragment extends Fragment {
 
         startAlarm();
 
-        remainingRepetitions = missioni.charAt(0) - '0';
 
-        if (remainingRepetitions != 0) {
+        ripCalc = missioni.charAt(0) - '0';
+        count = 0;
+
+        pallino1 = view.findViewById(R.id.pallino1);
+        pallino2 = view.findViewById(R.id.pallino2);
+        pallino3 = view.findViewById(R.id.pallino3);
+        pallino4 = view.findViewById(R.id.pallino4);
+        pallino5 = view.findViewById(R.id.pallino5);
+
+        // Rendi visibili le ImageView in base al valore di ripMemory
+        if (ripCalc >= 1) pallino1.setColorFilter(getResources().getColor(R.color.white));
+        if (ripCalc >= 2) pallino2.setColorFilter(getResources().getColor(R.color.white));
+        if (ripCalc >= 3) pallino3.setColorFilter(getResources().getColor(R.color.white));
+        if (ripCalc >= 4) pallino4.setColorFilter(getResources().getColor(R.color.white));
+        if (ripCalc >= 5) pallino5.setColorFilter(getResources().getColor(R.color.white));
+
+        if (ripCalc > 0) {
 
             textQuestion = view.findViewById(R.id.textQuestion);
             editTextAnswer = view.findViewById(R.id.editTextAnswer);
@@ -122,12 +148,18 @@ public class CalcolatriceFragment extends Fragment {
                     if (!answerText.isEmpty()) {
                         int userAnswer = Integer.parseInt(answerText);
                         if (userAnswer == rightAnswer) {
-                            getARandomQuestion();
                             editTextAnswer.setText("");
                             Snackbar.make(view, "Corretto", Snackbar.LENGTH_SHORT).show();
-                            remainingRepetitions--;
-                            if (remainingRepetitions > 0) {
-                                Snackbar.make(view, "Ripetizione completata! Ancora " + remainingRepetitions + " ripetizioni.", Snackbar.LENGTH_SHORT).show();
+                            count++;
+                            if (count == 1) {pallino1.setColorFilter(getResources().getColor(R.color.fucsia));}
+                            if (count == 2) {pallino2.setColorFilter(getResources().getColor(R.color.fucsia));}
+                            if (count == 3) {pallino3.setColorFilter(getResources().getColor(R.color.fucsia));}
+                            if (count == 4) {pallino4.setColorFilter(getResources().getColor(R.color.fucsia));}
+                            if (count == 5) {pallino5.setColorFilter(getResources().getColor(R.color.fucsia));}
+
+                            if (count < ripCalc) {
+                                Snackbar.make(view, "Ripetizione completata! Ancora " + (ripCalc-count) + " ripetizioni.", Snackbar.LENGTH_SHORT).show();
+                                getARandomQuestion();
                             } else {
                                 Snackbar.make(view, "Hai completato tutte le ripetizioni!", Snackbar.LENGTH_SHORT).show();
                                 stopAlarm();

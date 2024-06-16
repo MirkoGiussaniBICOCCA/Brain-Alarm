@@ -25,12 +25,12 @@
                             android:id="@+id/linearLayout2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_margin="30dp"
                             android:layout_marginTop="84dp"
                             android:layout_marginEnd="30dp"
-                            android:layout_margin="30dp"
-                            android:paddingBottom="30dp"
                             android:background="@drawable/background_navbar"
                             android:orientation="vertical"
+                            android:paddingBottom="30dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.493"
                             app:layout_constraintStart_toStartOf="parent"
@@ -41,39 +41,140 @@
                                     android:id="@+id/iTuoiSuoni"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="20dp"
+                                    android:layout_marginTop="28dp"
                                     android:text="@string/iTuoiSuoni"
                                     android:textAlignment="center"
                                     android:textColor="@color/white"
-                                    android:textSize="20dp" />
+                                    android:textSize="30dp"
+                                    android:layout_marginBottom="15dp"/>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/textClassica"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:layout_marginStart="15dp"
+                                            android:textSize="24dp"
+                                            android:textColor="@color/white"
+                                            android:text="@string/classicaSuono" />
+
+                                        <ImageButton
+                                            android:id="@+id/imageButtonClassica"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:minWidth="50dp"
+                                            android:minHeight="50dp"
+                                            android:layout_marginEnd="25dp"
+                                            android:background="@drawable/pallino"
+                                            android:backgroundTint="@color/fucsia"
+                                            android:src="@drawable/play" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/textPianoforte"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="@string/pianoforte" />
+
+                                        <ImageButton
+                                            android:id="@+id/imageButtonPianoforte"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+
+                                            android:src="@drawable/play" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/textRadar"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="TextView" />
+
+                                        <ImageButton
+                                            android:id="@+id/imageRadar"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:src="@drawable/play" />
+
+                                </LinearLayout>
 
 
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/textDolce"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="TextView" />
+
+                                        <ImageButton
+                                            android:id="@+id/imageButtonDolce"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:src="@drawable/play" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/textDigitale"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="TextView" />
+
+                                        <ImageButton
+                                            android:id="@+id/imageButtonDigitale"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:src="@drawable/play" />
+
+                                </LinearLayout>
 
                         </LinearLayout>
-
-                        <Button
-                            android:id="@+id/salvaSuono"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="60dp"
-                            android:text="@string/salva"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
                         <Button
                             android:id="@+id/maps"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="23dp"
                             android:layout_marginStart="30dp"
+                            android:layout_marginTop="131dp"
                             android:layout_marginEnd="30dp"
                             android:backgroundTint="@color/azzurro"
                             android:text="maps"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/salvaSuono" />
-
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

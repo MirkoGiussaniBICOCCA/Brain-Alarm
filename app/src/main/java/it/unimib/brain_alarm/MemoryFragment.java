@@ -38,6 +38,8 @@ public class MemoryFragment extends Fragment {
     private MediaPlayer mediaPlayer;
     private Vibrator vibrator;
 
+
+
     ImageButton b11;
     ImageButton b12;
     ImageButton b13;
@@ -60,6 +62,7 @@ public class MemoryFragment extends Fragment {
 
     int playerPoints = 0, cpuPoint = 0;
 
+    int counter = 0;
     int ripMemory;
 
     ImageView pallino1;
@@ -139,6 +142,7 @@ public class MemoryFragment extends Fragment {
 
 
         ripMemory = missioni.charAt(1) - '0';
+
 
         pallino1 = v.findViewById(R.id.pallino1);
         pallino2 = v.findViewById(R.id.pallino2);
@@ -445,18 +449,16 @@ public class MemoryFragment extends Fragment {
         if (b11.getVisibility() == View.INVISIBLE && b12.getVisibility() == View.INVISIBLE && b13.getVisibility() == View.INVISIBLE &&  b14.getVisibility() == View.INVISIBLE) {
             //qui se ho girato tutte le carte finisce il gioco
             Log.d(TAG, "ripMemory " + ripMemory);
-            ripMemory--;
-            // Rendi visibili le ImageView in base al valore di ripMemory
-            //se ripMemory = 3 diventa arancione la seconda
-            //se ripMemory =
 
-            if (ripMemory == 1) {pallino1.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked)); Log.d(TAG, "ripMemory set fatto pallino1" );}
-            if (ripMemory == 2) {pallino2.setColorFilter(getResources().getColor(R.color.arancione)); Log.d(TAG, "ripMemory set fatto pallino2" );}
-            if (ripMemory == 3) {pallino3.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked)); Log.d(TAG, "ripMemory set fatto pallino3" );}
-            if (ripMemory == 4) {pallino4.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked)); Log.d(TAG, "ripMemory set fatto pallino4" );}
-            if (ripMemory == 5) {pallino5.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked)); Log.d(TAG, "ripMemory set fatto pallino5" );}
+            counter ++;
 
-            if (ripMemory > 0) {
+            if (counter == 1) {pallino1.setColorFilter(getResources().getColor(R.color.fucsia));}
+            if (counter == 2) {pallino2.setColorFilter(getResources().getColor(R.color.fucsia));}
+            if (counter == 3) {pallino3.setColorFilter(getResources().getColor(R.color.fucsia));}
+            if (counter == 4) {pallino4.setColorFilter(getResources().getColor(R.color.fucsia));}
+            if (counter == 5) {pallino5.setColorFilter(getResources().getColor(R.color.fucsia));}
+
+            if (counter < ripMemory) {
                 resetGame(key);
             } else {
                 stopAlarm();

@@ -49,6 +49,12 @@ public class ScrivereFragment extends Fragment {
     private int currentImageResource;
 
 
+    ImageView pallino1;
+    ImageView pallino2;
+    ImageView pallino3;
+    ImageView pallino4;
+    ImageView pallino5;
+
     public ScrivereFragment() {
         // Required empty public constructor
     }
@@ -113,6 +119,19 @@ public class ScrivereFragment extends Fragment {
         startAlarm();
 
         ripScrivere = missioni.charAt(2) - '0';
+        pallino1 = v.findViewById(R.id.pallino1);
+        pallino2 = v.findViewById(R.id.pallino2);
+        pallino3 = v.findViewById(R.id.pallino3);
+        pallino4 = v.findViewById(R.id.pallino4);
+        pallino5 = v.findViewById(R.id.pallino5);
+
+        // Rendi visibili le ImageView in base al valore di ripMemory
+        if (ripScrivere >= 1) pallino1.setColorFilter(getResources().getColor(R.color.white));
+        if (ripScrivere >= 2) pallino2.setColorFilter(getResources().getColor(R.color.white));
+        if (ripScrivere >= 3) pallino3.setColorFilter(getResources().getColor(R.color.white));
+        if (ripScrivere >= 4) pallino4.setColorFilter(getResources().getColor(R.color.white));
+        if (ripScrivere >= 5) pallino5.setColorFilter(getResources().getColor(R.color.white));
+
 
         if(ripScrivere > 0) {
             imageView = v.findViewById(R.id.imageView);
@@ -178,6 +197,13 @@ public class ScrivereFragment extends Fragment {
         }
 
         imageShownCount++;
+
+        if (imageShownCount == 1) {pallino1.setColorFilter(getResources().getColor(R.color.fucsia));}
+        if (imageShownCount == 2) {pallino2.setColorFilter(getResources().getColor(R.color.fucsia));}
+        if (imageShownCount == 3) {pallino3.setColorFilter(getResources().getColor(R.color.fucsia));}
+        if (imageShownCount == 4) {pallino4.setColorFilter(getResources().getColor(R.color.fucsia));}
+        if (imageShownCount == 5) {pallino5.setColorFilter(getResources().getColor(R.color.fucsia));}
+
 
         // Mostra una nuova immagine dopo 2 secondi
         imageView.postDelayed(new Runnable() {

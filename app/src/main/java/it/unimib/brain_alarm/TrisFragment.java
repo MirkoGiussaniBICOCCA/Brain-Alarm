@@ -21,6 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageView;
+
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashSet;
@@ -40,6 +42,12 @@ public class TrisFragment extends Fragment {
     private Random random = new Random();
 
     private GridLayout gridLayout;
+
+    ImageView pallino1;
+    ImageView pallino2;
+    ImageView pallino3;
+    ImageView pallino4;
+    ImageView pallino5;
 
     public TrisFragment() {
         // Required empty public constructor
@@ -104,6 +112,14 @@ public class TrisFragment extends Fragment {
 
         startAlarm();
         ripTris = missioni.charAt(3) - '0';
+
+        // Rendi visibili le ImageView in base al valore di ripMemory
+        if (ripTris >= 1) pallino1.setColorFilter(getResources().getColor(R.color.white));
+        if (ripTris >= 2) pallino2.setColorFilter(getResources().getColor(R.color.white));
+        if (ripTris >= 3) pallino3.setColorFilter(getResources().getColor(R.color.white));
+        if (ripTris >= 4) pallino4.setColorFilter(getResources().getColor(R.color.white));
+        if (ripTris >= 5) pallino5.setColorFilter(getResources().getColor(R.color.white));
+
 
         if (ripTris > 0) {
             gridLayout = v.findViewById(R.id.gridLayout);
@@ -172,6 +188,13 @@ public class TrisFragment extends Fragment {
 
     private void endGame(View v) {
         currentGameCount++;
+
+        if (currentGameCount == 1) {pallino1.setColorFilter(getResources().getColor(R.color.fucsia));}
+        if (currentGameCount == 2) {pallino2.setColorFilter(getResources().getColor(R.color.fucsia));}
+        if (currentGameCount == 3) {pallino3.setColorFilter(getResources().getColor(R.color.fucsia));}
+        if (currentGameCount == 4) {pallino4.setColorFilter(getResources().getColor(R.color.fucsia));}
+        if (currentGameCount == 5) {pallino5.setColorFilter(getResources().getColor(R.color.fucsia));}
+
         if (currentGameCount < ripTris) {
             resetBoard();
         } else {

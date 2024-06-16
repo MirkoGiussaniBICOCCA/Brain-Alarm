@@ -56,7 +56,7 @@ public class SuoniFragment extends Fragment {
         imageButtonClassica.setOnClickListener(v -> {
             mediaPlayer = MediaPlayer.create(getContext(), R.raw.classica1);
             startAlarm();
-            //imageButtonClassica.setImageDrawable(getResources().getDrawable(R.id.pausa));
+            imageButtonClassica.setImageDrawable(getResources().getDrawable(R.id.));
 
             stopAlarm();
             //imageButtonClassica.setImageDrawable(getResources().getDrawable(R.id.start));

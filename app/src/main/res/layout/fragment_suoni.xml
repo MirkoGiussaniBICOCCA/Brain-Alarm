@@ -86,13 +86,20 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
+                                            android:layout_marginStart="15dp"
+                                            android:textSize="24dp"
+                                            android:textColor="@color/white"
                                             android:text="@string/pianoforte" />
 
                                         <ImageButton
                                             android:id="@+id/imageButtonPianoforte"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-
+                                            android:minWidth="50dp"
+                                            android:minHeight="50dp"
+                                            android:layout_marginEnd="25dp"
+                                            android:background="@drawable/pallino"
+                                            android:backgroundTint="@color/fucsia"
                                             android:src="@drawable/play" />
 
                                 </LinearLayout>
@@ -107,13 +114,20 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
-                                            android:text="TextView" />
+                                            android:layout_marginStart="15dp"
+                                            android:textSize="24dp"
+                                            android:textColor="@color/white"
+                                            android:text="@string/radar" />
 
                                         <ImageButton
                                             android:id="@+id/imageRadar"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_weight="1"
+                                            android:minWidth="50dp"
+                                            android:minHeight="50dp"
+                                            android:layout_marginEnd="25dp"
+                                            android:background="@drawable/pallino"
+                                            android:backgroundTint="@color/fucsia"
                                             android:src="@drawable/play" />
 
                                 </LinearLayout>
@@ -129,13 +143,20 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
-                                            android:text="TextView" />
+                                            android:layout_marginStart="15dp"
+                                            android:textSize="24dp"
+                                            android:textColor="@color/white"
+                                            android:text="@string/dolce" />
 
                                         <ImageButton
                                             android:id="@+id/imageButtonDolce"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_weight="1"
+                                            android:minWidth="50dp"
+                                            android:minHeight="50dp"
+                                            android:layout_marginEnd="25dp"
+                                            android:background="@drawable/pallino"
+                                            android:backgroundTint="@color/fucsia"
                                             android:src="@drawable/play" />
 
                                 </LinearLayout>
@@ -150,13 +171,20 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
-                                            android:text="TextView" />
+                                            android:layout_marginStart="15dp"
+                                            android:textSize="24dp"
+                                            android:textColor="@color/white"
+                                            android:text="@string/digitale" />
 
                                         <ImageButton
                                             android:id="@+id/imageButtonDigitale"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_weight="1"
+                                            android:minWidth="50dp"
+                                            android:minHeight="50dp"
+                                            android:layout_marginEnd="25dp"
+                                            android:background="@drawable/pallino"
+                                            android:backgroundTint="@color/fucsia"
                                             android:src="@drawable/play" />
 
                                 </LinearLayout>

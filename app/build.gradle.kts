@@ -6,9 +6,11 @@ plugins {
     id("androidx.navigation.safeargs")
 }
 
+
 android {
     namespace = "it.unimib.brain_alarm"
     compileSdk = 34
+
 
     defaultConfig {
         ndk {
@@ -28,6 +30,7 @@ android {
 
         resValue("string", "news_api_key", gradleLocalProperties(rootDir).getProperty("news_api_key"))
         resValue("bool", "debug_mode", gradleLocalProperties(rootDir).getProperty("debug_mode"))
+
     }
 
     buildTypes {
@@ -46,6 +49,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
 }
 
 dependencies {

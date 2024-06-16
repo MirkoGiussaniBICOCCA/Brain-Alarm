@@ -276,8 +276,7 @@ public class HomeFragment extends Fragment {
         else{
             layoutCountDown.setVisibility(getView().VISIBLE);
             if (countDown.charAt(0) == '0') {
-                textCountDown.setText("giorno 0");
-                //textCountDown.setVisibility(getView().GONE);
+                textCountDown.setVisibility(getView().GONE);
             }
             else {
                 textCountDown.setText(countDown.charAt(0) + " giorni e ");

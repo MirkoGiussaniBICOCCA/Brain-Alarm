@@ -447,11 +447,14 @@ public class MemoryFragment extends Fragment {
             Log.d(TAG, "ripMemory " + ripMemory);
             ripMemory--;
             // Rendi visibili le ImageView in base al valore di ripMemory
-            if (ripMemory == 1) {pallino1.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked)); Log.d(TAG, "ripMemory set fatto " );}
-            if (ripMemory == 2) pallino2.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked));
-            if (ripMemory == 3) pallino3.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked));
-            if (ripMemory == 4) pallino4.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked));
-            if (ripMemory == 5) pallino5.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked));
+            //se ripMemory = 3 diventa arancione la seconda
+            //se ripMemory =
+
+            if (ripMemory == 1) {pallino1.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked)); Log.d(TAG, "ripMemory set fatto pallino1" );}
+            if (ripMemory == 2) {pallino2.setColorFilter(getResources().getColor(R.color.arancione)); Log.d(TAG, "ripMemory set fatto pallino2" );}
+            if (ripMemory == 3) {pallino3.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked)); Log.d(TAG, "ripMemory set fatto pallino3" );}
+            if (ripMemory == 4) {pallino4.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked)); Log.d(TAG, "ripMemory set fatto pallino4" );}
+            if (ripMemory == 5) {pallino5.setImageDrawable(getResources().getDrawable(R.drawable.pallinochecked)); Log.d(TAG, "ripMemory set fatto pallino5" );}
 
             if (ripMemory > 0) {
                 resetGame(key);

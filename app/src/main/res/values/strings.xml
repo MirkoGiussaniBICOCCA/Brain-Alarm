@@ -2,6 +2,13 @@
     <string name="app_name">Brain-Alarm</string>
     <string name="fav_coun">PaginaSfide</string>
     <string name="nomeSveglia">Nome Sveglia</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Hai dimenticato la password?</string>
+    <string name="googleLogin">login Google</string>
+    <string name="nuovoAccount">Nuovo account</string>
+    <string name="registra">Registra</string>
     <string name="conferma">CONFERMA</string>
     <string name="annulla">ANNULLA</string>
     <string name="suono">Suono</string>

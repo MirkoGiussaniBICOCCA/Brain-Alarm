@@ -373,14 +373,14 @@ public class AggiungiFragment extends Fragment {
                     if (progCalcolatrice>0 || progMemory>0 || progScrivere>0 || progTris>0 || progPassi>0) {
                         isSfida = true;
                         layoutSfida.setVisibility(view.GONE);
-                        Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_mainActivity);
+                        Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_aggiungiFragment);
                         saveInformation();
                     }
                     else
                         Snackbar.make(requireActivity().findViewById(android.R.id.content), getString(R.string.mxSfida), Snackbar.LENGTH_LONG).show();
                 }
                 if (isClassica) {
-                    Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_mainActivity);
+                    Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_aggiungiFragment);
                     saveInformation();
                 }
 
@@ -392,7 +392,7 @@ public class AggiungiFragment extends Fragment {
 
         final Button buttonAnnulla = view.findViewById(R.id.annulla);
         buttonAnnulla.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.nav_aggiungiFragment_to_mainActivity);
+            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_aggiungiFragment);
         } );
 
 

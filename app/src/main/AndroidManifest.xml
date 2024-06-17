@@ -64,7 +64,7 @@
         <receiver android:name=".AlarmReceiver" />
         <receiver android:enabled="true" android:exported="false"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
-            android:name=".alarm.AlarmReciver">
+            android:name=".alarm.AlarmReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/azzurroChiaro"
     tools:context=".RegistrationFragment">
 
     <ScrollView
@@ -28,9 +29,9 @@
 
             <ImageView
                 android:id="@+id/logo"
-                android:layout_width="279dp"
-                android:layout_height="208dp"
-                android:layout_marginTop="44dp"
+                android:layout_width="315dp"
+                android:layout_height="261dp"
+                android:layout_marginTop="4dp"
                 android:contentDescription="logo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +45,8 @@
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/logo"
-                tools:layout_editor_absoluteX="0dp">
+                app:layout_constraintVertical_bias="0.074"
+                tools:layout_editor_absoluteX="16dp">
 
                 <TextView
                     android:id="@+id/textview_login"
@@ -52,16 +54,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:text="@string/registrazione"
-                    android:textColor="?android:textColorPrimary"
+                    android:textColor="@color/white"
                     android:textSize="34sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_input_layout_email"
-                    android:layout_width="345dp"
-                    android:layout_height="108dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
                     android:layout_marginTop="12dp"
-                    android:layout_marginEnd="24dp"
 
                     app:endIconMode="clear_text"
                     app:errorEnabled="true"
@@ -71,8 +72,10 @@
                         android:id="@+id/text_input_edit_text_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/white"
                         android:hint="@string/email"
-                        android:inputType="textEmailAddress" />
+                        android:inputType="textEmailAddress"
+                        android:paddingStart="50dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -80,7 +83,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:layout_marginEnd="24dp"
                     app:errorEnabled="true"
                     app:passwordToggleEnabled="true"
                     app:startIconDrawable="@drawable/key">
@@ -89,6 +91,8 @@
                         android:id="@+id/text_input_edit_text_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingStart="50dp"
                         android:hint="@string/password"
                         android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>

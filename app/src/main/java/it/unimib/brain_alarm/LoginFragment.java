@@ -1,5 +1,16 @@
 package it.unimib.brain_alarm;
 
+import static it.unimib.brain_alarm.util.Constants.EMAIL_ADDRESS;
+import static it.unimib.brain_alarm.util.Constants.ENCRYPTED_DATA_FILE_NAME;
+import static it.unimib.brain_alarm.util.Constants.ENCRYPTED_SHARED_PREFERENCES_FILE_NAME;
+import static it.unimib.brain_alarm.util.Constants.INVALID_CREDENTIALS_ERROR;
+import static it.unimib.brain_alarm.util.Constants.INVALID_USER_ERROR;
+import static it.unimib.brain_alarm.util.Constants.PASSWORD;
+import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_COUNTRY_OF_INTEREST;
+import static it.unimib.brain_alarm.util.Constants.SHARED_PREFERENCES_FILE_NAME;
+import static it.unimib.brain_alarm.util.Constants.ID_TOKEN;
+
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -21,6 +32,11 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+
+import it.unimib.brain_alarm.ui.LoginActivity;
+import it.unimib.brain_alarm.util.DataEncryptionUtil;
+import it.unimib.brain_alarm.util.SharedPreferencesUtil;
+
 public class LoginFragment extends Fragment {
 
     private static final String TAG = LoginFragment.class.getSimpleName();
@@ -28,6 +44,7 @@ public class LoginFragment extends Fragment {
 
     private TextInputLayout textInputLayoutEmail;
     private TextInputLayout textInputLayoutPassword;
+    private Button buttonRegister;
 
     private DataEncryptionUtil dataEncryptionUtil;
 
@@ -56,33 +73,14 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        dataEncryptionUtil = new DataEncryptionUtil(requireContext());
-        try {
-            if (!dataEncryptionUtil.readSecretDataOnFile(ENCRYPTED_DATA_FILE_NAME).isEmpty()) {
-                SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(requireContext());
-
-                if (sharedPreferencesUtil.readStringData(SHARED_PREFERENCES_FILE_NAME,
-                        SHARED_PREFERENCES_COUNTRY_OF_INTEREST) != null &&
-                        sharedPreferencesUtil.readStringSetData(SHARED_PREFERENCES_FILE_NAME,
-                                SHARED_PREFERENCES_TOPICS_OF_INTEREST) != null) {
-
-                    startActivityBasedOnCondition(MainActivityWithBottomNavigationView.class,
-                            R.id.navigate_to_mainActivityWithBottomNavigationView);
-                } else {
-                    startActivityBasedOnCondition(NewsPreferencesActivity.class,
-                            R.id.navigate_to_newsPreferencesActivity);
-                }
-            }
-        } catch (GeneralSecurityException | IOException e) {
-            e.printStackTrace();
-        }
 
         textInputLayoutEmail = view.findViewById(R.id.text_input_layout_email);
         textInputLayoutPassword = view.findViewById(R.id.text_input_layout_password);
         final Button buttonLogin = view.findViewById(R.id.button_login);
         final Button buttonGoogleLogin = view.findViewById(R.id.button_google_login);
 
-        dataEncryptionUtil = new DataEncryptionUtil(requireContext());
+        dataEncryptionUtil = new DataEncryptionUtil(requireActivity().getApplication());
+
 
         try {
             Log.d(TAG, "Email address from encrypted SharedPref: " + dataEncryptionUtil.
@@ -107,17 +105,32 @@ public class LoginFragment extends Fragment {
                 Log.d(TAG, "Email and password are ok");
                 saveLoginData(email, password);
 
-                startActivityBasedOnCondition(NewsPreferencesActivity.class,
-                        R.id.navigate_to_newsPreferencesActivity);
+                startActivityBasedOnCondition(LoginActivity.class,
+                        R.id.action_loginFragment_to_mainActivity);
             } else {
                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
                         R.string.check_login_data_message, Snackbar.LENGTH_SHORT).show();
             }
         });
 
+        /*
         buttonGoogleLogin.setOnClickListener(v ->
                 startActivityBasedOnCondition(MainActivityWithNavigationDrawer.class,
                         R.id.navigate_to_mainActivityWithNavigationDrawer));
+
+         */
+
+
+
+
+        buttonRegister = view.findViewById(R.id.button_register);
+        buttonRegister.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_registrationFragment);
+        });
+
+
+
+
     }
 
     private void startActivityBasedOnCondition(Class<?> destinationActivity, int destination) {
@@ -129,12 +142,6 @@ public class LoginFragment extends Fragment {
         }
         requireActivity().finish();
     }
-
-    /**
-     * Checks if the email address has a correct format.
-     * @param email The email address to be validated
-     * @return true if the email address is valid, false otherwise
-     */
     private boolean isEmailOk(String email) {
         // Check if the email is valid through the use of this library:
         // https://commons.apache.org/proper/commons-validator/
@@ -147,11 +154,7 @@ public class LoginFragment extends Fragment {
         }
     }
 
-    /**
-     * Checks if the password is not empty.
-     * @param password The password to be checked
-     * @return True if the password is not empty, false otherwise
-     */
+
     private boolean isPasswordOk(String password) {
         // Check if the password length is correct
         if (password.isEmpty()) {
@@ -163,11 +166,6 @@ public class LoginFragment extends Fragment {
         }
     }
 
-    /**
-     * Encrypts login data using DataEncryptionUtil class.
-     * @param email The email address to be encrypted and saved
-     * @param password The password to be encrypted and saved
-     */
     private void saveLoginData(String email, String password) {
         try {
             dataEncryptionUtil.writeSecretDataWithEncryptedSharedPreferences(
@@ -181,4 +179,9 @@ public class LoginFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
+
+
+
 }
+

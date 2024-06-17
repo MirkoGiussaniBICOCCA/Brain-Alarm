@@ -75,6 +75,12 @@ public class TrisFragment extends Fragment {
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
 
+        pallino1 = v.findViewById(R.id.pallino1);
+        pallino2 = v.findViewById(R.id.pallino2);
+        pallino3 = v.findViewById(R.id.pallino3);
+        pallino4 = v.findViewById(R.id.pallino4);
+        pallino5 = v.findViewById(R.id.pallino5);
+
 
         String key = TrisFragmentArgs.fromBundle(getArguments()).getKey();
 

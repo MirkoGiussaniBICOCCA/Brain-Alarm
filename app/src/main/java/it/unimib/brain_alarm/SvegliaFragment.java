@@ -208,7 +208,6 @@ public class SvegliaFragment extends Fragment {
 
         String finalOrario = orario;
         buttonPosticipa.setOnClickListener(v -> {
-            //TODO cambaire orario sveglia
             SharedPreferences.Editor editor = sharedPref.edit();
 
             Set<String> newSet = new HashSet<>(svegliaSet);

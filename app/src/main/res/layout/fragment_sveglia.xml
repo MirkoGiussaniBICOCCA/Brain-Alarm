@@ -9,7 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
 
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,7 +40,7 @@
                     android:backgroundTint="@color/azzurro"
                     android:text="@string/Interrompi"
                     android:textColor="@color/white"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -181,11 +181,11 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
                     android:layout_weight="1"
-                    android:background="@color/azzurroChiaro"
+                    android:backgroundTint="@color/azzurro"
                     android:text="@string/Gioca"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="14sp"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -199,8 +199,10 @@
                 android:text="@string/posticipa"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/barraSfide"
-                tools:layout_editor_absoluteX="151dp" />
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/layoutGioca"
+                app:layout_constraintTop_toBottomOf="@+id/barraSfide" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -10,11 +10,12 @@
     tools:context=".CalcolatriceFragment">
 
     <LinearLayout
-        android:background="@color/azzurro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:orientation="vertical">
+        android:background="@drawable/background_countdown"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/textQuestion"
@@ -33,13 +34,13 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_margin="3dp"
-            android:gravity="center"
-            android:inputType="number"
-            android:textSize="18sp"
-            android:textColor="@color/white"
-            android:background="@color/fucsia"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
+            android:background="@color/fucsia"
+            android:gravity="center"
+            android:inputType="number"
+            android:textColor="@color/white"
+            android:textSize="18sp"
             app:layout_constraintTop_toBottomOf="@+id/ripetizioni" />
     </LinearLayout>
 

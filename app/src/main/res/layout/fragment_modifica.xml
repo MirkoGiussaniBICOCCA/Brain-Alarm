@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/azzurroChiaro"
     tools:context=".ModificaFragment">
 
     <ScrollView
@@ -425,8 +425,8 @@
                             android:layout_marginBottom="20dp"
                             android:max="5"
                             android:progress="0"
-                            android:progressTint="#FFFF00"
-                            android:thumbTint="#FFAA00" />
+                            android:progressTint="@color/white"
+                            android:thumbTint="@color/fucsia" />
 
                         <TextView
                             android:id="@+id/progressoCalcolatrice"
@@ -467,8 +467,8 @@
                             android:layout_marginBottom="20dp"
                             android:max="5"
                             android:progress="0"
-                            android:progressTint="#FFFF00"
-                            android:thumbTint="#FFAA00" />
+                            android:progressTint="@color/white"
+                            android:thumbTint="@color/fucsia" />
 
                         <TextView
                             android:id="@+id/progressoMemory"
@@ -509,8 +509,8 @@
                             android:layout_marginBottom="20dp"
                             android:max="5"
                             android:progress="0"
-                            android:progressTint="#FFFF00"
-                            android:thumbTint="#FFAA00" />
+                            android:progressTint="@color/white"
+                            android:thumbTint="@color/fucsia" />
 
                         <TextView
                             android:id="@+id/progressoScrivere"
@@ -551,8 +551,8 @@
                             android:layout_marginBottom="20dp"
                             android:max="5"
                             android:progress="0"
-                            android:progressTint="#FFFF00"
-                            android:thumbTint="#FFAA00" />
+                            android:progressTint="@color/white"
+                            android:thumbTint="@color/fucsia" />
 
                         <TextView
                             android:id="@+id/progressoTris"
@@ -593,8 +593,8 @@
                             android:layout_marginBottom="20dp"
                             android:max="5"
                             android:progress="0"
-                            android:progressTint="#FFFF00"
-                            android:thumbTint="#FFAA00" />
+                            android:progressTint="@color/white"
+                            android:thumbTint="@color/fucsia" />
 
                         <TextView
                             android:id="@+id/progressoPassi"

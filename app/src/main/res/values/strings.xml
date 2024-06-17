@@ -62,6 +62,11 @@
 
     <string name="nav_drawer_subtitle">Stay tuned for news from the world</string>
 
+    <string name="error_email">Insert a valid email address</string>
+    <string name="error_password">Password should be at least 6 characters</string>
+
+    <string name="error_user_collision_message">L\'indirizzo email è già in uso</string>
+
     <string name="error_retrieving_news">Error in retrieving the news</string>
     <string name="api_key_error">API Key not valid or maximum number of requests reached</string>
     <string name="unexpected_error">Unexpected error</string>

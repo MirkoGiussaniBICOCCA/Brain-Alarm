@@ -13,6 +13,19 @@ public class Constants {
     public static final String SHARED_PREFERENCES_SVEGLIA = "nome sveglia";
 
     public static final String SHARED_PREFERENCES_COUNTRY_OF_INTEREST = "country_of_interest";
+
+    // Constants for EncryptedSharedPreferences
+    public static final String ENCRYPTED_SHARED_PREFERENCES_FILE_NAME = "it.unimib.worldnews.encrypted_preferences";
+    public static final String EMAIL_ADDRESS = "email_address";
+    public static final String PASSWORD = "password";
+    public static final String ID_TOKEN = "google_token";
+
+    // Constants for encrypted files
+    public static final String ENCRYPTED_DATA_FILE_NAME = "it.unimib.worldnews.encrypted_file.txt";
+
+    public static final int MINIMUM_PASSWORD_LENGTH = 6;
+    public static final String WEAK_PASSWORD_ERROR = "passwordIsWeak";
+
     // Constants for files contained in assets folder
     public static final String NEWS_API_TEST_JSON_FILE = "newsapi-test.json";
 
@@ -37,6 +50,9 @@ public class Constants {
     public static final String API_KEY_ERROR = "api_key_error";
 
     public static final String UNEXPECTED_ERROR = "unexpected_error";
+    public static final String INVALID_CREDENTIALS_ERROR = "invalidCredentials";
+    public static final String USER_COLLISION_ERROR = "userCollisionError";
+    public static final String INVALID_USER_ERROR = "invalidUserError";
 }
 
 

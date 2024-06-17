@@ -146,21 +146,6 @@ public class SuoniFragment extends Fragment {
 
 
 
-
-        /*
-        final Button buttonMaps = view.findViewById(R.id.maps);
-        buttonMaps.setOnClickListener(v -> {
-            Uri gmmIntentUri = Uri.parse("geo:37.7749,-122.4194");
-            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-            mapIntent.setPackage("com.google.android.apps.maps");
-            startActivity(mapIntent);
-        } );
-        */
-
-
-
-
-
     }
 
     private void startAlarm() {

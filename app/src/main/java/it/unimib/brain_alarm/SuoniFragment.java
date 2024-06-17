@@ -9,8 +9,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +22,12 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import it.unimib.brain_alarm.ui.HomeFragment;
+
 
 public class SuoniFragment extends Fragment {
+
+    private static final String TAG = SuoniFragment.class.getSimpleName();
 
     ImageButton imageButtonClassica;
     ImageButton imageButtonPianoforte;
@@ -57,16 +63,24 @@ public class SuoniFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         imageButtonClassica = view.findViewById(R.id.imageButtonClassica);
         imageButtonClassica.setOnClickListener(v -> {
+
+            Log.d(TAG, "suonoAttivo " +  suonoAttivo);
+
             mediaPlayer = MediaPlayer.create(getContext(), R.raw.classica1);
 
             if (!suonoAttivo) {
-                startAlarm(suonoAttivo);
+                Log.d(TAG, "attivazione suono");
+                suonoAttivo = true;
+                startAlarm();
                 imageButtonClassica.setImageDrawable(getResources().getDrawable(R.drawable.play));
-
-            } else {
-                stopAlarm(suonoAttivo);
+            } else if (suonoAttivo) {
+                Log.d(TAG, "disattivazione suono");
+                Log.d(TAG, "disattivazione suono che ha playing " + mediaPlayer.isPlaying());
+                suonoAttivo = false;
+                stopAlarm(mediaPlayer);
                 imageButtonClassica.setImageDrawable(getResources().getDrawable(R.drawable.pausa));
             }
 
@@ -78,10 +92,10 @@ public class SuoniFragment extends Fragment {
             mediaPlayer = MediaPlayer.create(getContext(), R.raw.pianoforte2);
 
             if (!suonoAttivo) {
-                startAlarm(suonoAttivo);
+                startAlarm();
                 imageButtonPianoforte.setImageDrawable(getResources().getDrawable(R.drawable.play));
             } else {
-                stopAlarm(suonoAttivo);
+                stopAlarm(mediaPlayer);
                 imageButtonClassica.setImageDrawable(getResources().getDrawable(R.drawable.pausa));
             }
         });
@@ -92,10 +106,10 @@ public class SuoniFragment extends Fragment {
             mediaPlayer = MediaPlayer.create(getContext(), R.raw.radar3);
 
             if (!suonoAttivo) {
-                startAlarm(suonoAttivo);
+                startAlarm();
                 imageButtonRadar.setImageDrawable(getResources().getDrawable(R.drawable.play));
             } else {
-                stopAlarm(suonoAttivo);
+                stopAlarm(mediaPlayer);
                 imageButtonRadar.setImageDrawable(getResources().getDrawable(R.drawable.pausa));
             }
         });
@@ -105,10 +119,10 @@ public class SuoniFragment extends Fragment {
             mediaPlayer = MediaPlayer.create(getContext(), R.raw.dolce4);
 
             if (!suonoAttivo) {
-                startAlarm(suonoAttivo);
+                startAlarm();
                 imageButtonDolce.setImageDrawable(getResources().getDrawable(R.drawable.play));
             } else {
-                stopAlarm(suonoAttivo);
+                stopAlarm(mediaPlayer);
                 imageButtonDolce.setImageDrawable(getResources().getDrawable(R.drawable.pausa));
             }
         });
@@ -119,10 +133,10 @@ public class SuoniFragment extends Fragment {
             mediaPlayer = MediaPlayer.create(getContext(), R.raw.digitale5);
 
             if (!suonoAttivo) {
-                startAlarm(suonoAttivo);
+                startAlarm();
                 imageButtonDigitale.setImageDrawable(getResources().getDrawable(R.drawable.play));
             } else {
-                stopAlarm(suonoAttivo);
+                stopAlarm(mediaPlayer);
                 imageButtonDigitale.setImageDrawable(getResources().getDrawable(R.drawable.pausa));
             }
         });
@@ -149,25 +163,29 @@ public class SuoniFragment extends Fragment {
 
     }
 
-    private void startAlarm(boolean suonoAttivo) {
-        suonoAttivo = true;
+    private void startAlarm() {
 
         //Log.d(TAG, "start suono");
         if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
             mediaPlayer.setLooping(true);
             mediaPlayer.start();
         }
+
+        Log.d(TAG, "suono Palying " + mediaPlayer.isPlaying());
     }
 
-    private void stopAlarm(boolean suonoAttivo) {
-        suonoAttivo = false;
+    private void stopAlarm(MediaPlayer mediaPlayer) {
 
-        //Log.d(TAG, "stop suono" + mediaPlayer + " ... " + mediaPlayer.isPlaying());
+        Log.d(TAG, "suono dentro stopAlarm");
 
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            Log.d(TAG, "suono dentro stopAlarm");
             mediaPlayer.stop();
-
             mediaPlayer.release();
+        } else if (mediaPlayer == null) {
+            Log.d(TAG, "suono mediaPlayer= null");
+        } else if(!mediaPlayer.isPlaying()) {
+            Log.d(TAG, "suono mediaPlayer.isPlaying()");
         }
     }
 

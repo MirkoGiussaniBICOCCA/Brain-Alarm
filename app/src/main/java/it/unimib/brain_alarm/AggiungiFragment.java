@@ -172,8 +172,9 @@ public class AggiungiFragment extends Fragment {
             if (!isClassica) {
                 isClassica = true;
                 isSfida = false;
-                buttonClassica.setBackgroundColor(getResources().getColor(R.color.grigio));
-                buttonSfida.setBackgroundColor(getResources().getColor(R.color.arancione));}
+                layoutSfida.setVisibility(view.GONE);
+                buttonClassica.setBackgroundColor(getResources().getColor(R.color.fucsia));
+                buttonSfida.setBackgroundColor(getResources().getColor(R.color.azzurro));}
             else {
                 isClassica = false;
                 buttonClassica.setBackgroundColor(getResources().getColor(R.color.azzurro));
@@ -188,13 +189,13 @@ public class AggiungiFragment extends Fragment {
             if (!isSfida) {
                 isSfida = true;
                 isClassica = false;
-                buttonSfida.setBackgroundColor(getResources().getColor(R.color.grigio));
+                buttonSfida.setBackgroundColor(getResources().getColor(R.color.fucsia));
                 buttonClassica.setBackgroundColor(getResources().getColor(R.color.azzurro));
                 layoutSfida.setVisibility(view.VISIBLE);
             }
             else {
                 isSfida = false;
-                buttonSfida.setBackgroundColor(getResources().getColor(R.color.arancione));
+                buttonSfida.setBackgroundColor(getResources().getColor(R.color.azzurro));
                 layoutSfida.setVisibility(view.GONE);
             }
         } );
@@ -352,7 +353,7 @@ public class AggiungiFragment extends Fragment {
         buttonAnnullaSfide.setOnClickListener(v -> {
             isSfida = false;
             layoutSfida.setVisibility(view.GONE);
-            buttonSfida.setBackgroundColor(getResources().getColor(R.color.arancione));
+            buttonSfida.setBackgroundColor(getResources().getColor(R.color.azzurro));
         });
 
 

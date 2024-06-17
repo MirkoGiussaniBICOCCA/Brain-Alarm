@@ -261,13 +261,14 @@ public class ModificaFragment extends Fragment {
         if(sveglia.getModalita().equals("tc")) {
             isClassica = true;
             isSfida = false;
-            buttonClassica.setBackgroundColor(getResources().getColor(R.color.grigio));
-            buttonSfida.setBackgroundColor(getResources().getColor(R.color.arancione));
+            layoutSfida.setVisibility(view.GONE);
+            buttonClassica.setBackgroundColor(getResources().getColor(R.color.fucsia));
+            buttonSfida.setBackgroundColor(getResources().getColor(R.color.azzurro));
         }
         else if (sveglia.getModalita().equals("ts")) {
             isSfida = true;
             isClassica = false;
-            buttonSfida.setBackgroundColor(getResources().getColor(R.color.grigio));
+            buttonSfida.setBackgroundColor(getResources().getColor(R.color.fucsia));
             buttonClassica.setBackgroundColor(getResources().getColor(R.color.azzurro));
             layoutSfida.setVisibility(view.VISIBLE);
         }
@@ -276,8 +277,8 @@ public class ModificaFragment extends Fragment {
             if (!isClassica) {
                 isClassica = true;
                 isSfida = false;
-                buttonClassica.setBackgroundColor(getResources().getColor(R.color.grigio));
-                buttonSfida.setBackgroundColor(getResources().getColor(R.color.arancione));}
+                buttonClassica.setBackgroundColor(getResources().getColor(R.color.fucsia));
+                buttonSfida.setBackgroundColor(getResources().getColor(R.color.azzurro));}
             else {
                 isClassica = false;
                 buttonClassica.setBackgroundColor(getResources().getColor(R.color.azzurro));
@@ -290,7 +291,7 @@ public class ModificaFragment extends Fragment {
             if (!isSfida) {
                 isSfida = true;
                 isClassica = false;
-                buttonSfida.setBackgroundColor(getResources().getColor(R.color.grigio));
+                buttonSfida.setBackgroundColor(getResources().getColor(R.color.fucsia));
                 buttonClassica.setBackgroundColor(getResources().getColor(R.color.azzurro));
                 layoutSfida.setVisibility(view.VISIBLE);
             }

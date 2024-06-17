@@ -234,7 +234,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:backgroundTint="@color/arancione"
+                    android:backgroundTint="@color/azzurro"
                     android:text="@string/sfida"
                     android:textColor="@color/white"
                     android:textSize="14sp"
@@ -658,7 +658,7 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/sfondoTras"
                     android:text="@string/annulla"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
 
                 <Button
@@ -670,7 +670,7 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/sfondoTras"
                     android:text="@string/conferma"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
 

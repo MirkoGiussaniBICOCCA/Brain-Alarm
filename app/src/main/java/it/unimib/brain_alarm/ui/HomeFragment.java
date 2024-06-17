@@ -367,6 +367,7 @@ public class HomeFragment extends Fragment {
 
             if (getSecondiMancanti(countDown) == 0) {
 
+                //modifica per interrompere suono
                 long currentTimeMillis = System.currentTimeMillis();
                 long triggerAtMillis = currentTimeMillis;
                 setAlarm(getContext(), triggerAtMillis);

@@ -215,12 +215,28 @@ public class SvegliaFragment extends Fragment {
 
             newSet.remove(finalOrario);
 
+            Log.d(TAG, "orario trovato " + finalOrario);
+
+            Log.d(TAG, "orario calcolato " + GetDateTime.getOrarioPosticipato(finalOrario));
 
             //CONTROLLARE return
             newSet.add(GetDateTime.getOrarioPosticipato(finalOrario));
 
+
+            newSet.remove("non attiva");
+
+            newSet.add("attiva");
+
             editor.putStringSet(key, newSet);
 
+
+            editor.apply();
+
+            Set<String> attive= sharedPref.getStringSet("sveglieAttive", new HashSet<>());
+
+            attive.add(key);
+
+            editor.putStringSet("sveglieAttive", attive);
 
             editor.apply();
 

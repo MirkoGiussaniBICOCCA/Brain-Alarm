@@ -81,9 +81,14 @@ public class ImpostazioniFragment extends Fragment {
         });
 
 
+
+        SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(getActivity().getApplication());
+
+
         SharedPreferences sharedPref = getActivity().getSharedPreferences("information_shared", Context.MODE_PRIVATE);
         nome = sharedPref.getString("nome", null);
-        stato = sharedPref.getString("stato", null);
+        stato = sharedPreferencesUtil.readStringData(
+                SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST);
 
         nomeImpostazioni = view.findViewById(R.id.nomeImpostazioni);
         statoImpostazioni = view.findViewById(R.id.statoImpostazioni);
@@ -101,16 +106,22 @@ public class ImpostazioniFragment extends Fragment {
             if (nome!=null && stato!=null) {
                 saveInformation();
 
+
+
+
+                nomeImpostazioni.setText("Ciao " + sharedPref.getString("nome", null));
+
+
                 //visualizzare nuovo nome
                 nomeImpostazioni.setText("Nome: " + sharedPref.getString("nome", null));
 
-                SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(getActivity().getApplication());
+
                 statoImpostazioni.setText("Stato: " + sharedPreferencesUtil.readStringData(
                         SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST));
 
                 layoutModifica.setVisibility(view.GONE);
             } else
-                nomeImpostazioni.setText("null");
+                nomeImpostazioni.setText("user");
         });
 
         Log.d(TAG, "nome shared pref " + nome);

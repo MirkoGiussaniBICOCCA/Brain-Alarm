@@ -136,6 +136,8 @@ public class SveglieAdapter extends
         @RequiresApi(api = Build.VERSION_CODES.O)
         public void bind(Sveglie sveglie) {
 
+            Log.d(TAG, "errore orario " + sveglie.getOrario() + " della sveglia " + sveglie.getKey());
+
             textViewOrario.setText(sveglie.getOrario().substring(0,5));
 
             if (!sveglie.getEtichetta().equals(""))

@@ -291,6 +291,8 @@ public class GetDateTime {
         @RequiresApi(api = Build.VERSION_CODES.O)
         public static String getOrarioPosticipato(String orario) {
 
+            Log.d(TAG, "orario dnetro metodo " + orario);
+
             // Estrai solo la parte dell'orario dalla stringa
             String orarioStr = orario.substring(1);
 
@@ -306,10 +308,12 @@ public class GetDateTime {
             // Converte l'orario modificato di nuovo in una stringa nel formato desiderato
             String nuovoOrarioStr = nuovoOrarioTime.format(formatter);
 
+            Log.d(TAG, "orario metodo o    " + nuovoOrarioStr);
+
             // Preponi la lettera 'o' alla nuova stringa dell'orario
             String nuovaStringa = "o" + nuovoOrarioStr;
 
-            return orarioStr;
+            return nuovaStringa;
         }
 
 

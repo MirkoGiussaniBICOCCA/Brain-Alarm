@@ -93,13 +93,13 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     @Override
     public void onSuccessFromLocal(NewsApiResponse newsApiResponse) {
         if (allNewsMutableLiveData.getValue() != null && allNewsMutableLiveData.getValue().isSuccess()) {
-            List<News> newsList = ((Result.Success)allNewsMutableLiveData.getValue()).getData().getNewsList();
+            List<News> newsList = ((Result.NewsResponseSuccess)allNewsMutableLiveData.getValue()).getData().getNewsList();
             newsList.addAll(newsApiResponse.getNewsList());
             newsApiResponse.setNewsList(newsList);
-            Result.Success result = new Result.Success(newsApiResponse);
+            Result.NewsResponseSuccess result = new Result.NewsResponseSuccess(newsApiResponse);
             allNewsMutableLiveData.postValue(result);
         } else {
-            Result.Success result = new Result.Success(newsApiResponse);
+            Result.NewsResponseSuccess result = new Result.NewsResponseSuccess(newsApiResponse);
             allNewsMutableLiveData.postValue(result);
         }
     }
@@ -116,18 +116,18 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
         Result allNewsResult = allNewsMutableLiveData.getValue();
 
         if (allNewsResult != null && allNewsResult.isSuccess()) {
-            List<News> oldAllNews = ((Result.Success)allNewsResult).getData().getNewsList();
+            List<News> oldAllNews = ((Result.NewsResponseSuccess)allNewsResult).getData().getNewsList();
             if (oldAllNews.contains(news)) {
                 oldAllNews.set(oldAllNews.indexOf(news), news);
                 allNewsMutableLiveData.postValue(allNewsResult);
             }
         }
-        favoriteNewsMutableLiveData.postValue(new Result.Success(new NewsResponse(favoriteNews)));
+        favoriteNewsMutableLiveData.postValue(new Result.NewsResponseSuccess(new NewsResponse(favoriteNews)));
     }
 
     @Override
     public void onNewsFavoriteStatusChanged(List<News> news) {
-        favoriteNewsMutableLiveData.postValue(new Result.Success(new NewsResponse(news)));
+        favoriteNewsMutableLiveData.postValue(new Result.NewsResponseSuccess(new NewsResponse(news)));
     }
 
     @Override
@@ -135,7 +135,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
         Result allNewsResult = allNewsMutableLiveData.getValue();
 
         if (allNewsResult != null && allNewsResult.isSuccess()) {
-            List<News> oldAllNews = ((Result.Success)allNewsResult).getData().getNewsList();
+            List<News> oldAllNews = ((Result.NewsResponseSuccess)allNewsResult).getData().getNewsList();
             for (News news : favoriteNews) {
                 if (oldAllNews.contains(news)) {
                     oldAllNews.set(oldAllNews.indexOf(news), news);
@@ -147,7 +147,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
         if (favoriteNewsMutableLiveData.getValue() != null &&
                 favoriteNewsMutableLiveData.getValue().isSuccess()) {
             favoriteNews.clear();
-            Result.Success result = new Result.Success(new NewsResponse(favoriteNews));
+            Result.NewsResponseSuccess result = new Result.NewsResponseSuccess(new NewsResponse(favoriteNews));
             favoriteNewsMutableLiveData.postValue(result);
         }
     }

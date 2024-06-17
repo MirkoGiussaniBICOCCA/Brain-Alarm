@@ -228,7 +228,7 @@ public class NewsFragment extends Fragment {
                     //o aggiorno la lista o mostro messaggio di errore
                     if (result.isSuccess()) {
 
-                        NewsResponse newsResponse = ((Result.Success) result).getData();
+                        NewsResponse newsResponse = ((Result.NewsResponseSuccess) result).getData();
                         List<News> fetchedNews = newsResponse.getNewsList();
 
                         //logica per aggiornare recycler view

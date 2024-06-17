@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/imageview_news_cover_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="221dp"
+            android:layout_height="126dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/content_description_news_cover_image"
             android:scaleType="fitCenter"

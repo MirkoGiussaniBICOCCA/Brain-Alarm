@@ -19,4 +19,9 @@
         android:name="it.unimib.brain_alarm.ui.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/fragment_registration"
+        android:name="it.unimib.brain_alarm.fragment_registration"
+        android:label="registrationfragment"
+        tools:layout="@layout/registrationfragment" />
 </navigation>

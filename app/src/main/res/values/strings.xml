@@ -3,6 +3,8 @@
     <string name="fav_coun">PaginaSfide</string>
     <string name="nomeSveglia">Nome Sveglia</string>
     <string name="login">Login</string>
+    <string name="registrazione">Registrazione</string>
+    <string name="registrati">Registrati</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="forgot_password">Hai dimenticato la password?</string>
@@ -45,6 +47,7 @@
     <string name="Gioca">Gioca</string>
     <string name="Interrompi">Interrompi</string>
     <string name="Posticipa">Posticipa</string>
+    <string name="list_size_message">La dimensione della lista è: </string>
 
     <string name="mxModalità">Devi scegliere la modalità della sveglia (classica o sfida)!</string>
     <string name="mxStato">Stato salvato</string>

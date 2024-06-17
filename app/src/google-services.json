@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "401126177756",
+    "project_id": "brainalarm-c987e",
+    "storage_bucket": "brainalarm-c987e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401126177756:android:8891a762d1e3231b4cad19",
+        "android_client_info": {
+          "package_name": "it.unimib.brain_alarm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBha63NzRGCxtBORiMWmDK1YFDmRWRhwr8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
